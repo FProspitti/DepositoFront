@@ -1,8 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule,Routes } from '@angular/router';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -27,6 +29,7 @@ import { ClientesComponent } from './components/clientes/clientes.component';
 import { EstadosComponent } from './components/estados/estados.component';
 import { ConsultasComponent } from './components/consultas/consultas.component';
 import { NuevoComponent } from './components/nuevo/nuevo.component';
+
 
 const  appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -69,7 +72,9 @@ const  appRoutes: Routes = [
     DialogModule,
     BrowserAnimationsModule,
     ButtonModule,
-    ContextMenuModule
+    ContextMenuModule,
+    AngularFontAwesomeModule,
+    NgbModule.forRoot()
 
   ],
   providers: [ValidateService,AuthService, AuthGuard],
