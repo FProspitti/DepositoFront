@@ -24,6 +24,7 @@ import {DataTableModule, SharedModule} from 'primeng/primeng';
 import {DialogModule} from "primeng/primeng";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ButtonModule} from 'primeng/primeng';
+import {DropdownModule} from 'primeng/dropdown';
 import {ContextMenuModule} from "primeng/primeng";
 import { UnidadesComponent } from './components/unidades/unidades.component';
 import { ClientesComponent } from './components/clientes/clientes.component';
@@ -77,6 +78,7 @@ const  appRoutes: Routes = [
     DialogModule,
     ToastModule,
     PanelModule,
+    DropdownModule,
     BrowserAnimationsModule,
     ButtonModule,
     ContextMenuModule,

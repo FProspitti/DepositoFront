@@ -195,5 +195,12 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  newMovimiento(movimiento) {
+    const headers = new Headers();
+    headers.append('content-type', 'application/json');
+    return this.http.post('http://localhost:3000/movimientos/nuevoMovimiento', movimiento, {headers: headers})
+      .map(res => res.json());
+  }
+
 
 }
