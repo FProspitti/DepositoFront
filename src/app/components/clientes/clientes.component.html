@@ -1,4 +1,5 @@
 <br/>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
 <p-dataTable  [value]="clientes" selectionMode="single" [(selection)]="selectedCliente" (onRowDblclick)="onRowSelect($event)"  [contextMenu]="cm"  [paginator]="true" rows="15" [responsive]="true">
   <p-header>Clientes</p-header>
   <p-column field="nombre" header="Nombre" [filter]="true" ></p-column>
@@ -7,7 +8,7 @@
       {{row.fechaAlta | date:'MM/dd/yyyy'}}
     </ng-template>
 </p-column>
-  <p-footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Nuevo"></button></div></p-footer>
+  <p-footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton  icon="fa fa-plus" style="float:left" (click)="showDialogToAdd()" label="Nuevo"></button></div></p-footer>
 </p-dataTable>
 
 <p-contextMenu #cm [model]="items">
@@ -23,8 +24,8 @@
 </div>
 <p-footer>
 <div class="ui-dialog-buttonpane ui-helper-clearfix">
-  <button type="button" pButton icon="fa-close" (click)="cerrarDialog()" label="Cancelar"></button>
-  <button type="button" pButton icon="fa-check" (click)="save()" label="Guardar"></button>
+  <button type="button" pButton icon="fa  fa-close" (click)="cerrarDialog()" label="Cancelar"></button>
+  <button type="button" pButton icon="fa  fa-check" (click)="save()" label="Guardar"></button>
 </div>
 </p-footer>
 </p-dialog>
@@ -39,8 +40,8 @@
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" pButton icon="fa-close" (click)="cerrarDelete()" label="Cancelar"></button>
-      <button type="button" pButton icon="fa-check" (click)="delete()" label="Borrar"></button>
+      <button type="button" pButton icon="fa  fa-close" (click)="cerrarDelete()" label="Cancelar"></button>
+      <button type="button" pButton icon="fa  fa-check" (click)="delete()" label="Borrar"></button>
     </div>
   </p-footer>
 </p-dialog>

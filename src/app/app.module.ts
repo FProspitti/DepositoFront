@@ -17,6 +17,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import {ValidateService} from "./services/validate.service";
 import {AuthService} from "./services/auth.service";
 import {FlashMessagesModule} from "angular2-flash-messages";
+import {ToastModule} from 'primeng/toast';
 import {AuthGuard} from "./guards/auth.guard";
 import { UsersComponent } from './components/users/users.component';
 import {DataTableModule, SharedModule} from 'primeng/primeng';
@@ -29,6 +30,8 @@ import { ClientesComponent } from './components/clientes/clientes.component';
 import { EstadosComponent } from './components/estados/estados.component';
 import { ConsultasComponent } from './components/consultas/consultas.component';
 import { NuevoComponent } from './components/nuevo/nuevo.component';
+import {PanelModule} from 'primeng/panel';
+import { NuevoMovimientoComponent } from './components/movimientos/nuevo-movimiento/nuevo-movimiento.component';
 
 
 const  appRoutes: Routes = [
@@ -42,7 +45,8 @@ const  appRoutes: Routes = [
   {path: 'clientes', component: ClientesComponent, canActivate:[AuthGuard]},
   {path: 'estados', component: EstadosComponent, canActivate:[AuthGuard]},
   {path: 'consultas', component: ConsultasComponent, canActivate:[AuthGuard]},
-  {path: 'nuevo', component: NuevoComponent, canActivate:[AuthGuard]}
+  {path: 'nuevo', component: NuevoComponent, canActivate:[AuthGuard]},
+  {path: 'nuevoMovimiento', component: NuevoMovimientoComponent, canActivate:[AuthGuard]}
 ];
 
 @NgModule({
@@ -59,7 +63,8 @@ const  appRoutes: Routes = [
     ClientesComponent,
     EstadosComponent,
     ConsultasComponent,
-    NuevoComponent
+    NuevoComponent,
+    NuevoMovimientoComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +75,8 @@ const  appRoutes: Routes = [
     DataTableModule,
     SharedModule,
     DialogModule,
+    ToastModule,
+    PanelModule,
     BrowserAnimationsModule,
     ButtonModule,
     ContextMenuModule,

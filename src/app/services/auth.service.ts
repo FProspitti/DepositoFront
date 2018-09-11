@@ -20,14 +20,14 @@ export class AuthService {
   }
 
   authenticateUser(user) {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('content-type', 'application/json');
     return this.http.post('http://localhost:3000/users/authenticate', user, {headers: headers})
       .map(res => res.json());
   }
 
   getProfile() {
-    let headers = new Headers();
+    const headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('content-type', 'application/json');
@@ -58,7 +58,7 @@ export class AuthService {
   }
 
   getUsers() {
-    let headers = new Headers();
+    const headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('content-type', 'application/json');
@@ -67,7 +67,7 @@ export class AuthService {
   }
 
   deleteUser(user) {
-    let headers = new Headers();
+    const headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('content-type', 'application/json');
@@ -77,7 +77,7 @@ export class AuthService {
   }
 
   updateUser(user) {
-    let headers = new Headers();
+    const headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('content-type', 'application/json');
@@ -87,7 +87,7 @@ export class AuthService {
   }
 
   deleteUnidad(unidad) {
-    let headers = new Headers();
+    const headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('content-type', 'application/json');
@@ -97,7 +97,7 @@ export class AuthService {
   }
 
   updateUnidad(unidad) {
-    let headers = new Headers();
+    const headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('content-type', 'application/json');
@@ -107,14 +107,14 @@ export class AuthService {
   }
 
   newUnidad(unidad) {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('content-type', 'application/json');
     return this.http.post('http://localhost:3000/unidades/nuevaUnidad', unidad, {headers: headers})
       .map(res => res.json());
   }
 
   getUnidades() {
-    let headers = new Headers();
+    const headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('content-type', 'application/json');
@@ -123,7 +123,7 @@ export class AuthService {
   }
 
   deleteCliente(cliente) {
-    let headers = new Headers();
+    const headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('content-type', 'application/json');
@@ -133,7 +133,7 @@ export class AuthService {
   }
 
   updateCliente(cliente) {
-    let headers = new Headers();
+    const headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('content-type', 'application/json');
@@ -143,18 +143,55 @@ export class AuthService {
   }
 
   newCliente(cliente) {
-    let headers = new Headers();
+    const headers = new Headers();
     headers.append('content-type', 'application/json');
     return this.http.post('http://localhost:3000/clientes/nuevoCliente', cliente, {headers: headers})
       .map(res => res.json());
   }
 
   getClientes() {
-    let headers = new Headers();
+    const headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('content-type', 'application/json');
     return this.http.get('http://localhost:3000/clientes/clientes', {headers: headers})
+      .map(res => res.json());
+  }
+
+
+  deleteEstado(estado) {
+    const headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    return this.http.put('http://localhost:3000/estados/deleteEstado', estado , {headers: headers})
+      .map(res => res.json());
+
+  }
+
+  updateEstado(estado) {
+    const headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    return this.http.put('http://localhost:3000/estados/updateEstado', estado , {headers: headers})
+      .map(res => res.json());
+
+  }
+
+  newEstado(estado) {
+    const headers = new Headers();
+    headers.append('content-type', 'application/json');
+    return this.http.post('http://localhost:3000/estados/nuevoEstado', estado, {headers: headers})
+      .map(res => res.json());
+  }
+
+  getEstados() {
+    const headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    return this.http.get('http://localhost:3000/estados/estados', {headers: headers})
       .map(res => res.json());
   }
 

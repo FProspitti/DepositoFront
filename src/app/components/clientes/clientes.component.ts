@@ -5,6 +5,7 @@ import {FlashMessagesService} from "angular2-flash-messages";
 import {Router} from "@angular/router";
 import {MessageService} from 'primeng/api';
 
+
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html',
@@ -31,9 +32,9 @@ export class ClientesComponent implements OnInit {
   ngOnInit() {
     this.cargarTabla();
     this.items = [
-      {label: 'Nuevo', icon: 'fa-plus', command: (event) => this.showDialogToAdd()},
-      {label: 'Actualizar', icon: 'fa-download', command: (event) => this.updateClienteContext(this.selectedCliente)},
-      {label: 'Borrar', icon: 'fa-trash', command: (event) => this.deleteClienteContext(this.selectedCliente)}
+      {label: 'Nuevo', icon: 'fa fa-plus', command: (event) => this.showDialogToAdd()},
+      {label: 'Actualizar', icon: 'fa fa-download', command: (event) => this.updateClienteContext(this.selectedCliente)},
+      {label: 'Borrar', icon: 'fa fa-trash', command: (event) => this.deleteClienteContext(this.selectedCliente)}
     ];
   }
 
@@ -48,9 +49,9 @@ export class ClientesComponent implements OnInit {
     if (this.newCliente) {
       this.authService.newCliente(this.cliente).subscribe(data => {
         if (data.success) {
-          this.messageService.add({severity:'success', summary:'Service Message', detail:'Via MessageService'});
+          this.messageService.add({severity:'success', summary:'Cliente', detail:'Registrado correctamente'});
         } else {
-          this.flashMessages.show('No se pudo registrar el cliente', {cssClass: 'alert-danger', timeout: 4000})
+          this.messageService.add({severity:'error', summary:'Cliente', detail:'Error al registrar'});
         }
       });
       this.cliente = null;
@@ -59,9 +60,9 @@ export class ClientesComponent implements OnInit {
     } else {
       this.authService.updateCliente(this.cliente).subscribe(data => {
         if (data.success) {
-          this.flashMessages.show('Se actualizo el cliente correctamente', {cssClass: 'alert-success', timeout: 4000})
+          this.messageService.add({severity:'success', summary:'Cliente', detail:'Actualizado correctamente'});
         } else {
-          this.flashMessages.show('No se pudo actualizar el cliente', {cssClass: 'alert-danger', timeout: 4000})
+          this.messageService.add({severity:'error', summary:'Cliente', detail:'Error al actualizar'});
         }
       });
       this.cliente = null;
@@ -73,9 +74,9 @@ export class ClientesComponent implements OnInit {
   delete() {
     this.authService.deleteCliente(this.cliente).subscribe(data => {
       if (data.success) {
-        this.flashMessages.show('Se borro el cliente correctamente', {cssClass: 'alert-success', timeout: 4000})
+        this.messageService.add({severity:'success', summary:'Cliente', detail:'Eliminado correctamente'});
       } else {
-        this.flashMessages.show('No se pudo borrar el cliente', {cssClass: 'alert-danger', timeout: 4000})
+        this.messageService.add({severity:'error', summary:'Cliente', detail:'Error al eliminar'});
       }
       this.cliente = null;
       this.displayDialogDelete = false;
