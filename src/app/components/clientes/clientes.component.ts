@@ -141,7 +141,4 @@ export class ClientesComponent implements OnInit {
       return false;
     });
   }
-
-
-
 }
