@@ -34,6 +34,7 @@ import { NuevoComponent } from './components/nuevo/nuevo.component';
 import {PanelModule} from 'primeng/panel';
 import { NuevoMovimientoComponent } from './components/movimientos/nuevo-movimiento/nuevo-movimiento.component';
 import {CalendarModule} from 'primeng/calendar';
+import {TableModule} from 'primeng/table';
 
 
 const  appRoutes: Routes = [
@@ -85,7 +86,8 @@ const  appRoutes: Routes = [
     ContextMenuModule,
     AngularFontAwesomeModule,
     NgbModule.forRoot(),
-    CalendarModule
+    CalendarModule,
+    TableModule
 
   ],
   providers: [ValidateService,AuthService, AuthGuard],

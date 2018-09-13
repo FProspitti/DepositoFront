@@ -1,19 +1,44 @@
 <br/>
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
-<p-dataTable  [value]="estados" selectionMode="single" [(selection)]="selectedEstados" (onRowDblclick)="onRowSelect($event)"  [contextMenu]="cm"  [paginator]="true" rows="15" [responsive]="true">
-  <p-header>Estados</p-header>
-  <p-column field="nombre" header="Nombre" [filter]="true" ></p-column>
-  <p-column field="fechaAlta" header="Fecha Alta">
-    <ng-template let-row="rowData" pTemplate="body">
-      {{row.fechaAlta | date:'MM/dd/yyyy'}}
-    </ng-template>
-  </p-column>
-  <p-footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton  icon="fa fa-plus" style="float:left" (click)="showDialogToAdd()" label="Nuevo"></button></div></p-footer>
-</p-dataTable>
+<!--<p-dataTable  [value]="estados" selectionMode="single" [(selection)]="selectedEstados" (onRowDblclick)="onRowSelect($event)"  [contextMenu]="cm"  [paginator]="true" rows="15" [responsive]="true">-->
+  <!--<p-header>Estados</p-header>-->
+  <!--<p-column field="nombre" header="Nombre" [filter]="true" ></p-column>-->
+  <!--<p-column field="fechaAlta" header="Fecha Alta">-->
+    <!--<ng-template let-row="rowData" pTemplate="body">-->
+      <!--{{row.fechaAlta | date:'MM/dd/yyyy'}}-->
+    <!--</ng-template>-->
+  <!--</p-column>-->
+  <!--<p-footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton  icon="fa fa-plus" style="float:left" (click)="showDialogToAdd()" label="Nuevo"></button></div></p-footer>-->
+<!--</p-dataTable>-->
 
-<p-contextMenu #cm [model]="items">
-  <label for="nombre">Nombre</label>
-</p-contextMenu>
+
+<p-table [columns]="cols" [value]="estados" selectionMode="single" [(contextMenuSelection)]="selectedEstado" (onRowDblclick)="onRowSelect($event)" [contextMenu]="cm" [responsive]="true" [paginator]="true" [rows]="15">
+  <ng-template pTemplate="caption">
+    Estados
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pContextMenuRow]="rowData">
+      <td *ngFor="let col of columns">
+        {{rowData[col.field]}}
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="summary" let-rowData>
+    <div style="text-align:left">
+      <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Add"></button>
+    </div>
+  </ng-template>
+</p-table>
+
+<p-contextMenu #cm [model]="items"></p-contextMenu>
 
 <p-dialog header="Estado" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="450">
   <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="estado">
@@ -25,12 +50,8 @@
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
       <button type="button" class="ui-button-danger" pButton icon="fa  fa-close" (click)="cerrarDialog()" label="Cancelar"></button>
-      <button pButton type="button" label="Warning" class="ui-button-warning"></button>
-      <button pButton type="button" label="Danger" class="btn btn-danger"></button>
       <button type="button" pButton icon="fa  fa-check" (click)="save()" label="Guardar"></button>
     </div>
-    <button pButton type="button" label="Warning" class="ui-button-warning"></button>
-    <button pButton type="button" label="Danger" style="background: #FC466B;border-color: #FC466B;" class="btn btn-danger"></button>
   </p-footer>
 </p-dialog>
 
@@ -49,3 +70,4 @@
     </div>
   </p-footer>
 </p-dialog>
+
