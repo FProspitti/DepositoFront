@@ -6,6 +6,7 @@ import {FlashMessagesService} from 'angular2-flash-messages';
 import {MenuItem} from '../../../../../node_modules/primeng/primeng';
 import {SelectItem} from 'primeng/api';
 
+
 @Component({
   selector: 'app-nuevo-movimiento',
   templateUrl: './nuevo-movimiento.component.html',
@@ -17,12 +18,13 @@ export class NuevoMovimientoComponent implements OnInit {
   movimientos: Object[];
   clientes: SelectItem[];
 
-  selectedMovimiento: Object;
+  selectedCliente: Object;
   movimiento: Object = new Object();
   newMovimiento: boolean;
   displayDialog: boolean;
   displayDialogDelete: boolean;
   items : MenuItem[];
+  value : Date;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -30,18 +32,7 @@ export class NuevoMovimientoComponent implements OnInit {
               private messageService: MessageService) {
 
 
-    this.clientes = [
-      {label: 'Audi', value: 'Audi'},
-      {label: 'BMW', value: 'BMW'},
-      {label: 'Fiat', value: 'Fiat'},
-      {label: 'Ford', value: 'Ford'},
-      {label: 'Honda', value: 'Honda'},
-      {label: 'Jaguar', value: 'Jaguar'},
-      {label: 'Mercedes', value: 'Mercedes'},
-      {label: 'Renault', value: 'Renault'},
-      {label: 'VW', value: 'VW'},
-      {label: 'Volvo', value: 'Volvo'},
-    ];
+    this.traerClientes();
 
   }
   ngOnInit() {
@@ -49,14 +40,31 @@ export class NuevoMovimientoComponent implements OnInit {
   }
 
   save() {
-    this.movimiento = new Object();
-      this.authService.newMovimiento(this.movimiento).subscribe(data => {
+    // this.movimiento = new Object();
+    // const movimient = this.movimiento;
+
+    var movimient = new Object();
+    movimient = {
+      cliente : this.selectedCliente
+    };
+
+      this.authService.newMovimiento(movimient).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity:'success', summary:'Estado', detail:'Registrado correctamente'});
         } else {
           this.messageService.add({severity:'error', summary:'Estado', detail:'Error al registrar'});
         }
       });
+  }
+
+  traerClientes() {
+    this.authService.getClientes().subscribe(clientes => {
+      this.clientes = clientes;
+
+    }, err => {
+      console.log(err);
+      return false;
+    });
   }
 
 }

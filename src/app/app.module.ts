@@ -33,10 +33,11 @@ import { ConsultasComponent } from './components/consultas/consultas.component';
 import { NuevoComponent } from './components/nuevo/nuevo.component';
 import {PanelModule} from 'primeng/panel';
 import { NuevoMovimientoComponent } from './components/movimientos/nuevo-movimiento/nuevo-movimiento.component';
+import {CalendarModule} from 'primeng/calendar';
 
 
 const  appRoutes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', component: DashboardComponent, canActivate:[AuthGuard]},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
@@ -83,7 +84,8 @@ const  appRoutes: Routes = [
     ButtonModule,
     ContextMenuModule,
     AngularFontAwesomeModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    CalendarModule
 
   ],
   providers: [ValidateService,AuthService, AuthGuard],

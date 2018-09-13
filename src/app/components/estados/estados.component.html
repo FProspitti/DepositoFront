@@ -24,9 +24,13 @@
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" pButton icon="fa  fa-close" (click)="cerrarDialog()" label="Cancelar"></button>
+      <button type="button" class="ui-button-danger" pButton icon="fa  fa-close" (click)="cerrarDialog()" label="Cancelar"></button>
+      <button pButton type="button" label="Warning" class="ui-button-warning"></button>
+      <button pButton type="button" label="Danger" class="btn btn-danger"></button>
       <button type="button" pButton icon="fa  fa-check" (click)="save()" label="Guardar"></button>
     </div>
+    <button pButton type="button" label="Warning" class="ui-button-warning"></button>
+    <button pButton type="button" label="Danger" style="background: #FC466B;border-color: #FC466B;" class="btn btn-danger"></button>
   </p-footer>
 </p-dialog>
 
