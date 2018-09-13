@@ -20,7 +20,8 @@ export class EstadosComponent implements OnInit {
   newEstado: boolean;
   displayDialog: boolean;
   displayDialogDelete: boolean;
-  items : MenuItem[];
+  items: MenuItem[];
+  cols: any[];
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -35,7 +36,14 @@ export class EstadosComponent implements OnInit {
       {label: 'Nuevo', icon: 'fa fa-plus', command: (event) => this.showDialogToAdd()},
       {label: 'Actualizar', icon: 'fa fa-download', command: (event) => this.updateEstadoContext(this.selectedEstado)},
       {label: 'Borrar', icon: 'fa fa-trash', command: (event) => this.deleteEstadoContext(this.selectedEstado)}
+
     ];
+
+    this.cols = [
+      { field: 'nombre', header: 'Nombre' },
+      { field: 'fechaAlta', header: 'Fecha Alta' }
+    ];
+
   }
 
 
