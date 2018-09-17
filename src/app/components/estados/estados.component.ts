@@ -12,10 +12,11 @@ import {MenuItem} from 'primeng/primeng';
   providers: [MessageService]
 })
 
-export class EstadosComponent implements OnInit {
+export class EstadosComponent implements OnInit{
 
   estados: Object[];
   selectedEstado: Object;
+  selectedEstado1: Object;
   estado: Object = new Object();
   newEstado: boolean;
   displayDialog: boolean;
@@ -23,10 +24,12 @@ export class EstadosComponent implements OnInit {
   items: MenuItem[];
   cols: any[];
 
+
   constructor(private authService: AuthService,
               private router: Router,
               private flashMessages: FlashMessagesService,
-              private messageService: MessageService) {
+              private messageService: MessageService
+             ) {
 
   }
 
@@ -41,7 +44,7 @@ export class EstadosComponent implements OnInit {
 
     this.cols = [
       { field: 'nombre', header: 'Nombre' },
-      { field: 'fechaAlta', header: 'Fecha Alta' }
+      { field: 'fechaAlta', header: 'Fecha Alta'}
     ];
 
   }
@@ -144,12 +147,10 @@ export class EstadosComponent implements OnInit {
     this.authService.getEstados().subscribe(estados => {
       this.estados = estados;
 
-    }, err => {
+   }, err => {
       console.log(err);
       return false;
     });
   }
-
-
 
 }

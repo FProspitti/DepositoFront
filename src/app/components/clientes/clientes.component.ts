@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {MenuItem} from "primeng/primeng";
-import {AuthService} from "../../services/auth.service";
-import {FlashMessagesService} from "angular2-flash-messages";
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 import {MessageService} from 'primeng/api';
+import {FlashMessagesService} from 'angular2-flash-messages';
+import {AuthService} from '../../services/auth.service';
+import {MenuItem} from 'primeng/primeng';
+
 
 
 @Component({
@@ -16,11 +17,13 @@ export class ClientesComponent implements OnInit {
 
   clientes: Object[];
   selectedCliente: Object;
+  selectedCliente1: Object;
   cliente: Object = new Object();
   newCliente: boolean;
   displayDialog: boolean;
   displayDialogDelete: boolean;
   items : MenuItem[];
+  cols: any[];
 
   constructor(private authService: AuthService,
   private router: Router,
@@ -36,6 +39,12 @@ export class ClientesComponent implements OnInit {
       {label: 'Actualizar', icon: 'fa fa-download', command: (event) => this.updateClienteContext(this.selectedCliente)},
       {label: 'Borrar', icon: 'fa fa-trash', command: (event) => this.deleteClienteContext(this.selectedCliente)}
     ];
+
+    this.cols = [
+      { field: 'nombre', header: 'Nombre' },
+      { field: 'fechaAlta', header: 'Fecha Alta'}
+    ];
+
   }
 
 

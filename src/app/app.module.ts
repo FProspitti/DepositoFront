@@ -32,9 +32,12 @@ import { EstadosComponent } from './components/estados/estados.component';
 import { ConsultasComponent } from './components/consultas/consultas.component';
 import { NuevoComponent } from './components/nuevo/nuevo.component';
 import {PanelModule} from 'primeng/panel';
-import { NuevoMovimientoComponent } from './components/movimientos/nuevo-movimiento/nuevo-movimiento.component';
+import { MovimientosComponent } from './components/movimientos/movimientos.component';
 import {CalendarModule} from 'primeng/calendar';
 import {TableModule} from 'primeng/table';
+import { ConsultaMovimientoComponent } from './components/movimientos/consulta-movimiento/consulta-movimiento.component';
+import { EntradaSalidaMovimientoComponent } from './components/movimientos/entrada-salida-movimiento/entrada-salida-movimiento.component';
+import {NuevoMovimientoComponent} from './components/movimientos/nuevo-movimiento/nuevo-movimiento.component';
 
 
 const  appRoutes: Routes = [
@@ -44,12 +47,12 @@ const  appRoutes: Routes = [
   {path: 'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
   {path: 'users', component: UsersComponent, canActivate:[AuthGuard]},
   {path: 'profile', component: ProfileComponent, canActivate:[AuthGuard]},
-  {path: 'unidades', component: UnidadesComponent, canActivate:[AuthGuard]},
+  {path: 'entradaSalida', component: EntradaSalidaMovimientoComponent, canActivate:[AuthGuard]},
   {path: 'clientes', component: ClientesComponent, canActivate:[AuthGuard]},
   {path: 'estados', component: EstadosComponent, canActivate:[AuthGuard]},
   {path: 'consultas', component: ConsultasComponent, canActivate:[AuthGuard]},
-  {path: 'nuevo', component: NuevoComponent, canActivate:[AuthGuard]},
-  {path: 'nuevoMovimiento', component: NuevoMovimientoComponent, canActivate:[AuthGuard]}
+  {path: 'consultaMovimiento', component: ConsultaMovimientoComponent, canActivate:[AuthGuard]},
+  {path: 'nuevoMovimiento', component: NuevoMovimientoComponent, canActivate:[AuthGuard]},
 ];
 
 @NgModule({
@@ -67,6 +70,9 @@ const  appRoutes: Routes = [
     EstadosComponent,
     ConsultasComponent,
     NuevoComponent,
+    MovimientosComponent,
+    ConsultaMovimientoComponent,
+    EntradaSalidaMovimientoComponent,
     NuevoMovimientoComponent
   ],
   imports: [

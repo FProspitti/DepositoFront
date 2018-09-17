@@ -1,36 +1,49 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../../services/auth.service";
-import {Router} from "@angular/router";
-import {FlashMessagesService} from "angular2-flash-messages";
-import {MenuItem} from "primeng/primeng";
+import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
+import {MessageService} from 'primeng/api';
+import {FlashMessagesService} from 'angular2-flash-messages';
+import {AuthService} from '../../services/auth.service';
+import {MenuItem} from 'primeng/primeng';
+
 
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
+  providers: [MessageService]
 })
 export class UsersComponent implements OnInit {
 
   usuarios: Object[];
   selectedUser: Object;
+  selectedUser1: Object;
   user: Object = new Object();
   newUser: boolean;
   displayDialog: boolean;
+  displayDialogDelete: boolean;
   items : MenuItem[];
+   cols: any[];
 
   constructor(private authService: AuthService,
               private router: Router,
-              private flashMessages: FlashMessagesService) {
+              private flashMessages: FlashMessagesService,
+              private messageService: MessageService) {
   }
 
   ngOnInit() {
     this.cargarTabla();
     this.items = [
-      {label: 'Agregar', icon: 'fa-plus', command: (event) => this.showDialogToAdd()},
-      {label: 'Actualizar', icon: 'fa-download', command: (event) => this.updateUserContext(this.selectedUser)},
-      {label: 'Borrar', icon: 'fa-download'},
-      {label: 'Actualizar pass', icon: 'fa-refresh'}
+      {label: 'Agregar', icon: 'fa fa-plus', command: (event) => this.showDialogToAdd()},
+      {label: 'Actualizar', icon: 'fa fa-download', command: (event) => this.updateUserContext(this.selectedUser)},
+      {label: 'Borrar', icon: 'fa fa-trash', command: (event) => this.deleteUsuarioContext(this.selectedUser)},
+      {label: 'Actualizar pass', icon: 'fa fa-refresh'}
+    ];
+
+    this.cols = [
+      { field: 'name', header: 'Nombre' },
+      { field: 'email', header: 'Email' },
+      { field: 'username', header: 'Nombre Usuario' }
     ];
   }
 
@@ -44,9 +57,9 @@ export class UsersComponent implements OnInit {
     if (this.newUser) {
       this.authService.registerUser(this.user).subscribe(data => {
         if (data.success) {
-          this.flashMessages.show('Se registro el usuario correctamente', {cssClass: 'alert-success', timeout: 4000})
+          this.messageService.add({severity:'success', summary:'Usuario', detail:'Registrado correctamente'});
         } else {
-          this.flashMessages.show('No se pudo registrar el usuario', {cssClass: 'alert-danger', timeout: 4000})
+          this.messageService.add({severity:'error', summary:'Usuario', detail:'Error al registrar'});
         }
       });
       this.user = null;
@@ -55,9 +68,9 @@ export class UsersComponent implements OnInit {
     } else {
       this.authService.updateUser(this.user).subscribe(data => {
         if (data.success) {
-          this.flashMessages.show('Se actualizo el usuario correctamente', {cssClass: 'alert-success', timeout: 4000})
+          this.messageService.add({severity:'success', summary:'Usuario', detail:'Actualizado correctamente'});
         } else {
-          this.flashMessages.show('No se pudo borrar el usuario', {cssClass: 'alert-danger', timeout: 4000})
+          this.messageService.add({severity:'error', summary:'Usuario', detail:'Error al actualizar'});
         }
       });
       this.user = null;
@@ -69,12 +82,13 @@ export class UsersComponent implements OnInit {
   delete() {
     this.authService.deleteUser(this.user).subscribe(data => {
       if (data.success) {
-        this.flashMessages.show('Se borro el usuario correctamente', {cssClass: 'alert-success', timeout: 4000})
+        this.messageService.add({severity:'success', summary:'Usuario', detail:'Borrado correctamente'});
       } else {
-        this.flashMessages.show('No se pudo borrar el usuario', {cssClass: 'alert-danger', timeout: 4000})
+        this.messageService.add({severity:'error', summary:'Usuario', detail:'Error al borrar'});
       }
       this.user = null;
       this.displayDialog = false;
+      this.displayDialogDelete = false;
       this.cargarTabla();
     });
   }
@@ -104,6 +118,13 @@ export class UsersComponent implements OnInit {
     return this.usuarios.indexOf(this.selectedUser);
   }
 
+  deleteUsuarioContext(user: Object) {
+    this.user = user;
+    this.newUser = false;
+    this.displayDialogDelete = true;
+  }
+
+
   cargarTabla() {
     this.authService.getUsers().subscribe(usuarios => {
       this.usuarios = usuarios;
@@ -112,6 +133,14 @@ export class UsersComponent implements OnInit {
       console.log(err);
       return false;
     });
+  }
+
+  cerrarDelete() {
+
+    this.user = null;
+    this.displayDialogDelete = false;
+    this.cargarTabla();
+
   }
 
 }

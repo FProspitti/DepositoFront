@@ -1,16 +1,45 @@
-<p-dataTable [value]="usuarios" selectionMode="single" [(selection)]="selectedUser" (onRowDblclick)="onRowSelect($event)"  [contextMenu]="cm"  [paginator]="true" rows="15" [responsive]="true">
-  <p-header>Usuarios</p-header>
-  <p-column field="name" header="Nombre" [filter]="true" ></p-column>
-  <p-column field="email" header="Email"></p-column>
-  <p-column field="username" header="Nombre usuario" [sortable]="true"></p-column>
-  <p-footer><div class="ui-helper-clearfix" style="width:100%"><button type="button" pButton icon="fa-plus" style="float:left" (click)="showDialogToAdd()" label="Add"></button></div></p-footer>
-</p-dataTable>
-<p-contextMenu #cm [model]="items">
-  <label for="name">Nombre</label>
+<br/>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-table #dt [columns]="cols" [value]="usuarios" selectionMode="single" [(contextMenuSelection)]="selectedUser" [(selection)]="selectedUser1"
+         dataKey="name" (onRowDblclick)="onRowSelect($event)" [contextMenu]="cm" [responsive]="true" [paginator]="true" [rows]="15">
+  <ng-template pTemplate="caption">
+    <div>
+      Usuarios
+    </div>
+    <div class="ui-helper-clearfix">
+      <button type="button" pButton icon="fa fa-file-o" iconPos="left" label="Exportar" (click)="dt.exportCSV()" style="float:right"></button>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+    </tr>
+    <tr>
+      <th *ngFor="let col of columns" [ngSwitch]="col.field">
+        <input *ngSwitchCase="'name'" pInputText type="text" style="width: 100%;" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr [pContextMenuRow]="rowData">
+      <td *ngFor="let col of columns">
+        {{rowData[col.field]}}
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="summary" let-rowData>
+    <div style="text-align:left">
+      <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Nuevo"></button>
+    </div>
+  </ng-template>
+</p-table>
 
-</p-contextMenu>
+<p-contextMenu #cm [model]="items"></p-contextMenu>
 
-<p-dialog header="Usuario" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true">
+<p-dialog header="Usuario" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" [width]="450">
   <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="user">
     <div class="ui-grid-row">
       <div class="ui-grid-col-4"><label for="name">Nombre</label></div>
@@ -31,8 +60,30 @@
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" pButton icon="fa-close" (click)="delete()" label="Borrar"></button>
-      <button type="button" pButton icon="fa-check" (click)="save()" label="Guardar"></button>
+      <button type="button" class="ui-button-danger" pButton icon="fa  fa-close" (click)="cerrarDialog()" label="Cancelar"></button>
+      <button type="button" class="ui-button-success" pButton icon="fa  fa-check" (click)="save()" label="Guardar"></button>
     </div>
   </p-footer>
 </p-dialog>
+
+
+<p-dialog header="Usuario" [(visible)]="displayDialogDelete" [responsive]="true" showEffect="fade" [modal]="true" [width]="450">
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="user">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="name">Nombre</label></div>
+      <div class="ui-grid-col-8"><input disabled pInputText id="nombreDelete" [(ngModel)]="user.name" /></div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" class="ui-button-danger" pButton icon="fa  fa-close" (click)="cerrarDelete()" label="Cancelar"></button>
+      <button type="button" class="ui-button-success" pButton icon="fa  fa-check" (click)="delete()" label="Borrar"></button>
+    </div>
+  </p-footer>
+</p-dialog>
+
+
+
+
+
+
