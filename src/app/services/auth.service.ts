@@ -196,14 +196,22 @@ export class AuthService {
   }
 
   newMovimiento(movimiento) {
-    // const movimiento1 = movimiento;
-    // this.movimiento1{
-    //   cliente: cliente
-    // };
     const headers = new Headers();
     headers.append('content-type', 'application/json');
     return this.http.post('http://localhost:3000/movimientos/nuevoMovimiento', movimiento, {headers: headers})
       .map(res => res.json());
+  }
+
+  getMovimiento(id) {
+    const headers = new Headers();
+    // this.loadToken();
+    // headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    const params = new URLSearchParams();
+    params.append('idFede', id)
+    return this.http.get('http://localhost:3000/movimientos/getMovimiento', {headers: headers, search: params })
+      .map(res => res.json());
+
   }
 
 

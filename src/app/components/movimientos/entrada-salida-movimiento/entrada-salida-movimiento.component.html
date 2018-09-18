@@ -1,3 +1,58 @@
-<p>
-  entrada-salida-movimiento works!
-</p>
+
+<br/>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+<p-panel>
+  <p-header>
+    <div class="ui-helper-clearfix">
+      <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">Entrada-Salida</span>
+    </div>
+  </p-header>
+
+  <div class="ui-grid ui-grid-responsive ui-fluid">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2"><label>ID</label></div>
+      <div class="ui-grid-col-8"><input style="width: 50%;" pInputText [(ngModel)]="id"/></div>
+    </div>
+    <br/>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2"><label></label></div>
+      <div class="ui-grid-col-8">
+        <p-dropdown disabled  [style]="{'width':'50%'}" [options]="clientes" [(ngModel)]="selectedCliente" placeholder="Selecionar cliente" optionLabel="nombre" [showClear]="true" ></p-dropdown>
+      </div>
+    </div>
+    <br/>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2"><label>Caracteristica 1</label></div>
+      <div class="ui-grid-col-8"><input disabled style="width: 50%;" pInputText [(ngModel)]="carac"/></div>
+    </div>
+    <br/>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2"><label>Caracteristica 2</label></div>
+      <div class="ui-grid-col-8"><input disabled style="width: 50%;" pInputText [(ngModel)]="carac1"/></div>
+    </div>
+    <br/>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2"><label>Caracteristica 3</label></div>
+      <div class="ui-grid-col-8"><input  disabled style="width: 50%;" pInputText [(ngModel)]="carac2"/></div>
+    </div>
+    <br/>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2"><label></label></div>
+      <div class="ui-grid-col-8">
+        <p-dropdown [options]="estados" [style]="{'width':'50%'}" [(ngModel)]="selectedEstado" placeholder="Selecionar estado" optionLabel="nombre" [showClear]="true"></p-dropdown>
+      </div>
+    </div>
+    <br/>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-2"><label>Fecha ingreso</label></div>
+      <div class="ui-grid-col-8">
+        <p-calendar [style]="{'width':'50%'}"   dateFormat="dd/mm/yy"  [(ngModel)]="fechaIngreso" [locale]="es" [showIcon]="true"></p-calendar>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-helper-clearfix">
+      <button pButton type="button" icon="pi pi-check" label="Ingresar" (click)="buscarMovimiento()" class="ui-button-success" style="margin-right: .25em; float: right;"></button>
+    </div>
+  </p-footer>
+</p-panel>

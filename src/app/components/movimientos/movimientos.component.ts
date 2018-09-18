@@ -32,10 +32,10 @@ export class MovimientosComponent implements OnInit {
   carac2: string;
 
 
-  constructor(private authService: AuthService,
-              private router: Router,
-              private flashMessages: FlashMessagesService,
-              private messageService: MessageService) {
+  constructor(public authService: AuthService,
+              public router: Router,
+              public flashMessages: FlashMessagesService,
+              public messageService: MessageService) {
 
 
     this.traerClientes();
