@@ -10,10 +10,10 @@ import {MessageService} from 'primeng/api';
 export class ConsultaMovimientoComponent extends MovimientosComponent implements OnInit {
 
   cols: any[];
+  Cliente: object;
 
   ngOnInit() {
 
-    // this.cargarTabla();
     this.es = {
       firstDayOfWeek: 1,
       dayNames: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
@@ -34,25 +34,43 @@ export class ConsultaMovimientoComponent extends MovimientosComponent implements
       { field: 'fechaAlta', header: 'Fecha Alta'}
     ];
 
+    this.Cliente = ({
+
+      nombre : {
+        type: String,
+        required: true
+      },
+      fechaAlta: {
+        type: Date,
+      },
+      baja: {
+        type: Boolean,
+      },
+      fechaBaja: {
+        type: Date,
+      }
+
+    });
+
   }
 
   buscarMovimientos() {
 
+    debugger;
+
+    let clien = this.Cliente;
+    clien = this.selectedCliente;
+
+
     const movimientoFiltro = new Object({
-      cliente: 'asd',
-      estado: 'asdasd',
+      cliente : clien,
+      estado : this.selectedEstado,
       fechaDesde: 'adasdasd',
       fechaHasta: 'sdfsdf'
     });
 
-    this.authService.getMovimientos(movimientoFiltro).subscribe(movimientos => {
-      this.movimientos = movimientos;
-
-    }, err => {
-      console.log(err);
-      return false;
+    this.authService.getMovimientos1(movimientoFiltro).subscribe(data => {
+      this.movimientos = data;
     });
   }
-
-
 }

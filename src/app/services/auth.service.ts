@@ -1,15 +1,20 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers} from "@angular/http";
-// import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import {Http, Headers} from '@angular/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import 'rxjs/add/operator/map';
-import {tokenNotExpired} from "angular2-jwt";
+import {tokenNotExpired} from 'angular2-jwt';
+import {HttpParamsOptions} from '../../../node_modules/@angular/common/http/src/params';
+
+
+
 
 @Injectable()
 export class AuthService {
   authToken: any;
   user: any;
 
-  constructor(private http: Http) {
+  constructor(private http: Http,
+              private httpClient: HttpClient) {
  }
 
   registerUser(user) {
@@ -240,6 +245,19 @@ export class AuthService {
     return this.http.get('http://localhost:3000/movimientos/movimientos/'+dCliente , {headers: headers})
       .map(res => res.json());
 
+  }
+
+  getMovimientos1(movimientoFiltro) {
+    this.loadToken();
+    const headers = new HttpHeaders().set( 'Content-Type', 'application/json').set( 'Authorization', this.authToken);
+
+    // const object1: any = { idMov: 1, cliente: 'asdasdasd', estado: 'sdfsdf'};
+    const httpParams: HttpParamsOptions = { fromObject: movimientoFiltro } as HttpParamsOptions;
+
+    const options = { params: new HttpParams(httpParams), headers: headers };
+
+    return this.httpClient.get<any>('http://localhost:3000/movimientos/movimientos', options)
+      .map(res => res);
   }
 
 
