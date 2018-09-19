@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from "@angular/http";
+// import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import {tokenNotExpired} from "angular2-jwt";
 
@@ -9,14 +10,13 @@ export class AuthService {
   user: any;
 
   constructor(private http: Http) {
-  }
-
+ }
 
   registerUser(user) {
     const headers = new Headers();
     headers.append('content-type', 'application/json');
     return this.http.post('http://localhost:3000/users/register', user, {headers: headers})
-      .map(res => res.json());
+  .map(res => res.json());
   }
 
   authenticateUser(user) {
@@ -207,9 +207,37 @@ export class AuthService {
     // this.loadToken();
     // headers.append('Authorization', this.authToken);
     headers.append('content-type', 'application/json');
-    const params = new URLSearchParams();
-    params.append('idFede', id)
-    return this.http.get('http://localhost:3000/movimientos/getMovimiento', {headers: headers, search: params })
+    return this.http.get('http://localhost:3000/movimientos/getMovimiento/'+id , {headers: headers})
+      .map(res => res.json());
+
+  }
+
+  getCliente(id) {
+    const headers = new Headers();
+    // this.loadToken();
+    // headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    return this.http.get('http://localhost:3000/clientes/getCliente/'+id , {headers: headers})
+      .map(res => res.json());
+
+  }
+
+  getEstado(id) {
+    const headers = new Headers();
+    // this.loadToken();
+    // headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    return this.http.get('http://localhost:3000/estados/getEstado/'+id , {headers: headers})
+      .map(res => res.json());
+
+  }
+
+  getMovimientos(dCliente) {
+    const headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    return this.http.get('http://localhost:3000/movimientos/movimientos/'+dCliente , {headers: headers})
       .map(res => res.json());
 
   }

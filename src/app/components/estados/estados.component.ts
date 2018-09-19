@@ -134,7 +134,7 @@ export class EstadosComponent implements OnInit{
   }
 
   deleteEstadoContext(estado: Object) {
-    this.estado=estado;
+    this.estado = estado;
     this.newEstado = false;
     this.displayDialogDelete = true;
   }

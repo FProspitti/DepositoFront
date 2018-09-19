@@ -1,3 +1,76 @@
-<p>
-  consulta-movimiento works!
-</p>
+<br/>
+<p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+
+<p-panel>
+  <p-header>
+    <div class="ui-helper-clearfix">
+      <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">Movimientos</span>
+    </div>
+  </p-header>
+   <div class="ui-grid ui-grid-responsive ui-fluid">
+
+     <div class="ui-grid-row">
+       <div class="ui-grid-col-2"><label>Buscar por:</label></div>
+       <div class="ui-grid-col-6">
+         <p-dropdown  [style]="{'width':'50%'}" [options]="clientes" [(ngModel)]="selectedCliente" placeholder="Selecionar cliente" optionLabel="nombre" [showClear]="true" ></p-dropdown>
+       </div>
+     </div>
+
+     <br/>
+     <div class="ui-grid-row">
+       <div class="ui-grid-col-2"><label>Buscar por:</label></div>
+       <div class="ui-grid-col-6">
+         <p-dropdown [options]="estados" [style]="{'width':'50%'}" [(ngModel)]="selectedEstado" placeholder="Selecionar estado" optionLabel="nombre" [showClear]="true"></p-dropdown>
+       </div>
+     </div>
+     <br/>
+
+     <div class="ui-grid-row">
+       <div class="ui-grid-col-2"><label>Fecha desde</label></div>
+       <div class="ui-grid-col-6" style="width: 30%;">
+         <p-calendar [style]="{'width':'30%'}"   dateFormat="dd/mm/yy"  [(ngModel)]="fechaIngreso" [locale]="es" [showIcon]="true"></p-calendar>
+       </div>
+       <div class="ui-grid-col-2"><label>Fecha hasta</label></div>
+       <div class="ui-grid-col-6" style="width: 30%;">
+         <p-calendar [style]="{'width':'30%'}"   dateFormat="dd/mm/yy"  [(ngModel)]="fechaIngreso" [locale]="es" [showIcon]="true"></p-calendar>
+       </div>
+     </div>
+     <br/>
+
+     <div class="ui-grid-row"  style="float:right">
+       <div class="ui-helper-clearfix">
+        <button type="button"  pButton icon="fa fa-search" (click)="buscarMovimientos()" label="Buscar"></button>
+       </div>
+       <hr>
+     </div>
+
+
+       <br/>
+       <hr>
+     <p-table #dt [columns]="cols" [value]="movimientos" selectionMode="single"
+              dataKey="nombre"  [responsive]="true" [paginator]="true" [rows]="15">
+       <ng-template pTemplate="caption">
+         <div class="ui-helper-clearfix">
+           <button type="button" pButton icon="fa fa-file-o" iconPos="left" label="Exportar" (click)="dt.exportCSV()" style="float:right"></button>
+         </div>
+       </ng-template>
+       <ng-template pTemplate="header" let-columns>
+         <tr>
+           <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+             {{col.header}}
+             <p-sortIcon [field]="col.field"></p-sortIcon>
+           </th>
+         </tr>
+       </ng-template>
+       <ng-template pTemplate="body" let-rowData let-columns="columns">
+         <tr [pContextMenuRow]="rowData">
+           <td *ngFor="let col of columns">
+             {{rowData[col.field]}}
+           </td>
+         </tr>
+       </ng-template>
+        </p-table>
+       </div>
+</p-panel>
+

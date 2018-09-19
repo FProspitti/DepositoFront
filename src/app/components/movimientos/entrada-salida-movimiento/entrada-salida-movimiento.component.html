@@ -11,13 +11,13 @@
   <div class="ui-grid ui-grid-responsive ui-fluid">
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>ID</label></div>
-      <div class="ui-grid-col-8"><input style="width: 50%;" pInputText [(ngModel)]="id"/></div>
+      <div class="ui-grid-col-8"><input style="width: 50%;" pInputText [(ngModel)]="id" (keyup)="buscarMovimiento()"/></div>
     </div>
     <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label></label></div>
       <div class="ui-grid-col-8">
-        <p-dropdown disabled  [style]="{'width':'50%'}" [options]="clientes" [(ngModel)]="selectedCliente" placeholder="Selecionar cliente" optionLabel="nombre" [showClear]="true" ></p-dropdown>
+        <p-dropdown #dc disabled  [style]="{'width':'50%'}" [options]="clientes" [(ngModel)]="selectedCliente" placeholder="Selecionar cliente" optionLabel="nombre" [showClear]="true" ></p-dropdown>
       </div>
     </div>
     <br/>
@@ -39,7 +39,7 @@
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label></label></div>
       <div class="ui-grid-col-8">
-        <p-dropdown [options]="estados" [style]="{'width':'50%'}" [(ngModel)]="selectedEstado" placeholder="Selecionar estado" optionLabel="nombre" [showClear]="true"></p-dropdown>
+        <p-dropdown   #de [options]="estados" [style]="{'width':'50%'}" [(ngModel)]="selectedEstado" placeholder="Selecionar estado" optionLabel="nombre" [showClear]="true"></p-dropdown>
       </div>
     </div>
     <br/>
@@ -52,7 +52,7 @@
   </div>
   <p-footer>
     <div class="ui-helper-clearfix">
-      <button pButton type="button" icon="pi pi-check" label="Ingresar" (click)="buscarMovimiento()" class="ui-button-success" style="margin-right: .25em; float: right;"></button>
+      <button pButton type="button" icon="pi pi-check" label="Actualizar" (click)="save()" class="ui-button-success" style="margin-right: .25em; float: right;"></button>
     </div>
   </p-footer>
 </p-panel>
