@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {MovimientosComponent} from '../movimientos.component';
 import {MessageService} from 'primeng/api';
+import {Cliente} from  '../../../shared/model/cliente';
+import {Estado} from  '../../../shared/model/estado';
+
 
 @Component({
   selector: 'app-consulta-movimiento',
@@ -10,7 +13,10 @@ import {MessageService} from 'primeng/api';
 export class ConsultaMovimientoComponent extends MovimientosComponent implements OnInit {
 
   cols: any[];
-  Cliente: object;
+  cliente: Cliente;
+  estado: Estado;
+  fechaDesde: Date;
+  fechaHasta: Date;
 
   ngOnInit() {
 
@@ -34,42 +40,37 @@ export class ConsultaMovimientoComponent extends MovimientosComponent implements
       { field: 'fechaAlta', header: 'Fecha Alta'}
     ];
 
-    this.Cliente = ({
-
-      nombre : {
-        type: String,
-        required: true
-      },
-      fechaAlta: {
-        type: Date,
-      },
-      baja: {
-        type: Boolean,
-      },
-      fechaBaja: {
-        type: Date,
-      }
-
-    });
+    this.fechaDesde = new Date;
+    this.fechaHasta = new Date;
 
   }
 
   buscarMovimientos() {
+      this.cliente = this.selectedCliente;
 
-    debugger;
+      let idCliente;
+     if (!this.cliente) {
+      idCliente = 'T';
+    } else {
+      idCliente = this.cliente._id;
+    }
+      this.estado = this.selectedEstado;
 
-    let clien = this.Cliente;
-    clien = this.selectedCliente;
-
+    let idEstado;
+    if (!this.estado) {
+      idEstado = 'T';
+    } else {
+      idEstado = this.estado._id;
+    }
 
     const movimientoFiltro = new Object({
-      cliente : clien,
-      estado : this.selectedEstado,
-      fechaDesde: 'adasdasd',
-      fechaHasta: 'sdfsdf'
+      clienteId : idCliente,
+      estadoId : idEstado,
+      fechaDesde: this.fechaDesde,
+      fechaHasta: this.fechaHasta
     });
 
-    this.authService.getMovimientos1(movimientoFiltro).subscribe(data => {
+    this.authService.getMovimientos(movimientoFiltro).subscribe(data => {
       this.movimientos = data;
     });
   }

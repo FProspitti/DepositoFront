@@ -18,8 +18,8 @@ export class MovimientosComponent implements OnInit {
   movimientos: Object[];
   clientes: SelectItem[];
   estados: SelectItem[];
-  selectedCliente: Object;
-  selectedEstado: Object;
+  selectedCliente: any;
+  selectedEstado: any;
   movimiento: Object = new Object();
   newMovimiento: boolean;
   displayDialog: boolean;
@@ -41,6 +41,8 @@ export class MovimientosComponent implements OnInit {
     this.traerClientes();
     this.traerEstados();
     this.fechaIngreso = new Date;
+
+
 
   }
   ngOnInit() {

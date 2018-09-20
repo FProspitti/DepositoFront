@@ -237,17 +237,7 @@ export class AuthService {
 
   }
 
-  getMovimientos(dCliente) {
-    const headers = new Headers();
-    this.loadToken();
-    headers.append('Authorization', this.authToken);
-    headers.append('content-type', 'application/json');
-    return this.http.get('http://localhost:3000/movimientos/movimientos/'+dCliente , {headers: headers})
-      .map(res => res.json());
-
-  }
-
-  getMovimientos1(movimientoFiltro) {
+  getMovimientos(movimientoFiltro) {
     this.loadToken();
     const headers = new HttpHeaders().set( 'Content-Type', 'application/json').set( 'Authorization', this.authToken);
 
