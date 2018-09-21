@@ -5,6 +5,8 @@ import {Router} from '@angular/router';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {MenuItem} from '../../../../node_modules/primeng/primeng';
 import {SelectItem} from 'primeng/api';
+import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
+import {Movimiento} from  '../../shared/model/movimiento';
 
 
 @Component({
@@ -15,7 +17,7 @@ import {SelectItem} from 'primeng/api';
 
 export class MovimientosComponent implements OnInit {
 
-  movimientos: Object[];
+  movimientos: Movimiento[];
   clientes: SelectItem[];
   estados: SelectItem[];
   selectedCliente: any;
@@ -30,6 +32,7 @@ export class MovimientosComponent implements OnInit {
   carac: string;
   carac1: string;
   carac2: string;
+  movform: FormGroup;
 
 
   constructor(public authService: AuthService,
@@ -50,6 +53,8 @@ export class MovimientosComponent implements OnInit {
   }
 
   save() {
+    this.fechaIngreso.setHours(0,0,0,0);
+
     var movimient = new Object();
     movimient = {
       cliente : this.selectedCliente,

@@ -10,13 +10,9 @@ import {MessageService} from 'primeng/api';
 
 })
 
-
-
 export class EntradaSalidaMovimientoComponent extends MovimientosComponent implements OnInit {
   id: Number;
   cliente: Object;
-  // @ViewChild("dc") dc;
-  // @ViewChild("de") de;
 
   ngOnInit() {
 
@@ -61,6 +57,8 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
   }
 
   save() {
+    this.fechaIngreso.setHours(0,0,0,0);
+
     var movimient = new Object();
     movimient = {
       cliente : this.selectedCliente,

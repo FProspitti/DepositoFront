@@ -41,6 +41,7 @@ import { EntradaSalidaMovimientoComponent } from './components/movimientos/entra
 import {NuevoMovimientoComponent} from './components/movimientos/nuevo-movimiento/nuevo-movimiento.component';
 
 
+
 const  appRoutes: Routes = [
   {path: '', component: DashboardComponent, canActivate:[AuthGuard]},
   {path: 'register', component: RegisterComponent},

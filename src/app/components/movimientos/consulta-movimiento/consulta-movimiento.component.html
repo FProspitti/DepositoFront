@@ -46,33 +46,36 @@
        </div>
        <hr>
      </div>
-
-
-       <br/>
+   <br/>
        <hr>
-     <p-table #dt [columns]="cols" [value]="movimientos" selectionMode="single"
+     <div class="ui-grid-row">
+     <p-table #dt [value]="movimientos" selectionMode="single"
               dataKey="nombre"  [responsive]="true" [paginator]="true" [rows]="15">
        <ng-template pTemplate="caption">
          <div class="ui-helper-clearfix">
-           <button type="button" pButton icon="fa fa-file-o" iconPos="left" label="Exportar" (click)="dt.exportCSV()" style="float:right"></button>
+           <button type="button" pButton icon="fa fa-file-o" iconPos="left" label="Exportar" style="width: 100px;float: right;" (click)="dt.exportCSV()" ></button>
          </div>
        </ng-template>
-       <ng-template pTemplate="header" let-columns>
+       <ng-template pTemplate="header">
          <tr>
-           <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-             {{col.header}}
-             <p-sortIcon [field]="col.field"></p-sortIcon>
-           </th>
+           <th>Id</th>
+           <th>Cliente</th>
+           <th>Estado</th>
+           <th>Fecha Ingreso</th>
+           <th>Fecha Alta</th>
          </tr>
        </ng-template>
-       <ng-template pTemplate="body" let-rowData let-columns="columns">
-         <tr [pContextMenuRow]="rowData">
-           <td *ngFor="let col of columns">
-             {{rowData[col.field]}}
-           </td>
+      <ng-template pTemplate="body" let-movimiento>
+         <tr>
+           <td>{{movimiento.idMov}}</td>
+           <td>{{movimiento.cliente.nombre}}</td>
+           <td>{{movimiento.estado.nombre}}</td>
+           <td>{{movimiento.fechaIngreso | date:'dd/MM/yyyy'}}</td>
+           <td>{{movimiento.fechaAlta | date:'dd/MM/yyyy'}}</td>
          </tr>
        </ng-template>
-        </p-table>
-       </div>
+     </p-table>
+    </div>
+    </div>
 </p-panel>
 

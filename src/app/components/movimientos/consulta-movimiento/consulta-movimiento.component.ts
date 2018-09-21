@@ -35,7 +35,7 @@ export class ConsultaMovimientoComponent extends MovimientosComponent implements
     this.cols = [
       { field: 'idMov', header: 'Id' },
       { field: 'cliente', header: 'Cliente' },
-      { field: 'estado', header: 'Estado' },
+      { field: 'estado.', header: 'Estado' },
       { field: 'fechaIngreso', header: 'Fecha Ingreso' },
       { field: 'fechaAlta', header: 'Fecha Alta'}
     ];
@@ -62,6 +62,9 @@ export class ConsultaMovimientoComponent extends MovimientosComponent implements
     } else {
       idEstado = this.estado._id;
     }
+
+    this.fechaDesde.setHours(0,0,0,0);
+    this.fechaHasta.setHours(0,0,0,0);
 
     const movimientoFiltro = new Object({
       clienteId : idCliente,

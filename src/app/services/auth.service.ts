@@ -240,10 +240,7 @@ export class AuthService {
   getMovimientos(movimientoFiltro) {
     this.loadToken();
     const headers = new HttpHeaders().set( 'Content-Type', 'application/json').set( 'Authorization', this.authToken);
-
-    // const object1: any = { idMov: 1, cliente: 'asdasdasd', estado: 'sdfsdf'};
     const httpParams: HttpParamsOptions = { fromObject: movimientoFiltro } as HttpParamsOptions;
-
     const options = { params: new HttpParams(httpParams), headers: headers };
 
     return this.httpClient.get<any>('http://localhost:3000/movimientos/movimientos', options)

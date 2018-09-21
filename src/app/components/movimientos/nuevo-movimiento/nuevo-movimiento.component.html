@@ -1,6 +1,7 @@
 
 <br/>
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
+
 <p-panel>
   <p-header>
     <div class="ui-helper-clearfix">
@@ -12,7 +13,7 @@
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label></label></div>
       <div class="ui-grid-col-8">
-        <p-dropdown  [style]="{'width':'50%'}" [options]="clientes" [(ngModel)]="selectedCliente" placeholder="Selecionar cliente" optionLabel="nombre" [showClear]="true" ></p-dropdown>
+        <p-dropdown  [style]="{'width':'50%'}" required="true" [options]="clientes" [(ngModel)]="selectedCliente" placeholder="Selecionar cliente" optionLabel="nombre" [showClear]="true" ></p-dropdown>
       </div>
     </div>
     <br/>
@@ -51,3 +52,5 @@
     </div>
   </p-footer>
 </p-panel>
+
+
