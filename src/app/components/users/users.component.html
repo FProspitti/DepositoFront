@@ -1,34 +1,35 @@
 <br/>
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
-<p-table #dt [columns]="cols" [value]="usuarios" selectionMode="single" [(contextMenuSelection)]="selectedUser" [(selection)]="selectedUser1"
-         dataKey="name" (onRowDblclick)="onRowSelect($event)" [contextMenu]="cm" [responsive]="true" [paginator]="true" [rows]="15">
+<p-table #dt [columns]="cols" [value]="usuarios" selectionMode="single" [(selection)]="selectedUser" contextMenuSelectionMode="joint"
+         dataKey="name" (onRowDblclick)="onRowSelect($event)"  [responsive]="true" [paginator]="true" [rows]="15" [contextMenu]="cm"
+         exportFilename="Usuarios">
   <ng-template pTemplate="caption">
     <div>
       Usuarios
     </div>
+    <div style="text-align: right">
+      <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+      <input type="text" pInputText size="50" placeholder="Nombre" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+    </div>
     <div class="ui-helper-clearfix">
-      <button type="button" pButton icon="fa fa-file-o" iconPos="left" label="Exportar" (click)="dt.exportCSV()" style="float:right"></button>
+      <button type="button" pButton icon="fa fa-file-o" iconPos="left" label="Exportar" (click)="dt.exportCSV()" style="float:left"></button>
     </div>
   </ng-template>
-  <ng-template pTemplate="header" let-columns>
+  <ng-template pTemplate="header">
     <tr>
-      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-        {{col.header}}
-        <p-sortIcon [field]="col.field"></p-sortIcon>
-      </th>
-    </tr>
-    <tr>
-      <th *ngFor="let col of columns" [ngSwitch]="col.field">
-        <input *ngSwitchCase="'name'" pInputText type="text" style="width: 100%;" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
-      </th>
+      <th>Nombre</th>
+      <th>Email</th>
+      <th>Nombre Usuario</th>
+      <th>Fecha Alta</th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-rowData let-columns="columns">
-    <tr [pContextMenuRow]="rowData">
-      <td *ngFor="let col of columns">
-        {{rowData[col.field]}}
-      </td>
-    </tr>
+  <ng-template pTemplate="body"  let-rowData let-usuario>
+    <tr [pSelectableRow]="rowData" [pContextMenuRow]="rowData">
+      <td>{{usuario.name}}</td>
+      <td>{{usuario.email}}</td>
+      <td>{{usuario.username}}</td>
+      <td>{{usuario.fechaAlta | date:'dd/MM/yyyy'}}</td>
+   </tr>
   </ng-template>
   <ng-template pTemplate="summary" let-rowData>
     <div style="text-align:left">

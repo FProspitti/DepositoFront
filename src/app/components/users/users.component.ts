@@ -109,7 +109,7 @@ export class UsersComponent implements OnInit {
 
 
   updateUserContext(user: Object) {
-    this.user=user;
+    this.user = user;
     this.newUser = false;
     this.displayDialog = true;
   }

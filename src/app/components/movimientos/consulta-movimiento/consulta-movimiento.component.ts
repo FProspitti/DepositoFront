@@ -34,8 +34,8 @@ export class ConsultaMovimientoComponent extends MovimientosComponent implements
 
     this.cols = [
       { field: 'idMov', header: 'Id' },
-      { field: 'cliente', header: 'Cliente' },
-      { field: 'estado.', header: 'Estado' },
+      { field: 'cliente.nombre', header: 'Cliente' },
+      { field: 'estado.nombre.', header: 'Estado' },
       { field: 'fechaIngreso', header: 'Fecha Ingreso' },
       { field: 'fechaAlta', header: 'Fecha Alta'}
     ];

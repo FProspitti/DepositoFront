@@ -49,11 +49,11 @@
    <br/>
        <hr>
      <div class="ui-grid-row">
-     <p-table #dt [value]="movimientos" selectionMode="single"
-              dataKey="nombre"  [responsive]="true" [paginator]="true" [rows]="15">
+     <p-table #dt [columns]="cols"  [value]="movimientos" selectionMode="single"
+              dataKey="idMov"  [responsive]="true" [paginator]="true" [rows]="15" exportFilename="Movimientos">
        <ng-template pTemplate="caption">
          <div class="ui-helper-clearfix">
-           <button type="button" pButton icon="fa fa-file-o" iconPos="left" label="Exportar" style="width: 100px;float: right;" (click)="dt.exportCSV()" ></button>
+           <button type="button" pButton icon="fa fa-file-o" iconPos="left" label="Exportar" style="width: 100px;float: left;" (click)="dt.exportCSV()" ></button>
          </div>
        </ng-template>
        <ng-template pTemplate="header">
@@ -65,8 +65,8 @@
            <th>Fecha Alta</th>
          </tr>
        </ng-template>
-      <ng-template pTemplate="body" let-movimiento>
-         <tr>
+      <ng-template pTemplate="body" let-rowData let-movimiento>
+         <tr [pSelectableRow]="rowData" [pContextMenuRow]="rowData">
            <td>{{movimiento.idMov}}</td>
            <td>{{movimiento.cliente.nombre}}</td>
            <td>{{movimiento.estado.nombre}}</td>

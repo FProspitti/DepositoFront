@@ -22,7 +22,7 @@ export class MovimientosComponent implements OnInit {
   estados: SelectItem[];
   selectedCliente: any;
   selectedEstado: any;
-  movimiento: Object = new Object();
+  movimiento: Movimiento;
   newMovimiento: boolean;
   displayDialog: boolean;
   displayDialogDelete: boolean;
@@ -33,6 +33,7 @@ export class MovimientosComponent implements OnInit {
   carac1: string;
   carac2: string;
   movform: FormGroup;
+
 
 
   constructor(public authService: AuthService,
@@ -65,7 +66,9 @@ export class MovimientosComponent implements OnInit {
       this.authService.newMovimiento(movimient).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity:'success', summary:'Ingreso', detail:'Creado correctamente'});
+          this.movimiento = data.mov;
           this.limpiarCampos();
+          this.displayDialog = true;
         } else {
           this.messageService.add({severity:'error', summary:'Ingreso', detail:'Error al ingresar'});
         }
@@ -98,6 +101,18 @@ export class MovimientosComponent implements OnInit {
   this.carac = '';
   this.carac1 = '';
   this.carac2 = '';
+  }
+
+  cerrarDialogConfirmar() {
+    this.displayDialog = false;
+  }
+
+  imprimir(){
+
+    const innerContents = document.getElementById("dialogBar").innerHTML;
+    const popupWinindow = window.open('', '_blank', 'width=1000,height=1000,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+    popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</html>');
+    popupWinindow.document.close();
   }
 
 }

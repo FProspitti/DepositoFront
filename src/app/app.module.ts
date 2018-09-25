@@ -39,7 +39,8 @@ import {TableModule} from 'primeng/table';
 import { ConsultaMovimientoComponent } from './components/movimientos/consulta-movimiento/consulta-movimiento.component';
 import { EntradaSalidaMovimientoComponent } from './components/movimientos/entrada-salida-movimiento/entrada-salida-movimiento.component';
 import {NuevoMovimientoComponent} from './components/movimientos/nuevo-movimiento/nuevo-movimiento.component';
-
+import { QRCodeModule } from 'ng-qrcode';
+import { NgxBarcodeModule } from 'ngx-barcode';
 
 
 const  appRoutes: Routes = [
@@ -96,7 +97,9 @@ const  appRoutes: Routes = [
     NgbModule.forRoot(),
     CalendarModule,
     TableModule,
-    HttpClientModule
+    HttpClientModule,
+    QRCodeModule,
+    NgxBarcodeModule
 
   ],
   providers: [ValidateService,AuthService, AuthGuard],
