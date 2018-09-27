@@ -56,9 +56,18 @@
 
 <p-dialog  #pd header="Nuevo Movimiento" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"  [width]="600">
   <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="movimiento" id="dialogBar">
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-8"><p>Id Movimiento: {{movimiento.idMov}}</p></div>
-  </div>
+      <div class="ui-grid-row">
+         <div class="ui-grid-col-8"><p style="font-weight:bold;">Id Movimiento: {{movimiento.idMov}}</p></div>
+      </div>
+        <div class="ui-grid-row">
+          <div class="ui-grid-col-8"><p style="font-weight:bold;">Cliente: {{movimiento.cliente.nombre}}</p></div>
+        </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-8"><p style="font-weight:bold;">Estado: {{movimiento.estado.nombre}}</p></div>
+      </div>
+      <div class="ui-grid-row">
+        <div class="ui-grid-col-8"><p style="font-weight:bold;">Fecha Ingreso: {{movimiento.fechaIngreso | date:'dd/MM/yyyy'}}</p></div>
+      </div>
     <div class="ui-grid-row">
       <div style="float: left;">
           <qr-code [value]="'Datos de paled'" [size]="250"></qr-code>
@@ -70,8 +79,8 @@
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" class="ui-button-success" pButton icon="fa  fa-close" (click)="cerrarDialogConfirmar()" label="Volver"></button>
-      <button type="button" class="ui-button-success" pButton icon="fa  fa-check" (click)="imprimir()" label="Imprimir Codigo"></button>
+      <button type="button" class="ui-button-info" pButton icon="fa fa-undo" (click)="cerrarDialogConfirmar()" label="Volver"></button>
+      <button type="button" class="ui-button-success" pButton icon="fa fa-print" (click)="imprimir()" label="Imprimir Codigo"></button>
     </div>
   </p-footer>
 </p-dialog>
