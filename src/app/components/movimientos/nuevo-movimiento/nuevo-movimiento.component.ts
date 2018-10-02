@@ -25,4 +25,14 @@ export class NuevoMovimientoComponent extends MovimientosComponent implements On
 
   }
 
+  showConfirmar() {
+    this.messageService.clear();
+    this.messageService.add({key: 'c', sticky: true, severity:'warn', summary:'Desea crear un nuevo movimiento?', detail:'Confirme para continuar'});
+  }
+
+  hideConfirmar() {
+    this.messageService.clear('c');
+  }
+
+
 }

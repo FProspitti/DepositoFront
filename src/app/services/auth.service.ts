@@ -200,12 +200,45 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  getEstado(id) {
+    const headers = new Headers();
+    // this.loadToken();
+    // headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    return this.http.get('http://localhost:3000/estados/getEstado/'+id , {headers: headers})
+      .map(res => res.json());
+
+  }
+
+  getEstadoNombre(nombre) {
+    const headers = new Headers();
+    // this.loadToken();
+    // headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    return this.http.get('http://localhost:3000/estados/getEstadoNombre/'+nombre , {headers: headers})
+      .map(res => res.json());
+
+  }
+
+
+
   newMovimiento(movimiento) {
     const headers = new Headers();
     headers.append('content-type', 'application/json');
     return this.http.post('http://localhost:3000/movimientos/nuevoMovimiento', movimiento, {headers: headers})
       .map(res => res.json());
   }
+
+  updateMovimiento(movimiento) {
+    const headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    return this.http.put('http://localhost:3000/movimientos/updateMovimiento', movimiento , {headers: headers})
+      .map(res => res.json());
+
+  }
+
 
   getMovimiento(id) {
     const headers = new Headers();
@@ -227,15 +260,6 @@ export class AuthService {
 
   }
 
-  getEstado(id) {
-    const headers = new Headers();
-    // this.loadToken();
-    // headers.append('Authorization', this.authToken);
-    headers.append('content-type', 'application/json');
-    return this.http.get('http://localhost:3000/estados/getEstado/'+id , {headers: headers})
-      .map(res => res.json());
-
-  }
 
   getMovimientos(movimientoFiltro) {
     this.loadToken();

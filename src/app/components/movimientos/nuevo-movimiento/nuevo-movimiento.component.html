@@ -2,6 +2,24 @@
 <br/>
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
 
+<p-toast position="center" key="c" (onClose)="hideConfirmar()" [modal]="true" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+    <div style="text-align: center">
+      <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+      <h3>{{message.summary}}</h3>
+      <p>{{message.detail}}</p>
+    </div>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-6">
+        <button type="button" pButton (click)="save()" label="Si" class="ui-button-success"></button>
+      </div>
+      <div class="ui-g-6">
+        <button type="button" pButton (click)="hideConfirmar()" label="No" class="ui-button-secondary"></button>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>
+
 <p-panel>
   <p-header>
     <div class="ui-helper-clearfix">
@@ -33,14 +51,7 @@
     </div>
     <br/>
     <div class="ui-grid-row">
-      <div class="ui-grid-col-2"><label></label></div>
-      <div class="ui-grid-col-8">
-        <p-dropdown [options]="estados" [style]="{'width':'50%'}" [(ngModel)]="selectedEstado" placeholder="Selecionar estado" optionLabel="nombre" [showClear]="true"></p-dropdown>
-      </div>
-    </div>
-    <br/>
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-2"><label>Fecha ingreso</label></div>
+      <div class="ui-grid-col-2"><label>Fecha registro</label></div>
       <div class="ui-grid-col-8">
         <p-calendar [style]="{'width':'50%'}"   dateFormat="dd/mm/yy"  [(ngModel)]="fechaIngreso" [locale]="es" [showIcon]="true"></p-calendar>
       </div>
@@ -48,7 +59,7 @@
   </div>
  <p-footer>
     <div class="ui-helper-clearfix">
-      <button pButton type="button" icon="pi pi-check" label="Ingresar" (click)="save()" class="ui-button-success" style="margin-right: .25em; float: right;"></button>
+      <button pButton type="button" icon="pi pi-check" label="Ingresar" (click)="showConfirmar()" class="ui-button-success" style="margin-right: .25em; float: right;"></button>
     </div>
   </p-footer>
 </p-panel>
@@ -73,13 +84,13 @@
           <qr-code [value]="'Datos de paled'" [size]="250"></qr-code>
       </div>
       <div>
-          <ngx-barcode [bc-value]="movimiento.idMov" [bc-display-value]="true" style="display: table-row;"></ngx-barcode>
+          <ngx-barcode [bc-value]="movimiento.idMov" [bc-format]="EAN8" [bc-display-value]="true" style="display: table-row;"></ngx-barcode>
       </div>
     </div>
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
-      <button type="button" class="ui-button-info" pButton icon="fa fa-undo" (click)="cerrarDialogConfirmar()" label="Volver"></button>
+      <button type="button" class="ui-button-info" pButton icon="fa fa-undo" (click)="cerrarDialogConfirmar()" label="Cerrar"></button>
       <button type="button" class="ui-button-success" pButton icon="fa fa-print" (click)="imprimir()" label="Imprimir Codigo"></button>
     </div>
   </p-footer>

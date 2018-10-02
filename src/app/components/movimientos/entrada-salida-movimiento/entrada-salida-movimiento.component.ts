@@ -35,8 +35,7 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
   if (this.id) {
       this.authService.getMovimiento(this.id).subscribe(data => {
         if (data) {
-          // this.messageService.add({severity: 'success', summary: 'Movimiento', detail: 'Encontrado'});
-          this.fechaIngreso = new Date(data.fechaIngreso);
+          // this.fechaIngreso = new Date(data.fechaIngreso);
           if (data.cliente) {
             this.authService.getCliente(data.cliente).subscribe(cliente => {
               this.selectedCliente = cliente;
@@ -57,13 +56,13 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
   }
 
   save() {
-    this.fechaIngreso.setHours(0,0,0,0);
+    this.fechaSalida.setHours(0,0,0,0);
 
     var movimient = new Object();
     movimient = {
       cliente : this.selectedCliente,
       estado : this.selectedEstado,
-      fechaIngreso : this.fechaIngreso
+      fechaSalida : this.fechaSalida
     };
 
     this.authService.newMovimiento(movimient).subscribe(data => {

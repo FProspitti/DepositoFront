@@ -8,6 +8,9 @@ export class Movimiento {
   public cliente: Cliente;
   public estado: Estado;
   public fechaAlta: Date;
+  public fechaIngreso: Date;
+  public fechaSalida: Date;
   public idMov: Number;
+  public cantDias: Number;
 
 }

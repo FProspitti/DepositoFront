@@ -7,6 +7,7 @@ import {MenuItem} from '../../../../node_modules/primeng/primeng';
 import {SelectItem} from 'primeng/api';
 import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
 import {Movimiento} from  '../../shared/model/movimiento';
+import {Estado} from  '../../shared/model/estado';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class MovimientosComponent implements OnInit {
   movimientos: Movimiento[];
   clientes: SelectItem[];
   estados: SelectItem[];
+  estado: any;
   selectedCliente: any;
   selectedEstado: any;
   movimiento: Movimiento;
@@ -28,6 +30,8 @@ export class MovimientosComponent implements OnInit {
   displayDialogDelete: boolean;
   items: MenuItem[];
   fechaIngreso: Date;
+  fechaRegistro: Date;
+  fechaSalida: Date;
   es: any;
   carac: string;
   carac1: string;
@@ -45,6 +49,8 @@ export class MovimientosComponent implements OnInit {
     this.traerClientes();
     this.traerEstados();
     this.fechaIngreso = new Date;
+    this.fechaSalida = new Date;
+    this.fechaRegistro = new Date;
 
 
 
@@ -54,14 +60,18 @@ export class MovimientosComponent implements OnInit {
   }
 
   save() {
-    this.fechaIngreso.setHours(0,0,0,0);
+    this.messageService.clear('c');
+    this.fechaRegistro.setHours(0,0,0,0);
 
-    var movimient = new Object();
-    movimient = {
-      cliente : this.selectedCliente,
-      estado : this.selectedEstado,
-      fechaIngreso : this.fechaIngreso
-    };
+    this.authService.getEstadoNombre('Registro').subscribe(estado => {
+      this.estado = estado;
+
+      var movimient = new Object();
+      movimient = {
+        cliente : this.selectedCliente,
+        estado : this.estado,
+        fechaRegistro : this.fechaRegistro
+      };
 
       this.authService.newMovimiento(movimient).subscribe(data => {
         if (data.success) {
@@ -73,6 +83,9 @@ export class MovimientosComponent implements OnInit {
           this.messageService.add({severity:'error', summary:'Ingreso', detail:'Error al ingresar'});
         }
       });
+    });
+
+
   }
 
   traerClientes() {
