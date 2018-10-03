@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MovimientosComponent} from '../movimientos.component';
 import {MessageService} from 'primeng/api';
+
 // import {Dropdown} from "primeng/components/dropdown/dropdown";
 
 @Component({
@@ -32,10 +33,10 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
     this.selectedEstado = new Object;
     this.selectedCliente = new Object;
 
+
   if (this.id) {
       this.authService.getMovimiento(this.id).subscribe(data => {
         if (data) {
-          // this.fechaIngreso = new Date(data.fechaIngreso);
           if (data.cliente) {
             this.authService.getCliente(data.cliente).subscribe(cliente => {
               this.selectedCliente = cliente;
@@ -44,9 +45,11 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
 
           if (data.estado) {
             this.authService.getEstado(data.estado).subscribe(estado => {
-              this.selectedEstado = estado;
+              this.selectedEstadoActual = estado.nombre;
             });
           }
+
+          this.movimiento = data;
 
         } else {
           this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'No encontrado'});
@@ -56,16 +59,17 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
   }
 
   save() {
-    this.fechaSalida.setHours(0,0,0,0);
+    this.fecha.setHours(0,0,0,0);
 
     var movimient = new Object();
     movimient = {
+      _id: this.movimiento._id,
       cliente : this.selectedCliente,
       estado : this.selectedEstado,
-      fechaSalida : this.fechaSalida
+      fecha : this.fecha
     };
 
-    this.authService.newMovimiento(movimient).subscribe(data => {
+    this.authService.updateMovimiento(movimient).subscribe(data => {
       if (data.success) {
         this.messageService.add({severity:'success', summary:'Ingreso', detail:'Creado correctamente'});
         this.limpiarCampos();

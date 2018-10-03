@@ -10,6 +10,7 @@ export class Movimiento {
   public fechaAlta: Date;
   public fechaIngreso: Date;
   public fechaSalida: Date;
+  public fecha: Date;
   public idMov: Number;
   public cantDias: Number;
 

@@ -62,7 +62,8 @@
            <th>Cliente</th>
            <th>Estado</th>
            <th>Fecha Ingreso</th>
-           <th>Fecha Alta</th>
+           <th>Fecha Salida</th>
+           <th>Cantidad dias</th>
          </tr>
        </ng-template>
       <ng-template pTemplate="body" let-rowData let-movimiento>
@@ -71,7 +72,8 @@
            <td>{{movimiento.cliente.nombre}}</td>
            <td>{{movimiento.estado.nombre}}</td>
            <td>{{movimiento.fechaIngreso | date:'dd/MM/yyyy'}}</td>
-           <td>{{movimiento.fechaAlta | date:'dd/MM/yyyy'}}</td>
+           <td>{{movimiento.fechaSalida | date:'dd/MM/yyyy'}}</td>
+           <td>3</td>
          </tr>
        </ng-template>
      </p-table>

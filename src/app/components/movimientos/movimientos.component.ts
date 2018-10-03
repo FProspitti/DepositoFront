@@ -24,14 +24,14 @@ export class MovimientosComponent implements OnInit {
   estado: any;
   selectedCliente: any;
   selectedEstado: any;
+  selectedEstadoActual: any;
   movimiento: Movimiento;
   newMovimiento: boolean;
   displayDialog: boolean;
   displayDialogDelete: boolean;
   items: MenuItem[];
-  fechaIngreso: Date;
+  fecha: Date;
   fechaRegistro: Date;
-  fechaSalida: Date;
   es: any;
   carac: string;
   carac1: string;
@@ -48,8 +48,7 @@ export class MovimientosComponent implements OnInit {
 
     this.traerClientes();
     this.traerEstados();
-    this.fechaIngreso = new Date;
-    this.fechaSalida = new Date;
+    this.fecha = new Date;
     this.fechaRegistro = new Date;
 
 
@@ -108,9 +107,10 @@ export class MovimientosComponent implements OnInit {
   }
 
   limpiarCampos(){
-  this.fechaIngreso = new Date;
+  this.fecha = new Date;
   this.selectedEstado = new Object;
   this.selectedCliente = new Object;
+  this.selectedEstadoActual = new Object;
   this.carac = '';
   this.carac1 = '';
   this.carac2 = '';
