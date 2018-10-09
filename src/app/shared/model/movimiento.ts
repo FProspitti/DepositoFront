@@ -13,5 +13,6 @@ export class Movimiento {
   public fecha: Date;
   public idMov: Number;
   public cantDias: Number;
+  public codigoBarras: String;
 
 }

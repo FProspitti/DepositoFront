@@ -280,5 +280,41 @@ export class AuthService {
       .map(res => res);
   }
 
+  deleteCaracteristica(caracteristica) {
+    const headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    return this.http.put('http://localhost:3000/caracteristicas/deleteCaracteristica', caracteristica , {headers: headers})
+      .map(res => res.json());
+
+  }
+
+  updateCaracteristica(caracteristica) {
+    const headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    return this.http.put('http://localhost:3000/caracteristicas/updateCaracteristica', caracteristica , {headers: headers})
+      .map(res => res.json());
+
+  }
+
+  newCaracteristica(caracteristica) {
+    const headers = new Headers();
+    headers.append('content-type', 'application/json');
+    return this.http.post('http://localhost:3000/caracteristicas/nuevaCaracteristica', caracteristica, {headers: headers})
+      .map(res => res.json());
+  }
+
+  getCaracteristicas() {
+    const headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    return this.http.get('http://localhost:3000/caracteristicas/caracteristicas', {headers: headers})
+      .map(res => res.json());
+  }
+
 
 }

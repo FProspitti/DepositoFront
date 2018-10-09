@@ -59,8 +59,6 @@ export class MovimientosComponent implements OnInit {
   }
 
   save() {
-    const result1 = this.calcularDigito('12');
-    debugger;
     this.messageService.clear('c');
     this.fechaRegistro.setHours(0, 0, 0, 0);
 
@@ -129,38 +127,6 @@ export class MovimientosComponent implements OnInit {
     popupWinindow.document.close();
   }
 
-  calcularDigito(numero) {
-    numero = this.ponerCeros(numero);
-    var result = 0;
-    var impar = 0;
-    var par = 0;
-    var array = [];
-    var i;
-    var y;
-    array = numero.split('');
 
-    for (i = 0; i < array.length; i++) {
-      impar = impar + parseInt(array[i]);
-      console.log('Suma', impar);
-      i++;
-    }
-    impar = impar * 3;
-    for (y = 1; y < array.length; y++) {
-      par = par + parseInt(array[y]);
-      console.log('Suma', par);
-      y++;
-    }
-    result = impar + par;
-    var modulo = (10 - (result % 10)) % 10;
-    return   numero + modulo;
-
-  }
-
-  ponerCeros(numero) {
-    while (numero.length < 7) {
-      numero = '0' + numero;
-    }
-    return numero;
-  }
 
 }

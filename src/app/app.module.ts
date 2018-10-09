@@ -41,6 +41,7 @@ import { EntradaSalidaMovimientoComponent } from './components/movimientos/entra
 import {NuevoMovimientoComponent} from './components/movimientos/nuevo-movimiento/nuevo-movimiento.component';
 import { QRCodeModule } from 'ng-qrcode';
 import { NgxBarcodeModule } from 'ngx-barcode';
+import { CaracteristicasComponent } from './components/caracteristicas/caracteristicas.component';
 
 
 const  appRoutes: Routes = [
@@ -56,6 +57,7 @@ const  appRoutes: Routes = [
   {path: 'consultas', component: ConsultasComponent, canActivate:[AuthGuard]},
   {path: 'consultaMovimiento', component: ConsultaMovimientoComponent, canActivate:[AuthGuard]},
   {path: 'nuevoMovimiento', component: NuevoMovimientoComponent, canActivate:[AuthGuard]},
+  {path: 'caracteristicas', component: CaracteristicasComponent, canActivate:[AuthGuard]},
 ];
 
 @NgModule({
@@ -76,7 +78,8 @@ const  appRoutes: Routes = [
     MovimientosComponent,
     ConsultaMovimientoComponent,
     EntradaSalidaMovimientoComponent,
-    NuevoMovimientoComponent
+    NuevoMovimientoComponent,
+    CaracteristicasComponent
   ],
   imports: [
     BrowserModule,
