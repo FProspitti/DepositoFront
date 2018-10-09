@@ -34,23 +34,27 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
     this.selectedCliente = new Object;
 
 
-  if (this.id) {
+    if (this.id) {
       this.authService.getMovimiento(this.id).subscribe(data => {
         if (data) {
+          this.movimiento = data;
           if (data.cliente) {
             this.authService.getCliente(data.cliente).subscribe(cliente => {
               this.selectedCliente = cliente;
+              this.movimiento.cliente = cliente;
             });
           }
 
           if (data.estado) {
             this.authService.getEstado(data.estado).subscribe(estado => {
-              this.selectedEstadoActual = estado.nombre;
+              if (this.movimiento.baja) {
+                this.selectedEstadoActual = 'Baja';
+              } else {
+                this.selectedEstadoActual = estado.nombre;
+              }
+              this.movimiento.estado = estado;
             });
           }
-
-          this.movimiento = data;
-
         } else {
           this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'No encontrado'});
         }
@@ -59,25 +63,51 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
   }
 
   save() {
-    this.fecha.setHours(0,0,0,0);
+    this.fecha.setHours(0, 0, 0, 0);
 
     var movimient = new Object();
     movimient = {
       _id: this.movimiento._id,
-      cliente : this.selectedCliente,
-      estado : this.selectedEstado,
-      fecha : this.fecha
+      cliente: this.selectedCliente,
+      estado: this.selectedEstado,
+      fecha: this.fecha
     };
 
     this.authService.updateMovimiento(movimient).subscribe(data => {
       if (data.success) {
-        this.messageService.add({severity:'success', summary:'Ingreso', detail:'Creado correctamente'});
+        this.messageService.add({severity: 'success', summary: 'Ingreso', detail: 'Creado correctamente'});
         this.limpiarCampos();
         this.id = null;
       } else {
-        this.messageService.add({severity:'error', summary:'Ingreso', detail:'Error al ingresar'});
+        this.messageService.add({severity: 'error', summary: 'Ingreso', detail: 'Error al ingresar'});
       }
     });
   }
 
+  borrar() {
+    this.authService.deleteMovimiento(this.movimiento).subscribe(data => {
+      if (data.success) {
+        this.messageService.add({severity: 'success', summary: 'Movimiento', detail: 'Borrado correctamente'});
+        this.limpiarCampos();
+        this.id = null;
+      } else {
+        this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Error al borrar'});
+      }
+    });
+  }
+
+  reimprirMovimiento() {
+    this.displayDialog = true;
+  }
+
+  getStyleBaja() {
+    if (this.movimiento) {
+      if (this.movimiento.baja) {
+        return 'red';
+      } else {
+        return 'blue';
+      }
+    }
+  }
 }
+

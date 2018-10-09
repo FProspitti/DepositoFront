@@ -38,7 +38,7 @@
     <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>Estado Actual</label></div>
-        <div class="ui-grid-col-8"><label style="color: #3F5EFB">{{selectedEstadoActual}}</label></div>
+        <div class="ui-grid-col-8"><label [style.color]="getStyleBaja()">{{selectedEstadoActual}}</label></div>
     </div>
     <br/>
     <div class="ui-grid-row">
@@ -58,6 +58,40 @@
   <p-footer>
     <div class="ui-helper-clearfix">
       <button pButton type="button" icon="pi pi-check" label="Actualizar" (click)="save()" class="ui-button-success" style="margin-right: .25em; float: right;"></button>
+      <button pButton type="button" icon="fa  fa-close" label="Borrar" (click)="borrar()" class="ui-button-danger" style="margin-right: .25em; float: right;"></button>
+      <button type="button" class="ui-button-success" pButton icon="fa fa-print" (click)="reimprirMovimiento()" label="Re-Imprimir Codigo"></button>
     </div>
   </p-footer>
 </p-panel>
+
+
+<p-dialog  #pd header="Reimprimir Movimiento" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"  [width]="600">
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="movimiento" id="dialogBar">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-8"><p style="font-weight:bold;">Id Movimiento: {{movimiento.idMov}}</p></div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-8"><p style="font-weight:bold;">Cliente: {{movimiento.cliente.nombre}}</p></div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-8"><p style="font-weight:bold;">Estado: {{movimiento.estado.nombre}}</p></div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-8"><p style="font-weight:bold;">Fecha Ingreso: {{movimiento.fechaIngreso | date:'dd/MM/yyyy'}}</p></div>
+    </div>
+    <div class="ui-grid-row">
+      <div style="float: left;">
+        <qr-code [value]="'Datos de paled'" [size]="250"></qr-code>
+      </div>
+      <div>
+        <ngx-barcode [bc-value]="movimiento.idMov" [bc-format]="EAN8" [bc-display-value]="true" style="display: table-row;"></ngx-barcode>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" class="ui-button-info" pButton icon="fa fa-undo" (click)="cerrarDialogConfirmar()" label="Cerrar"></button>
+      <button type="button" class="ui-button-success" pButton icon="fa fa-print" (click)="imprimir()" label="Imprimir Codigo"></button>
+    </div>
+  </p-footer>
+</p-dialog>

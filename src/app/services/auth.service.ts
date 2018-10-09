@@ -239,6 +239,15 @@ export class AuthService {
 
   }
 
+  deleteMovimiento(movimiento) {
+    const headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    return this.http.put('http://localhost:3000/movimientos/deleteMovimiento', movimiento , {headers: headers})
+      .map(res => res.json());
+
+  }
 
   getMovimiento(id) {
     const headers = new Headers();

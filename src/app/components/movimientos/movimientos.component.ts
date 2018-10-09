@@ -37,7 +37,7 @@ export class MovimientosComponent implements OnInit {
   carac1: string;
   carac2: string;
   movform: FormGroup;
-
+  pos: any;
 
 
   constructor(public authService: AuthService,
@@ -52,34 +52,36 @@ export class MovimientosComponent implements OnInit {
     this.fechaRegistro = new Date;
 
 
-
   }
+
   ngOnInit() {
 
   }
 
   save() {
+    const result1 = this.calcularDigito('12');
+    debugger;
     this.messageService.clear('c');
-    this.fechaRegistro.setHours(0,0,0,0);
+    this.fechaRegistro.setHours(0, 0, 0, 0);
 
     this.authService.getEstadoNombre('Registro').subscribe(estado => {
       this.estado = estado;
 
       var movimient = new Object();
       movimient = {
-        cliente : this.selectedCliente,
-        estado : this.estado,
-        fechaRegistro : this.fechaRegistro
+        cliente: this.selectedCliente,
+        estado: this.estado,
+        fechaRegistro: this.fechaRegistro
       };
 
       this.authService.newMovimiento(movimient).subscribe(data => {
         if (data.success) {
-          this.messageService.add({severity:'success', summary:'Ingreso', detail:'Creado correctamente'});
+          this.messageService.add({severity: 'success', summary: 'Ingreso', detail: 'Creado correctamente'});
           this.movimiento = data.mov;
           this.limpiarCampos();
           this.displayDialog = true;
         } else {
-          this.messageService.add({severity:'error', summary:'Ingreso', detail:'Error al ingresar'});
+          this.messageService.add({severity: 'error', summary: 'Ingreso', detail: 'Error al ingresar'});
         }
       });
     });
@@ -106,26 +108,59 @@ export class MovimientosComponent implements OnInit {
     });
   }
 
-  limpiarCampos(){
-  this.fecha = new Date;
-  this.selectedEstado = new Object;
-  this.selectedCliente = new Object;
-  this.selectedEstadoActual = new Object;
-  this.carac = '';
-  this.carac1 = '';
-  this.carac2 = '';
+  limpiarCampos() {
+    this.fecha = new Date;
+    this.selectedEstado = new Object;
+    this.selectedCliente = new Object;
+    this.selectedEstadoActual = '';
+    this.carac = '';
+    this.carac1 = '';
+    this.carac2 = '';
   }
 
   cerrarDialogConfirmar() {
     this.displayDialog = false;
   }
 
-  imprimir(){
-
+  imprimir() {
     const innerContents = document.getElementById("dialogBar").innerHTML;
     const popupWinindow = window.open('', '_blank', 'width=1000,height=1000,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
     popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</html>');
     popupWinindow.document.close();
+  }
+
+  calcularDigito(numero) {
+    numero = this.ponerCeros(numero);
+    var result = 0;
+    var impar = 0;
+    var par = 0;
+    var array = [];
+    var i;
+    var y;
+    array = numero.split('');
+
+    for (i = 0; i < array.length; i++) {
+      impar = impar + parseInt(array[i]);
+      console.log('Suma', impar);
+      i++;
+    }
+    impar = impar * 3;
+    for (y = 1; y < array.length; y++) {
+      par = par + parseInt(array[y]);
+      console.log('Suma', par);
+      y++;
+    }
+    result = impar + par;
+    var modulo = (10 - (result % 10)) % 10;
+    return   numero + modulo;
+
+  }
+
+  ponerCeros(numero) {
+    while (numero.length < 7) {
+      numero = '0' + numero;
+    }
+    return numero;
   }
 
 }
