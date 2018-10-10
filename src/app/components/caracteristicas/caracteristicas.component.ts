@@ -5,6 +5,8 @@ import {FlashMessagesService} from 'angular2-flash-messages';
 import {AuthService} from '../../services/auth.service';
 import {MenuItem} from 'primeng/primeng';
 import {SelectItem} from 'primeng/api';
+import {Caracteristica} from  '../../shared/model/caracteristica';
+import {CaracteristicaSelect} from  '../../shared/model/caracteristicaSelect';
 
 @Component({
   selector: 'app-caracteristicas',
@@ -16,10 +18,10 @@ export class CaracteristicasComponent implements OnInit {
 
 
   caracteristicas: Object[];
-  caracteristicaCombo: SelectItem[];
-  selectedCaracteristica: Object;
-  selectedCaracteristicaCombo: Object;
-  caracteristica: Object = new Object();
+  caracteristicaCombo: CaracteristicaSelect[];
+  selectedCaracteristica: Caracteristica;
+  selectedCaracteristicaCombo: CaracteristicaSelect;
+  caracteristica: Caracteristica;
   newCaracteristica: boolean;
   displayDialog: boolean;
   displayDialogDelete: boolean;
@@ -48,26 +50,27 @@ export class CaracteristicasComponent implements OnInit {
     ];
 
     this.caracteristicaCombo = [
-      {label:'Todos', value: 0 },
-      {label:'Caracteristica 1', value: 1 },
-      {label:'Caracteristica 2', value: 2 },
-      {label:'Caracteristica 3', value: 3 },
-      {label:'Caracteristica 4', value: 4 },
-      {label:'Caracteristica 5', value: 5 },
-      {label:'Caracteristica 6', value: 6 },
-      {label:'Caracteristica 7', value: 7 }
+      {nombre:'Todos', tipo: 0 },
+      {nombre:'Caracteristica 1', tipo: 1 },
+      {nombre:'Caracteristica 2', tipo: 2 },
+      {nombre:'Caracteristica 3', tipo: 3 },
+      {nombre:'Caracteristica 4', tipo: 4 },
+      {nombre:'Caracteristica 5', tipo: 5 },
+      {nombre:'Caracteristica 6', tipo: 6 },
+      {nombre:'Caracteristica 7', tipo: 7 }
     ];
 
   }
 
   showDialogToAdd() {
     this.newCaracteristica = true;
-    this.caracteristica = new Object();
+    this.caracteristica = new Caracteristica();
     this.displayDialog = true;
   }
 
   save() {
     if (this.newCaracteristica) {
+      this.caracteristica.tipo = this.selectedCaracteristicaCombo.tipo;
       this.authService.newCaracteristica(this.caracteristica).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity:'success', summary:'Caracteristica', detail:'Registrada correctamente'});
@@ -122,11 +125,7 @@ export class CaracteristicasComponent implements OnInit {
 
   }
 
-  onRowSelect(event) {
-    this.newCaracteristica = false;
-    this.caracteristica = this.cloneCaracteristica(event.data);
-    this.displayDialog = true;
-  }
+
 
   cloneCaracteristica(c: Object): Object {
     let caracteristica = new Object();
@@ -137,13 +136,13 @@ export class CaracteristicasComponent implements OnInit {
   }
 
 
-  updateCaracteristicaContext(caracteristica: Object) {
+  updateCaracteristicaContext(caracteristica: Caracteristica) {
     this.caracteristica = caracteristica;
     this.newCaracteristica = false;
     this.displayDialog = true;
   }
 
-  deleteCaracteristicaContext(caracteristica: Object) {
+  deleteCaracteristicaContext(caracteristica: Caracteristica) {
     this.caracteristica = caracteristica;
     this.newCaracteristica = false;
     this.displayDialogDelete = true;

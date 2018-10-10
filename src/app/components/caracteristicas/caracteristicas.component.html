@@ -9,7 +9,7 @@
   <div class="ui-grid ui-grid-responsive ui-fluid">
       <div class="ui-grid-row">
       <div class="ui-grid-col-4">
-        <p-dropdown  [style]="{'width':'50%'}" [options]="caracteristicaCombo" [(ngModel)]="selectedCaracteristicaCombo" placeholder="Caracteristicas" [showClear]="true" ></p-dropdown>
+        <p-dropdown  [style]="{'width':'50%'}" [options]="caracteristicaCombo" [(ngModel)]="selectedCaracteristicaCombo" optionLabel="nombre" placeholder="Caracteristicas" [showClear]="true" ></p-dropdown>
        </div>
       </div>
       <div class="ui-grid-row"  style="float:right">
@@ -23,18 +23,15 @@
 
   <div class="ui-grid-row">
   <p-table #dt [columns]="cols" [value]="caracteristicas" selectionMode="single" [(selection)]="selectedCaracteristica" contextMenuSelectionMode="joint"
-         dataKey="nombre" (onRowDblclick)="onRowSelect($event)"  [responsive]="true" [paginator]="true" [rows]="15" [contextMenu]="cm"
+         dataKey="nombre"  [responsive]="true" [paginator]="true" [rows]="15" [contextMenu]="cm"
          exportFilename="Caracteristicas">
   <ng-template pTemplate="caption">
-    <div>
-      Caracteristicas
-    </div>
     <div style="text-align: right">
       <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
       <input type="text" pInputText size="50" placeholder="Nombre" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
     </div>
     <div class="ui-helper-clearfix">
-      <button type="button" pButton icon="fa fa-file-o" iconPos="left" label="Exportar" (click)="dt.exportCSV()" style="float:left"></button>
+      <button type="button" pButton icon="fa fa-file-o" iconPos="left" label="Exportar" (click)="dt.exportCSV()" style="width: 100px;float: left;"></button>
     </div>
   </ng-template>
   <ng-template pTemplate="header">
@@ -50,7 +47,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="summary" let-rowData>
-    <div style="text-align:left">
+    <div style="text-align:left;width: 100px">
       <button type="button" pButton icon="fa fa-plus" (click)="showDialogToAdd()" label="Nuevo"></button>
     </div>
   </ng-template>
@@ -66,7 +63,7 @@
     </div>
     <div class="ui-grid-row">
       <div class="ui-grid-col-4"><label>Tipo</label></div>
-      <div class="ui-grid-col-8"><label>{{selectedCaracteristicaCombo}}</label></div>
+      <div class="ui-grid-col-8"><label>{{selectedCaracteristicaCombo.nombre}}</label></div>
     </div>
   </div>
   <p-footer>
