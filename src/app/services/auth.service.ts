@@ -316,5 +316,15 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  getCaracteristicasFiltro(caracteristicaFiltro) {
+    this.loadToken();
+    const headers = new HttpHeaders().set( 'Content-Type', 'application/json').set( 'Authorization', this.authToken);
+    const httpParams: HttpParamsOptions = { fromObject: caracteristicaFiltro } as HttpParamsOptions;
+    const options = { params: new HttpParams(httpParams), headers: headers };
+
+    return this.httpClient.get<any>('http://localhost:3000/caracteristicas/caracteristicasFiltro', options)
+      .map(res => res);
+  }
+
 
 }

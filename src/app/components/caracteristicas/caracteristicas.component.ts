@@ -17,10 +17,12 @@ import {CaracteristicaSelect} from  '../../shared/model/caracteristicaSelect';
 export class CaracteristicasComponent implements OnInit {
 
 
-  caracteristicas: Object[];
+  caracteristicas: Caracteristica[];
   caracteristicaCombo: CaracteristicaSelect[];
+  caracteristicaComboSave: CaracteristicaSelect[];
   selectedCaracteristica: Caracteristica;
   selectedCaracteristicaCombo: CaracteristicaSelect;
+  selectedCaracteristicaComboSave: CaracteristicaSelect;
   caracteristica: Caracteristica;
   newCaracteristica: boolean;
   displayDialog: boolean;
@@ -37,7 +39,7 @@ export class CaracteristicasComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cargarTabla();
+
     this.items = [
       {label: 'Nuevo', icon: 'fa fa-plus', command: (event) => this.showDialogToAdd()},
       {label: 'Actualizar', icon: 'fa fa-download', command: (event) => this.updateCaracteristicaContext(this.selectedCaracteristica)},
@@ -60,17 +62,29 @@ export class CaracteristicasComponent implements OnInit {
       {nombre:'Caracteristica 7', tipo: 7 }
     ];
 
+    this.caracteristicaComboSave = [
+      {nombre:'Caracteristica 1', tipo: 1 },
+      {nombre:'Caracteristica 2', tipo: 2 },
+      {nombre:'Caracteristica 3', tipo: 3 },
+      {nombre:'Caracteristica 4', tipo: 4 },
+      {nombre:'Caracteristica 5', tipo: 5 },
+      {nombre:'Caracteristica 6', tipo: 6 },
+      {nombre:'Caracteristica 7', tipo: 7 }
+    ];
+
+
   }
 
   showDialogToAdd() {
     this.newCaracteristica = true;
     this.caracteristica = new Caracteristica();
+    this.selectedCaracteristicaComboSave = null;
     this.displayDialog = true;
   }
 
   save() {
+      this.caracteristica.tipo = this.selectedCaracteristicaComboSave.tipo;
     if (this.newCaracteristica) {
-      this.caracteristica.tipo = this.selectedCaracteristicaCombo.tipo;
       this.authService.newCaracteristica(this.caracteristica).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity:'success', summary:'Caracteristica', detail:'Registrada correctamente'});
@@ -80,7 +94,7 @@ export class CaracteristicasComponent implements OnInit {
       });
       this.caracteristica = null;
       this.displayDialog = false;
-      this.cargarTabla();
+      this.buscarCaracteristicas();
     } else {
       this.authService.updateCaracteristica(this.caracteristica).subscribe(data => {
         if (data.success) {
@@ -91,7 +105,7 @@ export class CaracteristicasComponent implements OnInit {
       });
       this.caracteristica = null;
       this.displayDialog = false;
-      this.cargarTabla();
+      this.buscarCaracteristicas();
     }
   }
 
@@ -104,7 +118,7 @@ export class CaracteristicasComponent implements OnInit {
       }
       this.caracteristica = null;
       this.displayDialogDelete = false;
-      this.cargarTabla();
+      this.buscarCaracteristicas();
 
     });
   }
@@ -113,7 +127,7 @@ export class CaracteristicasComponent implements OnInit {
 
     this.caracteristica = null;
     this.displayDialog = false;
-    this.cargarTabla();
+    this.buscarCaracteristicas();
 
   }
 
@@ -121,7 +135,7 @@ export class CaracteristicasComponent implements OnInit {
 
     this.caracteristica = null;
     this.displayDialogDelete = false;
-    this.cargarTabla();
+    this.buscarCaracteristicas();
 
   }
 
@@ -138,12 +152,14 @@ export class CaracteristicasComponent implements OnInit {
 
   updateCaracteristicaContext(caracteristica: Caracteristica) {
     this.caracteristica = caracteristica;
+    this.selectedCaracteristicaComboSave = this.caracteristicaComboSave.find( caracter => caracter.tipo === this.caracteristica.tipo );
     this.newCaracteristica = false;
     this.displayDialog = true;
   }
 
   deleteCaracteristicaContext(caracteristica: Caracteristica) {
     this.caracteristica = caracteristica;
+    this.selectedCaracteristicaComboSave = this.caracteristicaComboSave.find( caracter => caracter.tipo === this.caracteristica.tipo );
     this.newCaracteristica = false;
     this.displayDialogDelete = true;
   }
@@ -159,6 +175,17 @@ export class CaracteristicasComponent implements OnInit {
     }, err => {
       console.log(err);
       return false;
+    });
+  }
+
+
+  buscarCaracteristicas() {
+    const caracteristicaFiltro = new Object({
+      tipo : this.selectedCaracteristicaCombo.tipo
+    });
+
+    this.authService.getCaracteristicasFiltro(caracteristicaFiltro).subscribe(data => {
+      this.caracteristicas = data;
     });
   }
 }
