@@ -24,6 +24,16 @@ export class MovimientosComponent implements OnInit {
   estado: any;
   selectedCliente: any;
   selectedEstado: any;
+  selectedCaracteristica1: any;
+  selectedCaracteristica2: any;
+  selectedCaracteristica3: any;
+  selectedCaracteristica4: any;
+  selectedCaracteristica5: any;
+  selectedCaracteristica6: any;
+  selectedCaracteristica7: any;
+  caracteristica8: string;
+  caracteristica9: string;
+  caracteristica10: string;
   selectedEstadoActual: any;
   movimiento: Movimiento;
   newMovimiento: boolean;
@@ -33,9 +43,6 @@ export class MovimientosComponent implements OnInit {
   fecha: Date;
   fechaRegistro: Date;
   es: any;
-  carac: string;
-  carac1: string;
-  carac2: string;
   movform: FormGroup;
   pos: any;
 
@@ -111,9 +118,16 @@ export class MovimientosComponent implements OnInit {
     this.selectedEstado = new Object;
     this.selectedCliente = new Object;
     this.selectedEstadoActual = '';
-    this.carac = '';
-    this.carac1 = '';
-    this.carac2 = '';
+    // this.selectedCaracteristica1: any;
+    // selectedCaracteristica2: any;
+    // selectedCaracteristica3: any;
+    // selectedCaracteristica4: any;
+    // selectedCaracteristica5: any;
+    // selectedCaracteristica6: any;
+    // selectedCaracteristica7: any;
+    // caracteristica8: string;
+    // caracteristica9: string;
+    // caracteristica10: string;
   }
 
   cerrarDialogConfirmar() {
