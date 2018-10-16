@@ -326,5 +326,15 @@ export class AuthService {
       .map(res => res);
   }
 
+  getCaracteristicasTipo(tipo) {
+    const headers = new Headers();
+    // this.loadToken();
+    // headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    return this.http.get('http://localhost:3000/caracteristicas/caracteristicasTipo/'+tipo , {headers: headers})
+      .map(res => res.json());
+
+  }
+
 
 }

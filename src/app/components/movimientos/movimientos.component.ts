@@ -8,6 +8,8 @@ import {SelectItem} from 'primeng/api';
 import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
 import {Movimiento} from  '../../shared/model/movimiento';
 import {Estado} from  '../../shared/model/estado';
+import {Caracteristica} from '../../shared/model/caracteristica';
+
 
 
 @Component({
@@ -45,6 +47,14 @@ export class MovimientosComponent implements OnInit {
   es: any;
   movform: FormGroup;
   pos: any;
+  caracteristicas1: Caracteristica[];
+  caracteristicas2: Caracteristica[];
+  caracteristicas3: Caracteristica[];
+  caracteristicas4: Caracteristica[];
+  caracteristicas5: Caracteristica[];
+  caracteristicas6: Caracteristica[];
+  caracteristicas7: Caracteristica[];
+  caractetistica: Caracteristica[];
 
 
   constructor(public authService: AuthService,
@@ -52,12 +62,13 @@ export class MovimientosComponent implements OnInit {
               public flashMessages: FlashMessagesService,
               public messageService: MessageService) {
 
-
+    for (var i = 1; i <= 7; i++) {
+      this.buscarCaracteristicasXtipos(i);
+    }
     this.traerClientes();
     this.traerEstados();
     this.fecha = new Date;
     this.fechaRegistro = new Date;
-
 
   }
 
@@ -118,16 +129,16 @@ export class MovimientosComponent implements OnInit {
     this.selectedEstado = new Object;
     this.selectedCliente = new Object;
     this.selectedEstadoActual = '';
-    // this.selectedCaracteristica1: any;
-    // selectedCaracteristica2: any;
-    // selectedCaracteristica3: any;
-    // selectedCaracteristica4: any;
-    // selectedCaracteristica5: any;
-    // selectedCaracteristica6: any;
-    // selectedCaracteristica7: any;
-    // caracteristica8: string;
-    // caracteristica9: string;
-    // caracteristica10: string;
+    this.selectedCaracteristica1 = null;
+    this.selectedCaracteristica2 = null;
+    this.selectedCaracteristica3 = null;
+    this.selectedCaracteristica4 = null;
+    this.selectedCaracteristica5 = null;
+    this.selectedCaracteristica6 = null;
+    this.selectedCaracteristica7 = null;
+    this.caracteristica8 = '';
+    this.caracteristica9 = '';
+    this.caracteristica10 = '';
   }
 
   cerrarDialogConfirmar() {
@@ -141,6 +152,77 @@ export class MovimientosComponent implements OnInit {
     popupWinindow.document.close();
   }
 
+  buscarCaracteristicasXTipo1() {
+    // debugger;
+    // var i = 1;
+    // for (i; i <= 7; i++) {
+    //   //  const caracteristica = new Object({
+    //   //    tipo: i
+    //   //  });
+    //   // this.authService.getCaracteristicasFiltro(caracteristica).subscribe(data => {
+    //   //   data = data;
+    //   //  });
+    //   this.buscarCaracteristicasXtipos(i);
+    //   debugger;
+    //   switch (i) {
+    //     case 1:
+    //       this.caracteristicas1 = this.caractetistica;
+    //       break;
+    //     case 2:
+    //       this.caracteristicas2 = this.caractetistica;
+    //       break;
+    //     case 3:
+    //       this.caracteristicas3 = this.caractetistica;
+    //       break;
+    //     case 4:
+    //       this.caracteristicas4 = this.caractetistica;
+    //       break;
+    //     case 5:
+    //       this.caracteristicas5 = this.caractetistica;
+    //       break;
+    //     case 6:
+    //       this.caracteristicas6 = this.caractetistica;
+    //       break;
+    //     case 7:
+    //       this.caracteristicas7 = this.caractetistica;
+    //       break;
+    //   }
+    // }
 
+    // this.buscarCaracteristicasXtipos(1);
+
+  }
+
+  buscarCaracteristicasXtipos = function (tipo) {
+    debugger;
+    this.authService.getCaracteristicasTipo(tipo).subscribe(data => {
+        switch (tipo) {
+          case 1:
+            this.caracteristicas1 = data;
+            break;
+          case 2:
+            this.caracteristicas2 = data;
+            break;
+          case 3:
+            this.caracteristicas3 = data;
+            break;
+          case 4:
+            this.caracteristicas4 = data;
+            break;
+          case 5:
+            this.caracteristicas5 = data;
+            break;
+          case 6:
+            this.caracteristicas6 = data;
+            break;
+          case 7:
+            this.caracteristicas7 = data;
+            break;
+        }
+    });
+
+  };
 
 }
+
+
