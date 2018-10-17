@@ -9,6 +9,8 @@ import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
 import {Movimiento} from  '../../shared/model/movimiento';
 import {Estado} from  '../../shared/model/estado';
 import {Caracteristica} from '../../shared/model/caracteristica';
+import { Dropdown } from 'primeng/components/dropdown/dropdown';
+import {Cliente} from '../../shared/model/cliente';
 
 
 
@@ -21,10 +23,10 @@ import {Caracteristica} from '../../shared/model/caracteristica';
 export class MovimientosComponent implements OnInit {
 
   movimientos: Movimiento[];
-  clientes: SelectItem[];
+  clientes: Cliente[];
   estados: SelectItem[];
   estado: any;
-  selectedCliente: any;
+  selectedCliente: Cliente;
   selectedEstado: any;
   selectedCaracteristica1: any;
   selectedCaracteristica2: any;
@@ -37,6 +39,7 @@ export class MovimientosComponent implements OnInit {
   caracteristica9: string;
   caracteristica10: string;
   selectedEstadoActual: any;
+  clienteNombre: String;
   movimiento: Movimiento;
   newMovimiento: boolean;
   displayDialog: boolean;
@@ -55,21 +58,24 @@ export class MovimientosComponent implements OnInit {
   caracteristicas6: Caracteristica[];
   caracteristicas7: Caracteristica[];
   caractetistica: Caracteristica[];
+  caracNombre1: String;
+  caracNombre2: String;
+  caracNombre3: String;
+  caracNombre4: String;
+  caracNombre5: String;
+  caracNombre6: String;
+  caracNombre7: String;
+  caracNombre8: String;
+  caracNombre9: String;
+  caracNombre10: String;
+
+  // d1: Dropdown;
 
 
   constructor(public authService: AuthService,
               public router: Router,
               public flashMessages: FlashMessagesService,
               public messageService: MessageService) {
-
-    for (var i = 1; i <= 7; i++) {
-      this.buscarCaracteristicasXtipos(i);
-    }
-    this.traerClientes();
-    this.traerEstados();
-    this.fecha = new Date;
-    this.fechaRegistro = new Date;
-
   }
 
   ngOnInit() {
@@ -87,7 +93,17 @@ export class MovimientosComponent implements OnInit {
       movimient = {
         cliente: this.selectedCliente,
         estado: this.estado,
-        fechaRegistro: this.fechaRegistro
+        fechaRegistro: this.fechaRegistro,
+        caracteristicas1: this.selectedCaracteristica1,
+        caracteristicas2: this.selectedCaracteristica2,
+        caracteristicas3: this.selectedCaracteristica3,
+        caracteristicas4: this.selectedCaracteristica4,
+        caracteristicas5: this.selectedCaracteristica5,
+        caracteristicas6: this.selectedCaracteristica6,
+        caracteristicas7: this.selectedCaracteristica7,
+        caracteristicas8: this.caracteristica8,
+        caracteristicas9: this.caracteristica9,
+        caracteristicas10: this.caracteristica10
       };
 
       this.authService.newMovimiento(movimient).subscribe(data => {
@@ -127,18 +143,19 @@ export class MovimientosComponent implements OnInit {
   limpiarCampos() {
     this.fecha = new Date;
     this.selectedEstado = new Object;
-    this.selectedCliente = new Object;
+    this.selectedCliente = new Cliente();
     this.selectedEstadoActual = '';
-    this.selectedCaracteristica1 = null;
-    this.selectedCaracteristica2 = null;
-    this.selectedCaracteristica3 = null;
-    this.selectedCaracteristica4 = null;
-    this.selectedCaracteristica5 = null;
-    this.selectedCaracteristica6 = null;
-    this.selectedCaracteristica7 = null;
-    this.caracteristica8 = '';
-    this.caracteristica9 = '';
-    this.caracteristica10 = '';
+    // this.d1.resetFilter();
+    this.selectedCaracteristica1 = '';
+    // this.selectedCaracteristica2 = '';
+    // this.selectedCaracteristica3 = '';
+    // this.selectedCaracteristica4 = '';
+    // this.selectedCaracteristica5 = '';
+    // this.selectedCaracteristica6 = '';
+    // this.selectedCaracteristica7 = '';
+    // this.caracteristica8 = '';
+    // this.caracteristica9 = '';
+    // this.caracteristica10 = '';
   }
 
   cerrarDialogConfirmar() {
@@ -152,49 +169,7 @@ export class MovimientosComponent implements OnInit {
     popupWinindow.document.close();
   }
 
-  buscarCaracteristicasXTipo1() {
-    // debugger;
-    // var i = 1;
-    // for (i; i <= 7; i++) {
-    //   //  const caracteristica = new Object({
-    //   //    tipo: i
-    //   //  });
-    //   // this.authService.getCaracteristicasFiltro(caracteristica).subscribe(data => {
-    //   //   data = data;
-    //   //  });
-    //   this.buscarCaracteristicasXtipos(i);
-    //   debugger;
-    //   switch (i) {
-    //     case 1:
-    //       this.caracteristicas1 = this.caractetistica;
-    //       break;
-    //     case 2:
-    //       this.caracteristicas2 = this.caractetistica;
-    //       break;
-    //     case 3:
-    //       this.caracteristicas3 = this.caractetistica;
-    //       break;
-    //     case 4:
-    //       this.caracteristicas4 = this.caractetistica;
-    //       break;
-    //     case 5:
-    //       this.caracteristicas5 = this.caractetistica;
-    //       break;
-    //     case 6:
-    //       this.caracteristicas6 = this.caractetistica;
-    //       break;
-    //     case 7:
-    //       this.caracteristicas7 = this.caractetistica;
-    //       break;
-    //   }
-    // }
-
-    // this.buscarCaracteristicasXtipos(1);
-
-  }
-
-  buscarCaracteristicasXtipos = function (tipo) {
-    debugger;
+   buscarCaracteristicasXtipos = function (tipo) {
     this.authService.getCaracteristicasTipo(tipo).subscribe(data => {
         switch (tipo) {
           case 1:
@@ -223,6 +198,12 @@ export class MovimientosComponent implements OnInit {
 
   };
 
+  clearFilter(dropdown: Dropdown) {
+
+    // dropdown.clear();
+  }
+
 }
+
 
 

@@ -15,15 +15,15 @@ export class Movimiento {
   public idMov: Number;
   public cantDias: Number;
   public codigoBarras: String;
-  public caracteristica1: Caracteristica;
-  public caracteristica2: Caracteristica;
-  public caracteristica3: Caracteristica;
-  public caracteristica4: Caracteristica;
-  public caracteristica5: Caracteristica;
-  public caracteristica6: Caracteristica;
-  public caracteristica7: Caracteristica;
-  public caracteristica8: String;
-  public caracteristica9: String;
-  public caracteristica10: String;
+  public caracteristicas1: Caracteristica;
+  public caracteristicas2: Caracteristica;
+  public caracteristicas3: Caracteristica;
+  public caracteristicas4: Caracteristica;
+  public caracteristicas5: Caracteristica;
+  public caracteristicas6: Caracteristica;
+  public caracteristicas7: Caracteristica;
+  public caracteristicas8: String;
+  public caracteristicas9: String;
+  public caracteristicas10: String;
 
 }

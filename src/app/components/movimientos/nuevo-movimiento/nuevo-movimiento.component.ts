@@ -22,7 +22,14 @@ export class NuevoMovimientoComponent extends MovimientosComponent implements On
       clear: 'Borrar'
     };
 
-
+    console.log('init');
+    for (let i = 1; i <= 7; i++) {
+      this.buscarCaracteristicasXtipos(i);
+    }
+    this.traerClientes();
+    this.traerEstados();
+    this.fecha = new Date;
+    this.fechaRegistro = new Date;
   }
 
   showConfirmar() {

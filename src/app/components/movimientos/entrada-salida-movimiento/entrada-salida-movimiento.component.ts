@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MovimientosComponent} from '../movimientos.component';
 import {MessageService} from 'primeng/api';
+import {Cliente} from '../../../shared/model/cliente';
 
 // import {Dropdown} from "primeng/components/dropdown/dropdown";
 
@@ -27,34 +28,37 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
       today: 'Hoy',
       clear: 'Borrar'
     };
+
+    this.traerEstados();
   }
 
   buscarMovimiento() {
     this.selectedEstado = new Object;
-    this.selectedCliente = new Object;
-
-
     if (this.id) {
       this.authService.getMovimiento(this.id).subscribe(data => {
         if (data) {
           this.movimiento = data;
-          if (data.cliente) {
-            this.authService.getCliente(data.cliente).subscribe(cliente => {
-              this.selectedCliente = cliente;
-              this.movimiento.cliente = cliente;
-            });
+          if (this.movimiento.cliente) {
+            debugger;
+            this.clienteNombre = this.movimiento.cliente.nombre;
           }
-
           if (data.estado) {
-            this.authService.getEstado(data.estado).subscribe(estado => {
               if (this.movimiento.baja) {
                 this.selectedEstadoActual = 'Baja';
               } else {
-                this.selectedEstadoActual = estado.nombre;
+                this.selectedEstadoActual = data.estado.nombre;
               }
-              this.movimiento.estado = estado;
-            });
           }
+          this.caracNombre1 = this.movimiento.caracteristicas1.nombre;
+          this.caracNombre2 = this.movimiento.caracteristicas2.nombre;
+          this.caracNombre3 = this.movimiento.caracteristicas3.nombre;
+          this.caracNombre4 = this.movimiento.caracteristicas4.nombre;
+          this.caracNombre5 = this.movimiento.caracteristicas5.nombre;
+          this.caracNombre6 = this.movimiento.caracteristicas6.nombre;
+          this.caracNombre7 = this.movimiento.caracteristicas7.nombre;
+          this.caracNombre8 = this.movimiento.caracteristicas8;
+          this.caracNombre9 = this.movimiento.caracteristicas9;
+          this.caracNombre10 = this.movimiento.caracteristicas10;
         } else {
           this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'No encontrado'});
         }
@@ -68,7 +72,7 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
     var movimient = new Object();
     movimient = {
       _id: this.movimiento._id,
-      cliente: this.selectedCliente,
+      cliente: this.movimiento.cliente,
       estado: this.selectedEstado,
       fecha: this.fecha
     };
