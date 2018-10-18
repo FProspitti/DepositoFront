@@ -1,5 +1,6 @@
 <br/>
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
+<form [formGroup]="clienteForm" (ngSubmit)="save()">
 <p-table #dt [columns]="cols" [value]="clientes" selectionMode="single" [(selection)]="selectedCliente" contextMenuSelectionMode="joint"
          dataKey="nombre" (onRowDblclick)="onRowSelect($event)"  [responsive]="true" [paginator]="true" [rows]="15" [contextMenu]="cm"
          exportFilename="Clientes">
@@ -40,23 +41,24 @@
   <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="cliente">
     <div class="ui-grid-row">
       <div class="ui-grid-col-4"><label for="nombre">Nombre</label></div>
-      <div class="ui-grid-col-8"><input pInputText id="nombre" [(ngModel)]="cliente.nombre" /></div>
+      <div class="ui-grid-col-8"><input formControlName="nombreValido" type="text" id="nombre" [(ngModel)]="cliente.nombre"/></div>
+      <p-message severity="error" text="El nombre es requerido" *ngIf="clienteForm.controls['nombreValido'].invalid && (clienteForm.controls['nombreValido'].dirty || clienteForm.controls['nombreValido'].touched)"></p-message>
     </div>
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
       <button type="button" class="ui-button-danger" pButton icon="fa  fa-close" (click)="cerrarDialog()" label="Cancelar"></button>
-      <button type="button" class="ui-button-success" pButton icon="fa  fa-check" (click)="save()" label="Guardar"></button>
+      <button type="submit" class="ui-button-success" pButton icon="fa  fa-check" label="Guardar" [disabled]="!clienteForm.valid"></button>
     </div>
   </p-footer>
 </p-dialog>
 
 
 <p-dialog header="Cliente" [(visible)]="displayDialogDelete" [responsive]="true" showEffect="fade" [modal]="true" [width]="450">
-  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="cliente">
+  <div class="ui-grid ui-grid-responsive ui-fluid">
     <div class="ui-grid-row">
       <div class="ui-grid-col-4"><label for="nombre">Nombre</label></div>
-      <div class="ui-grid-col-8"><input disabled pInputText id="nombreDelete" [(ngModel)]="cliente.nombre" /></div>
+      <div class="ui-grid-col-8"><label>{{clienteNombre}}</label></div>
     </div>
   </div>
   <p-footer>
@@ -66,4 +68,4 @@
     </div>
   </p-footer>
 </p-dialog>
-
+</form>

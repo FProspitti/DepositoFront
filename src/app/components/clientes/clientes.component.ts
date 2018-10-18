@@ -4,6 +4,8 @@ import {MessageService} from 'primeng/api';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {AuthService} from '../../services/auth.service';
 import {MenuItem} from 'primeng/primeng';
+import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
+import {Cliente} from '../../shared/model/cliente';
 
 
 
@@ -16,19 +18,23 @@ import {MenuItem} from 'primeng/primeng';
 export class ClientesComponent implements OnInit {
 
   clientes: Object[];
-  selectedCliente: Object;
+  selectedCliente: Cliente;
   selectedCliente1: Object;
   cliente: Object = new Object();
   newCliente: boolean;
   displayDialog: boolean;
   displayDialogDelete: boolean;
-  items : MenuItem[];
+  items: MenuItem[];
   cols: any[];
+  clienteForm: FormGroup;
+  clienteNombre: String;
+  submitted = false;
 
   constructor(private authService: AuthService,
   private router: Router,
   private flashMessages: FlashMessagesService,
-              private messageService: MessageService) {
+  private messageService: MessageService,
+  private fb: FormBuilder) {
 
 }
 
@@ -45,8 +51,12 @@ export class ClientesComponent implements OnInit {
       { field: 'fechaAlta', header: 'Fecha Alta'}
     ];
 
-  }
+    this.clienteForm = this.fb.group({
+      'nombreValido': new FormControl('', Validators.required),
+      });
 
+
+  }
 
   showDialogToAdd() {
     this.newCliente = true;
@@ -55,7 +65,8 @@ export class ClientesComponent implements OnInit {
   }
 
   save() {
-    if (this.newCliente) {
+    this.submitted = true;
+     if (this.newCliente) {
       this.authService.newCliente(this.cliente).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity:'success', summary:'Cliente', detail:'Registrado correctamente'});
@@ -125,16 +136,17 @@ export class ClientesComponent implements OnInit {
   }
 
 
-  updateClienteContext(cliente: Object) {
-    this.cliente=cliente;
+  updateClienteContext(cliente: Cliente) {
+    this.cliente = cliente;
     this.newCliente = false;
     this.displayDialog = true;
   }
 
-  deleteClienteContext(cliente: Object) {
-    this.cliente=cliente;
+  deleteClienteContext(cliente: Cliente) {
+    this.cliente = cliente;
     this.newCliente = false;
-    this.displayDialogDelete = true;
+    this.clienteNombre = cliente.nombre;
+     this.displayDialogDelete = true;
   }
 
   findSelectedClienteIndex(): number {

@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule,Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AppComponent } from './app.component';
@@ -42,6 +42,10 @@ import {NuevoMovimientoComponent} from './components/movimientos/nuevo-movimient
 import { QRCodeModule } from 'ng-qrcode';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { CaracteristicasComponent } from './components/caracteristicas/caracteristicas.component';
+
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {KeyFilterModule} from 'primeng/keyfilter';
 
 
 const  appRoutes: Routes = [
@@ -84,6 +88,7 @@ const  appRoutes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     RouterModule.forRoot(appRoutes),
     FlashMessagesModule.forRoot(),
@@ -102,7 +107,10 @@ const  appRoutes: Routes = [
     TableModule,
     HttpClientModule,
     QRCodeModule,
-    NgxBarcodeModule
+    NgxBarcodeModule,
+    MessagesModule,
+    MessageModule,
+    KeyFilterModule
 
   ],
   providers: [ValidateService,AuthService, AuthGuard],

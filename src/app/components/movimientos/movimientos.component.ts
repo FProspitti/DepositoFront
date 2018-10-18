@@ -143,19 +143,21 @@ export class MovimientosComponent implements OnInit {
   limpiarCampos() {
     this.fecha = new Date;
     this.selectedEstado = new Object;
-    this.selectedCliente = new Cliente();
     this.selectedEstadoActual = '';
+    this.clienteNombre = '';
     // this.d1.resetFilter();
-    this.selectedCaracteristica1 = '';
-    // this.selectedCaracteristica2 = '';
-    // this.selectedCaracteristica3 = '';
-    // this.selectedCaracteristica4 = '';
-    // this.selectedCaracteristica5 = '';
-    // this.selectedCaracteristica6 = '';
-    // this.selectedCaracteristica7 = '';
-    // this.caracteristica8 = '';
-    // this.caracteristica9 = '';
-    // this.caracteristica10 = '';
+    this.caracNombre1  = '';
+    this.caracNombre2  = '';
+    this.caracNombre3  = '';
+    this.caracNombre4  = '';
+    this.caracNombre5  = '';
+    this.caracNombre6  = '';
+    this.caracNombre7  = '';
+    this.caracNombre8  = '';
+    this.caracNombre9  = '';
+    this.caracNombre10  = '';
+    this.movimiento = null;
+
   }
 
   cerrarDialogConfirmar() {

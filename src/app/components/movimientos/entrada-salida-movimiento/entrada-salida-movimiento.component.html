@@ -11,7 +11,7 @@
   <div class="ui-grid ui-grid-responsive ui-fluid">
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>ID</label></div>
-      <div class="ui-grid-col-8"><input style="width: 50%;" pInputText [(ngModel)]="id" (keyup)="buscarMovimiento()"/></div>
+      <div class="ui-grid-col-8"><input style="width: 50%;" pInputText [(ngModel)]="id" pKeyFilter="int" (keyup)="buscarMovimiento()"/></div>
     </div>
     <br/>
     <div class="ui-grid-row">

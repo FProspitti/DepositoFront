@@ -30,16 +30,17 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
     };
 
     this.traerEstados();
+    this.fecha = new Date();
   }
 
   buscarMovimiento() {
+    this.limpiarCampos();
     this.selectedEstado = new Object;
     if (this.id) {
       this.authService.getMovimiento(this.id).subscribe(data => {
         if (data) {
           this.movimiento = data;
           if (this.movimiento.cliente) {
-            debugger;
             this.clienteNombre = this.movimiento.cliente.nombre;
           }
           if (data.estado) {
@@ -67,41 +68,53 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
   }
 
   save() {
-    this.fecha.setHours(0, 0, 0, 0);
+    if (this.movimiento != null) {
+      this.fecha.setHours(0, 0, 0, 0);
 
-    var movimient = new Object();
-    movimient = {
-      _id: this.movimiento._id,
-      cliente: this.movimiento.cliente,
-      estado: this.selectedEstado,
-      fecha: this.fecha
-    };
+      var movimient = new Object();
+      movimient = {
+        _id: this.movimiento._id,
+        cliente: this.movimiento.cliente,
+        estado: this.selectedEstado,
+        fecha: this.fecha
+      };
 
-    this.authService.updateMovimiento(movimient).subscribe(data => {
-      if (data.success) {
-        this.messageService.add({severity: 'success', summary: 'Ingreso', detail: 'Creado correctamente'});
-        this.limpiarCampos();
-        this.id = null;
-      } else {
-        this.messageService.add({severity: 'error', summary: 'Ingreso', detail: 'Error al ingresar'});
-      }
-    });
+      this.authService.updateMovimiento(movimient).subscribe(data => {
+        if (data.success) {
+          this.messageService.add({severity: 'success', summary: 'Ingreso', detail: 'Creado correctamente'});
+          this.limpiarCampos();
+          this.id = null;
+        } else {
+          this.messageService.add({severity: 'error', summary: 'Ingreso', detail: 'Error al ingresar'});
+        }
+      });
+    } else {
+      this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Debe buscar un movimiento'});
+    }
   }
 
   borrar() {
-    this.authService.deleteMovimiento(this.movimiento).subscribe(data => {
-      if (data.success) {
-        this.messageService.add({severity: 'success', summary: 'Movimiento', detail: 'Borrado correctamente'});
-        this.limpiarCampos();
-        this.id = null;
-      } else {
-        this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Error al borrar'});
-      }
-    });
-  }
+    if (this.movimiento != null) {
+      this.authService.deleteMovimiento(this.movimiento).subscribe(data => {
+        if (data.success) {
+          this.messageService.add({severity: 'success', summary: 'Movimiento', detail: 'Borrado correctamente'});
+          this.limpiarCampos();
+          this.id = null;
+        } else {
+          this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Error al borrar'});
+        }
+      });
+    }  else {
+          this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Debe buscar un movimiento'});
+    }
 
+}
   reimprirMovimiento() {
-    this.displayDialog = true;
+    if (this.movimiento != null) {
+      this.displayDialog = true;
+    } else {
+      this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Debe buscar un movimiento'});
+    }
   }
 
   getStyleBaja() {
