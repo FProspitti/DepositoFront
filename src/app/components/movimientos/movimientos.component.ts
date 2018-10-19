@@ -68,6 +68,7 @@ export class MovimientosComponent implements OnInit {
   caracNombre8: String;
   caracNombre9: String;
   caracNombre10: String;
+  movimientoForm: FormGroup;
 
   // d1: Dropdown;
 
@@ -75,7 +76,8 @@ export class MovimientosComponent implements OnInit {
   constructor(public authService: AuthService,
               public router: Router,
               public flashMessages: FlashMessagesService,
-              public messageService: MessageService) {
+              public messageService: MessageService,
+              public fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -157,6 +159,7 @@ export class MovimientosComponent implements OnInit {
     this.caracNombre9  = '';
     this.caracNombre10  = '';
     this.movimiento = null;
+    this.movimientoForm.reset();
 
   }
 

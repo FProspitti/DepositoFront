@@ -1,5 +1,6 @@
 <br/>
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
+<form [formGroup]="userForm">
 <p-table #dt [columns]="cols" [value]="usuarios" selectionMode="single" [(selection)]="selectedUser" contextMenuSelectionMode="joint"
          dataKey="name" (onRowDblclick)="onRowSelect($event)"  [responsive]="true" [paginator]="true" [rows]="15" [contextMenu]="cm"
          exportFilename="Usuarios">
@@ -44,20 +45,36 @@
   <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="user">
     <div class="ui-grid-row">
       <div class="ui-grid-col-4"><label for="name">Nombre</label></div>
-      <div class="ui-grid-col-8"><input pInputText id="name" [(ngModel)]="user.name" /></div>
+      <div class="ui-grid-col-8"><input pInputText  formControlName="nombreYApeUser" id="name" [(ngModel)]="user.name" /></div>
+      <div class="ui-grid-col-6">
+        <p-message severity="error" text="Requerido" *ngIf="!userForm.controls['nombreYApeUser'].valid&&userForm.controls['nombreYApeUser'].dirty"></p-message>
+      </div>
     </div>
+    <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-4"><label for="email">Email</label></div>
-      <div class="ui-grid-col-8"><input pInputText id="email" [(ngModel)]="user.email" /></div>
+      <div class="ui-grid-col-8"><input type="email"  formControlName="emailUser" pKeyFilter="email" id="email" [(ngModel)]="user.email" /></div>
+      <div class="ui-grid-col-6">
+        <p-message severity="error" text="Requerido" *ngIf="!userForm.controls['emailUser'].valid&&userForm.controls['emailUser'].dirty"></p-message>
+      </div>
     </div>
+    <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-4"><label for="username">Nombre Usuario</label></div>
-      <div class="ui-grid-col-8"><input pInputText id="username" [(ngModel)]="user.username" /></div>
+      <div class="ui-grid-col-8"><input pInputText id="username" formControlName="nombreUser"  [(ngModel)]="user.username" /></div>
+      <div class="ui-grid-col-6">
+        <p-message severity="error" text="Requerido" *ngIf="!userForm.controls['nombreUser'].valid&&userForm.controls['nombreUser'].dirty"></p-message>
+      </div>
     </div>
+    <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-4"><label for="password">Password</label></div>
-      <div class="ui-grid-col-8"><input pInputText id="password" type="password" [(ngModel)]="user.password" /></div>
+      <div class="ui-grid-col-8"><input pInputText formControlName="passUser" id="password" type="password" [(ngModel)]="user.password" /></div>
+      <div class="ui-grid-col-6">
+        <p-message severity="error" text="Requerido" *ngIf="!userForm.controls['passUser'].valid&&userForm.controls['passUser'].dirty"></p-message>
+      </div>
     </div>
+    <br/>
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
@@ -72,7 +89,7 @@
   <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="user">
     <div class="ui-grid-row">
       <div class="ui-grid-col-4"><label for="name">Nombre</label></div>
-      <div class="ui-grid-col-8"><input disabled pInputText id="nombreDelete" [(ngModel)]="user.name" /></div>
+      <div class="ui-grid-col-8"><label>{{usuarioNombre}}</label></div>
     </div>
   </div>
   <p-footer>
@@ -82,6 +99,8 @@
     </div>
   </p-footer>
 </p-dialog>
+</form>
+
 
 
 

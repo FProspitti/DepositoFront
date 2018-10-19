@@ -59,6 +59,7 @@ export class ClientesComponent implements OnInit {
   }
 
   showDialogToAdd() {
+    this.clienteForm.reset();
     this.newCliente = true;
     this.cliente = new Object();
     this.displayDialog = true;
@@ -66,6 +67,12 @@ export class ClientesComponent implements OnInit {
 
   save() {
     this.submitted = true;
+    if (!this.clienteForm.valid) {
+      if (!this.clienteForm.controls['nombreValido'].valid) {
+        this.clienteForm.controls['nombreValido'].markAsDirty();
+      }
+     return;
+    }
      if (this.newCliente) {
       this.authService.newCliente(this.cliente).subscribe(data => {
         if (data.success) {

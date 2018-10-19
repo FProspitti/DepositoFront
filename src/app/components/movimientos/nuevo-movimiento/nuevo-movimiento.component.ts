@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MovimientosComponent} from '../movimientos.component';
 import {MessageService} from 'primeng/api';
+import {FormControl, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-nuevo-movimiento',
@@ -30,6 +31,10 @@ export class NuevoMovimientoComponent extends MovimientosComponent implements On
     this.traerEstados();
     this.fecha = new Date;
     this.fechaRegistro = new Date;
+
+    this.movimientoForm = this.fb.group({
+      'clienteValido': new FormControl('', Validators.required),
+    });
   }
 
   showConfirmar() {

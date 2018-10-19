@@ -4,6 +4,7 @@ import {MessageService} from 'primeng/api';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {AuthService} from '../../services/auth.service';
 import {MenuItem} from 'primeng/primeng';
+import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
 
 
 
@@ -17,18 +18,21 @@ export class UsersComponent implements OnInit {
 
   usuarios: Object[];
   selectedUser: Object;
-  selectedUser1: Object;
   user: Object = new Object();
   newUser: boolean;
   displayDialog: boolean;
   displayDialogDelete: boolean;
-  items : MenuItem[];
-   cols: any[];
+  items: MenuItem[];
+  cols: any[];
+  submitted = false;
+  userForm: FormGroup;
+  usuarioNombre: String;
 
   constructor(private authService: AuthService,
               private router: Router,
               private flashMessages: FlashMessagesService,
-              private messageService: MessageService) {
+              private messageService: MessageService,
+              private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -45,15 +49,41 @@ export class UsersComponent implements OnInit {
       { field: 'email', header: 'Email' },
       { field: 'username', header: 'Nombre Usuario' }
     ];
+
+    this.userForm = this.fb.group({
+      'nombreYApeUser': new FormControl('', Validators.required),
+      'emailUser': new FormControl('', Validators.required),
+      'nombreUser': new FormControl('', Validators.required),
+      'passUser': new FormControl('', Validators.required),
+    });
+
   }
 
   showDialogToAdd() {
+    this.userForm.reset();
     this.newUser = true;
     this.user = new Object();
     this.displayDialog = true;
   }
 
   save() {
+    this.submitted = true;
+    if (!this.userForm.valid) {
+      if (!this.userForm.controls['nombreYApeUser'].valid) {
+        this.userForm.controls['nombreYApeUser'].markAsDirty();
+      }
+      if (!this.userForm.controls['emailUser'].valid) {
+        this.userForm.controls['emailUser'].markAsDirty();
+      }
+      if (!this.userForm.controls['nombreUser'].valid) {
+        this.userForm.controls['nombreUser'].markAsDirty();
+      }
+      if (!this.userForm.controls['passUser'].valid) {
+        this.userForm.controls['passUser'].markAsDirty();
+      }
+      return;
+    }
+
     if (this.newUser) {
       this.authService.registerUser(this.user).subscribe(data => {
         if (data.success) {
@@ -118,7 +148,8 @@ export class UsersComponent implements OnInit {
     return this.usuarios.indexOf(this.selectedUser);
   }
 
-  deleteUsuarioContext(user: Object) {
+  deleteUsuarioContext(user: any) {
+    this.usuarioNombre = user.name;
     this.user = user;
     this.newUser = false;
     this.displayDialogDelete = true;
@@ -139,6 +170,13 @@ export class UsersComponent implements OnInit {
 
     this.user = null;
     this.displayDialogDelete = false;
+    this.cargarTabla();
+
+  }
+
+  cerrarDialog() {
+    this.user = null;
+    this.displayDialog = false;
     this.cargarTabla();
 
   }

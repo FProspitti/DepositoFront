@@ -27,7 +27,7 @@ export class CaracteristicasComponent implements OnInit {
   newCaracteristica: boolean;
   displayDialog: boolean;
   displayDialogDelete: boolean;
-  items : MenuItem[];
+  items: MenuItem[];
   cols: any[];
 
 

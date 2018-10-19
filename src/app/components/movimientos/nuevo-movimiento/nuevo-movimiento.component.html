@@ -20,6 +20,7 @@
   </ng-template>
 </p-toast>
 
+<form [formGroup]="movimientoForm">
 <p-panel>
   <p-header>
     <div class="ui-helper-clearfix">
@@ -31,7 +32,7 @@
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label></label></div>
       <div class="ui-grid-col-8">
-        <p-dropdown  [style]="{'width':'50%'}" required="true" [options]="clientes" [(ngModel)]="selectedCliente" placeholder="Selecionar cliente" optionLabel="nombre" [showClear]="true" ></p-dropdown>
+        <p-dropdown  [style]="{'width':'50%'}" formControlName="clienteValido" [options]="clientes" [(ngModel)]="selectedCliente" placeholder="Selecionar cliente" optionLabel="nombre" [showClear]="true" ></p-dropdown>
       </div>
     </div>
     <br/>
@@ -145,4 +146,5 @@
     </div>
   </p-footer>
 </p-dialog>
+</form>
 
