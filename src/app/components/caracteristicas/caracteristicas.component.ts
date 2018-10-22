@@ -4,9 +4,10 @@ import {MessageService} from 'primeng/api';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {AuthService} from '../../services/auth.service';
 import {MenuItem} from 'primeng/primeng';
-import {SelectItem} from 'primeng/api';
 import {Caracteristica} from  '../../shared/model/caracteristica';
 import {CaracteristicaSelect} from  '../../shared/model/caracteristicaSelect';
+import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
+
 
 @Component({
   selector: 'app-caracteristicas',
@@ -21,20 +22,22 @@ export class CaracteristicasComponent implements OnInit {
   caracteristicaCombo: CaracteristicaSelect[];
   caracteristicaComboSave: CaracteristicaSelect[];
   selectedCaracteristica: Caracteristica;
-  selectedCaracteristicaCombo: CaracteristicaSelect;
-  selectedCaracteristicaComboSave: CaracteristicaSelect;
+  selectedCaracteristicaCombo =  new CaracteristicaSelect();
+  selectedCaracteristicaComboSave = new CaracteristicaSelect();
   caracteristica: Caracteristica;
   newCaracteristica: boolean;
   displayDialog: boolean;
   displayDialogDelete: boolean;
   items: MenuItem[];
   cols: any[];
+  caracteristicaForm: FormGroup;
 
 
   constructor(private authService: AuthService,
               private router: Router,
               private flashMessages: FlashMessagesService,
-              private messageService: MessageService) {
+              private messageService: MessageService,
+              private fb: FormBuilder) {
 
   }
 
@@ -72,6 +75,10 @@ export class CaracteristicasComponent implements OnInit {
       {nombre:'Caracteristica 7', tipo: 7 }
     ];
 
+
+    this.caracteristicaForm = this.fb.group({
+      'nombreValido': new FormControl('', Validators.required),
+    });
 
   }
 
