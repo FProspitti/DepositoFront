@@ -22,8 +22,8 @@ export class CaracteristicasComponent implements OnInit {
   caracteristicaCombo: CaracteristicaSelect[];
   caracteristicaComboSave: CaracteristicaSelect[];
   selectedCaracteristica: Caracteristica;
-  selectedCaracteristicaCombo =  new CaracteristicaSelect();
-  selectedCaracteristicaComboSave = new CaracteristicaSelect();
+  selectedCaracteristicaCombo:  CaracteristicaSelect;
+  selectedCaracteristicaComboSave: CaracteristicaSelect;
   caracteristica: Caracteristica;
   newCaracteristica: boolean;
   displayDialog: boolean;
@@ -31,6 +31,8 @@ export class CaracteristicasComponent implements OnInit {
   items: MenuItem[];
   cols: any[];
   caracteristicaForm: FormGroup;
+  nombreDelete: String;
+  tipoDelete: String;
 
 
   constructor(private authService: AuthService,
@@ -78,6 +80,9 @@ export class CaracteristicasComponent implements OnInit {
 
     this.caracteristicaForm = this.fb.group({
       'nombreValido': new FormControl('', Validators.required),
+      'caracteristicaSelectFiltro': new FormControl('', Validators.required),
+      'caracteristicaSelect': new FormControl('', Validators.required),
+      'nombreDelete': new FormControl('', Validators.required),
     });
 
   }
@@ -167,6 +172,8 @@ export class CaracteristicasComponent implements OnInit {
   deleteCaracteristicaContext(caracteristica: Caracteristica) {
     this.caracteristica = caracteristica;
     this.selectedCaracteristicaComboSave = this.caracteristicaComboSave.find( caracter => caracter.tipo === this.caracteristica.tipo );
+    this.nombreDelete = caracteristica.nombre;
+    this.tipoDelete = 'Caracteristica ' + caracteristica.tipo.toString();
     this.newCaracteristica = false;
     this.displayDialogDelete = true;
   }
