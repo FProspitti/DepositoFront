@@ -31,8 +31,10 @@ export class CaracteristicasComponent implements OnInit {
   items: MenuItem[];
   cols: any[];
   caracteristicaForm: FormGroup;
+  caracteristicaConsultaForm: FormGroup;
   nombreDelete: String;
   tipoDelete: String;
+  submitted = false;
 
 
   constructor(private authService: AuthService,
@@ -80,14 +82,17 @@ export class CaracteristicasComponent implements OnInit {
 
     this.caracteristicaForm = this.fb.group({
       'nombreValido': new FormControl('', Validators.required),
-      'caracteristicaSelectFiltro': new FormControl('', Validators.required),
       'caracteristicaSelect': new FormControl('', Validators.required),
-      'nombreDelete': new FormControl('', Validators.required),
+    });
+
+    this.caracteristicaConsultaForm = this.fb.group({
+      'caracteristicaSelectFiltro': new FormControl('', Validators.required),
     });
 
   }
 
   showDialogToAdd() {
+    this.caracteristicaForm.reset();
     this.newCaracteristica = true;
     this.caracteristica = new Caracteristica();
     this.selectedCaracteristicaComboSave = null;
@@ -95,6 +100,17 @@ export class CaracteristicasComponent implements OnInit {
   }
 
   save() {
+    this.submitted = true;
+    if (!this.caracteristicaForm.valid) {
+      if (!this.caracteristicaForm.controls['nombreValido'].valid) {
+        this.caracteristicaForm.controls['nombreValido'].markAsDirty();
+      }
+      if (!this.caracteristicaForm.controls['caracteristicaSelect'].valid) {
+        this.caracteristicaForm.controls['caracteristicaSelect'].markAsDirty();
+      }
+      return;
+    }
+
       this.caracteristica.tipo = this.selectedCaracteristicaComboSave.tipo;
     if (this.newCaracteristica) {
       this.authService.newCaracteristica(this.caracteristica).subscribe(data => {
@@ -151,17 +167,6 @@ export class CaracteristicasComponent implements OnInit {
 
   }
 
-
-
-  cloneCaracteristica(c: Object): Object {
-    let caracteristica = new Object();
-    for (let prop in c) {
-      caracteristica[prop] = c[prop];
-    }
-    return caracteristica;
-  }
-
-
   updateCaracteristicaContext(caracteristica: Caracteristica) {
     this.caracteristica = caracteristica;
     this.selectedCaracteristicaComboSave = this.caracteristicaComboSave.find( caracter => caracter.tipo === this.caracteristica.tipo );
@@ -178,22 +183,14 @@ export class CaracteristicasComponent implements OnInit {
     this.displayDialogDelete = true;
   }
 
-  findSelectedCaracteristicaIndex(): number {
-    return this.caracteristicas.indexOf(this.selectedCaracteristica);
-  }
-
-  cargarTabla() {
-    this.authService.getCaracteristicas().subscribe(caracteristicas => {
-      this.caracteristicas = caracteristicas;
-
-    }, err => {
-      console.log(err);
-      return false;
-    });
-  }
-
-
   buscarCaracteristicas() {
+    if (!this.caracteristicaConsultaForm.valid) {
+      if (!this.caracteristicaConsultaForm.controls['caracteristicaSelectFiltro'].valid) {
+        this.caracteristicaConsultaForm.controls['caracteristicaSelectFiltro'].markAsDirty();
+      }
+      return;
+    }
+
     const caracteristicaFiltro = new Object({
       tipo : this.selectedCaracteristicaCombo.tipo
     });

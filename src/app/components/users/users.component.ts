@@ -18,14 +18,16 @@ export class UsersComponent implements OnInit {
 
   usuarios: Object[];
   selectedUser: Object;
-  user: Object = new Object();
+  user: any;
   newUser: boolean;
   displayDialog: boolean;
   displayDialogDelete: boolean;
+  displayDialogPass: boolean;
   items: MenuItem[];
   cols: any[];
   submitted = false;
   userForm: FormGroup;
+  userFormUpdatePass: FormGroup;
   usuarioNombre: String;
 
   constructor(private authService: AuthService,
@@ -41,7 +43,7 @@ export class UsersComponent implements OnInit {
       {label: 'Agregar', icon: 'fa fa-plus', command: (event) => this.showDialogToAdd()},
       {label: 'Actualizar', icon: 'fa fa-download', command: (event) => this.updateUserContext(this.selectedUser)},
       {label: 'Borrar', icon: 'fa fa-trash', command: (event) => this.deleteUsuarioContext(this.selectedUser)},
-      {label: 'Actualizar pass', icon: 'fa fa-refresh'}
+      {label: 'Actualizar pass', icon: 'fa fa-refresh', command: (event) => this.updateUserPassContext(this.selectedUser)},
     ];
 
     this.cols = [
@@ -54,7 +56,10 @@ export class UsersComponent implements OnInit {
       'nombreYApeUser': new FormControl('', Validators.required),
       'emailUser': new FormControl('', Validators.required),
       'nombreUser': new FormControl('', Validators.required),
-      'passUser': new FormControl('', Validators.required),
+    });
+
+    this.userFormUpdatePass = this.fb.group({
+      'passUserUpdate': new FormControl('', Validators.required),
     });
 
   }
@@ -123,20 +128,24 @@ export class UsersComponent implements OnInit {
     });
   }
 
-  onRowSelect(event) {
-    this.newUser = false;
-    this.user = this.cloneUser(event.data);
-    this.displayDialog = true;
-  }
-
-  cloneUser(c: Object): Object {
-    let user = new Object();
-    for (let prop in c) {
-      user[prop] = c[prop];
+  updatePass() {
+    if (!this.userFormUpdatePass.valid) {
+      if (!this.userFormUpdatePass.controls['passUserUpdate'].valid) {
+        this.userFormUpdatePass.controls['passUserUpdate'].markAsDirty();
+      }
+      return;
     }
-    return user;
+    this.authService.updateUserPass(this.user).subscribe(data => {
+      if (data.success) {
+        this.messageService.add({severity:'success', summary:'Pass', detail:'Actualizado correctamente'});
+      } else {
+        this.messageService.add({severity:'error', summary:'Pass', detail:'Error al actualizar'});
+      }
+    });
+    this.user = null;
+    this.displayDialogPass = false;
+    this.cargarTabla();
   }
-
 
   updateUserContext(user: Object) {
     this.user = user;
@@ -144,15 +153,19 @@ export class UsersComponent implements OnInit {
     this.displayDialog = true;
   }
 
-  findSelectedUserIndex(): number {
-    return this.usuarios.indexOf(this.selectedUser);
-  }
-
   deleteUsuarioContext(user: any) {
     this.usuarioNombre = user.name;
     this.user = user;
     this.newUser = false;
     this.displayDialogDelete = true;
+  }
+
+  updateUserPassContext(user: any) {
+    this.userFormUpdatePass.reset();
+    this.user = user;
+    this.user.password = '';
+    this.newUser = false;
+    this.displayDialogPass = true;
   }
 
 
@@ -170,6 +183,14 @@ export class UsersComponent implements OnInit {
 
     this.user = null;
     this.displayDialogDelete = false;
+    this.cargarTabla();
+
+  }
+
+  cerrarUpdatePass() {
+
+    this.user = null;
+    this.displayDialogPass = false;
     this.cargarTabla();
 
   }

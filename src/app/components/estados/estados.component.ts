@@ -4,6 +4,8 @@ import {MessageService} from 'primeng/api';
 import {FlashMessagesService} from 'angular2-flash-messages';
 import {AuthService} from '../../services/auth.service';
 import {MenuItem} from 'primeng/primeng';
+import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
+import {Estado} from '../../shared/model/estado';
 
 @Component({
   selector: 'app-estados',
@@ -14,22 +16,24 @@ import {MenuItem} from 'primeng/primeng';
 
 export class EstadosComponent implements OnInit{
 
-  estados: Object[];
-  selectedEstado: Object;
-  selectedEstado1: Object;
-  estado: Object = new Object();
+  estados: Estado[];
+  selectedEstado: Estado;
+  estado: Estado;
   newEstado: boolean;
   displayDialog: boolean;
   displayDialogDelete: boolean;
   items: MenuItem[];
   cols: any[];
+  estadoForm: FormGroup;
+  nombreDelete: String;
+  submitted = false;
 
 
   constructor(private authService: AuthService,
               private router: Router,
               private flashMessages: FlashMessagesService,
-              private messageService: MessageService
-             ) {
+              private messageService: MessageService,
+              private fb: FormBuilder) {
 
   }
 
@@ -47,16 +51,29 @@ export class EstadosComponent implements OnInit{
       { field: 'fechaAlta', header: 'Fecha Alta'}
     ];
 
+    this.estadoForm = this.fb.group({
+      'nombreValido': new FormControl('', Validators.required),
+    });
+
   }
 
 
   showDialogToAdd() {
+    this.estadoForm.reset();
     this.newEstado = true;
-    this.estado = new Object();
+    this.estado = new Estado();
     this.displayDialog = true;
   }
 
   save() {
+
+    this.submitted = true;
+    if (!this.estadoForm.valid) {
+      if (!this.estadoForm.controls['nombreValido'].valid) {
+        this.estadoForm.controls['nombreValido'].markAsDirty();
+      }
+      return;
+    }
     if (this.newEstado) {
       this.authService.newEstado(this.estado).subscribe(data => {
         if (data.success) {
@@ -112,35 +129,17 @@ export class EstadosComponent implements OnInit{
 
   }
 
-  onRowSelect(event) {
-    this.newEstado = false;
-    this.estado = this.cloneEstado(event.data);
-    this.displayDialog = true;
-  }
-
-  cloneEstado(c: Object): Object {
-    let estado = new Object();
-    for (let prop in c) {
-      estado[prop] = c[prop];
-    }
-    return estado;
-  }
-
-
-  updateEstadoContext(estado: Object) {
-    this.estado=estado;
+  updateEstadoContext(estado: Estado) {
+    this.estado = estado;
     this.newEstado = false;
     this.displayDialog = true;
   }
 
-  deleteEstadoContext(estado: Object) {
+  deleteEstadoContext(estado: Estado) {
+    this.nombreDelete = estado.nombre;
     this.estado = estado;
     this.newEstado = false;
     this.displayDialogDelete = true;
-  }
-
-  findSelectedEstadoIndex(): number {
-    return this.estados.indexOf(this.selectedEstado);
   }
 
   cargarTabla() {

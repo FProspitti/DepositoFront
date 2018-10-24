@@ -1,6 +1,6 @@
 <br/>
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
-<form [formGroup]="caracteristicaForm">
+
 <p-panel>
   <p-header>
     <div class="ui-helper-clearfix">
@@ -8,10 +8,14 @@
     </div>
   </p-header>
   <div class="ui-grid ui-grid-responsive ui-fluid">
+    <form [formGroup]="caracteristicaConsultaForm">
       <div class="ui-grid-row">
-      <div class="ui-grid-col-4">
-        <p-dropdown  [style]="{'width':'50%'}" formControlName="caracteristicaSelectFiltro"  [options]="caracteristicaCombo" [(ngModel)]="selectedCaracteristicaCombo" optionLabel="nombre" placeholder="Caracteristicas" [showClear]="true" ></p-dropdown>
+      <div class="ui-grid-col-2">
+        <p-dropdown  formControlName="caracteristicaSelectFiltro"  [options]="caracteristicaCombo" [(ngModel)]="selectedCaracteristicaCombo" optionLabel="nombre" placeholder="Caracteristicas" [showClear]="true" ></p-dropdown>
        </div>
+        <div class="ui-grid-col-2">
+          <p-message severity="error" text="Requerido" *ngIf="!caracteristicaConsultaForm.controls['caracteristicaSelectFiltro'].valid&&caracteristicaConsultaForm.controls['caracteristicaSelectFiltro'].dirty"></p-message>
+        </div>
       </div>
       <div class="ui-grid-row"  style="float:right">
       <div class="ui-helper-clearfix">
@@ -21,7 +25,8 @@
     </div>
     <br/>
     <hr>
-
+</form>
+ <form [formGroup]="caracteristicaForm">
   <div class="ui-grid-row">
   <p-table #dt [columns]="cols" [value]="caracteristicas" selectionMode="single" [(selection)]="selectedCaracteristica" contextMenuSelectionMode="joint"
          dataKey="nombre"  [responsive]="true" [paginator]="true" [rows]="15" [contextMenu]="cm"
@@ -58,19 +63,25 @@
 
 <p-contextMenu #cm [model]="items"></p-contextMenu>
 
-<p-dialog header="Caracteristica" [(visible)]="displayDialog" [responsive]="true" [resizable]="false" showEffect="fade" [modal]="true" [width]="450">
+<p-dialog header="Caracteristica" [(visible)]="displayDialog" [responsive]="true" [resizable]="false" showEffect="fade" [modal]="true" [width]="600">
   <div  *ngIf="caracteristica">
     <div class="ui-grid-row">
-      <div class="ui-grid-col-4"><label for="nombre">Nombre</label></div>
-      <div class="ui-grid-col-8"><input formControlName="nombreValido" pInputText id="nombre" [(ngModel)]="caracteristica.nombre" /></div>
-      <div class="ui-grid-col-6">
+      <div class="ui-grid-col-4"><label for="nombre">Nombre *</label></div>
+      <div class="ui-grid-col-4"><input formControlName="nombreValido" pInputText id="nombre" [(ngModel)]="caracteristica.nombre" /></div>
+      <div class="ui-grid-col-4">
         <p-message severity="error" text="Requerido" *ngIf="!caracteristicaForm.controls['nombreValido'].valid&&caracteristicaForm.controls['nombreValido'].dirty"></p-message>
       </div>
     </div>
+    <br/>
     <div class="ui-grid-row">
-      <div class="ui-grid-col-4"><label>Tipo</label></div>
-      <div class="ui-g-8">
-        <p-dropdown [options]="caracteristicaComboSave"  formControlName="caracteristicaSelect" [(ngModel)]="selectedCaracteristicaComboSave" placeholder="Caracteristicas" optionLabel="nombre" [showClear]="true" ></p-dropdown>
+      <div class="ui-grid-col-4"><label>Tipo *</label></div>
+      <div class="ui-grid-col-4">
+        <p-dropdown appendTo="body" [options]="caracteristicaComboSave"  formControlName="caracteristicaSelect"
+                    [(ngModel)]="selectedCaracteristicaComboSave"   placeholder="Caracteristicas" optionLabel="nombre" [showClear]="true">
+       </p-dropdown>
+      </div>
+      <div class="ui-grid-col-4">
+        <p-message severity="error" text="Requerido" *ngIf="!caracteristicaForm.controls['caracteristicaSelect'].valid&&caracteristicaForm.controls['caracteristicaSelect'].dirty"></p-message>
       </div>
     </div>
   </div>
@@ -92,7 +103,7 @@
   </div>
   <div class="ui-grid-row">
     <div class="ui-grid-col-4"><label>Tipo</label></div>
-    <div class="ui-grid-col-8"><label>{{nombreDelete}}</label></div>
+    <div class="ui-grid-col-8"><label>{{tipoDelete}}</label></div>
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
@@ -102,6 +113,6 @@
   </p-footer>
   </p-dialog>
   </div>
-  </div>
+ </form>
+ </div>
 </p-panel>
-</form>

@@ -91,6 +91,16 @@ export class AuthService {
 
   }
 
+  updateUserPass(user) {
+    const headers = new Headers();
+    this.loadToken();
+    headers.append('Authorization', this.authToken);
+    headers.append('content-type', 'application/json');
+    return this.http.put('http://localhost:3000/users/updateUserPass', user , {headers: headers})
+      .map(res => res.json());
+
+  }
+
   deleteUnidad(unidad) {
     const headers = new Headers();
     this.loadToken();

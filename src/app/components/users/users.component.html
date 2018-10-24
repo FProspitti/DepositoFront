@@ -2,7 +2,7 @@
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
 <form [formGroup]="userForm">
 <p-table #dt [columns]="cols" [value]="usuarios" selectionMode="single" [(selection)]="selectedUser" contextMenuSelectionMode="joint"
-         dataKey="name" (onRowDblclick)="onRowSelect($event)"  [responsive]="true" [paginator]="true" [rows]="15" [contextMenu]="cm"
+         dataKey="name"  [responsive]="true" [paginator]="true" [rows]="15" [contextMenu]="cm"
          exportFilename="Usuarios">
   <ng-template pTemplate="caption">
     <div>
@@ -67,14 +67,6 @@
       </div>
     </div>
     <br/>
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-4"><label for="password">Password</label></div>
-      <div class="ui-grid-col-8"><input pInputText formControlName="passUser" id="password" type="password" [(ngModel)]="user.password" /></div>
-      <div class="ui-grid-col-6">
-        <p-message severity="error" text="Requerido" *ngIf="!userForm.controls['passUser'].valid&&userForm.controls['passUser'].dirty"></p-message>
-      </div>
-    </div>
-    <br/>
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
@@ -96,6 +88,26 @@
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
       <button type="button" class="ui-button-danger" pButton icon="fa  fa-close" (click)="cerrarDelete()" label="Cancelar"></button>
       <button type="button" class="ui-button-success" pButton icon="fa  fa-check" (click)="delete()" label="Borrar"></button>
+    </div>
+  </p-footer>
+</p-dialog>
+</form>
+
+<form [formGroup]="userFormUpdatePass">
+<p-dialog header="Usuario" [(visible)]="displayDialogPass" [responsive]="true" showEffect="fade" [modal]="true" [width]="450">
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="user">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="passwordUpdate">Password</label></div>
+      <div class="ui-grid-col-8"><input pInputText formControlName="passUserUpdate" id="passwordUpdate" type="password" [(ngModel)]="user.password" /></div>
+      <div class="ui-grid-col-6">
+        <p-message severity="error" text="Requerido" *ngIf="!userFormUpdatePass.controls['passUserUpdate'].valid&&userFormUpdatePass.controls['passUserUpdate'].dirty"></p-message>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" class="ui-button-danger" pButton icon="fa  fa-close" (click)="cerrarUpdatePass()" label="Cancelar"></button>
+      <button type="button" class="ui-button-success" pButton icon="fa  fa-check" (click)="updatePass()" label="Guardar"></button>
     </div>
   </p-footer>
 </p-dialog>
