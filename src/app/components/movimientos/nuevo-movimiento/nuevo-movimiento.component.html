@@ -20,7 +20,7 @@
   </ng-template>
 </p-toast>
 
-<form [formGroup]="movimientoForm">
+<form [formGroup]="nuevoMovimientoForm">
 <p-panel>
   <p-header>
     <div class="ui-helper-clearfix">
@@ -34,83 +34,88 @@
       <div class="ui-grid-col-8">
         <p-dropdown  [style]="{'width':'50%'}" formControlName="clienteValido" [options]="clientes" [(ngModel)]="selectedCliente" placeholder="Selecionar cliente" optionLabel="nombre" [showClear]="true" ></p-dropdown>
       </div>
+      <div class="ui-grid-col-2">
+        <p-message severity="error" text="Requerido" *ngIf="!nuevoMovimientoForm.controls['clienteValido'].valid&&nuevoMovimientoForm.controls['clienteValido'].dirty"></p-message>
+      </div>
     </div>
     <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>Caracteristica 1</label></div>
       <div class="ui-grid-col-8">
-        <p-dropdown #dd [style]="{'width':'50%'}" required="true" [options]="caracteristicas1" [(ngModel)]="selectedCaracteristica1" placeholder="Selecionar caracteristica" optionLabel="nombre" [showClear]="true" ></p-dropdown>
+        <p-dropdown #dd [style]="{'width':'50%'}" formControlName="caracteristica1" [options]="caracteristicas1" [(ngModel)]="selectedCaracteristica1" placeholder="Selecionar caracteristica" optionLabel="nombre" [showClear]="true" ></p-dropdown>
       </div>
     </div>
     <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>Caracteristica 2</label></div>
       <div class="ui-grid-col-8">
-        <p-dropdown  [style]="{'width':'50%'}" required="true" [options]="caracteristicas2" [(ngModel)]="selectedCaracteristica2" placeholder="Selecionar caracteristica" optionLabel="nombre" [showClear]="true" ></p-dropdown>
+        <p-dropdown  [style]="{'width':'50%'}" formControlName="caracteristica2"[options]="caracteristicas2" [(ngModel)]="selectedCaracteristica2" placeholder="Selecionar caracteristica" optionLabel="nombre" [showClear]="true" ></p-dropdown>
       </div>
     </div>
     <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>Caracteristica 3</label></div>
       <div class="ui-grid-col-8">
-        <p-dropdown  [style]="{'width':'50%'}" required="true" [options]="caracteristicas3" [(ngModel)]="selectedCaracteristica3" placeholder="Selecionar caracteristica" optionLabel="nombre" [showClear]="true" ></p-dropdown>
+        <p-dropdown  [style]="{'width':'50%'}" formControlName="caracteristica3"[options]="caracteristicas3" [(ngModel)]="selectedCaracteristica3" placeholder="Selecionar caracteristica" optionLabel="nombre" [showClear]="true" ></p-dropdown>
       </div>
     </div>
     <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>Caracteristica 4</label></div>
       <div class="ui-grid-col-8">
-        <p-dropdown  [style]="{'width':'50%'}" required="true" [options]="caracteristicas4" [(ngModel)]="selectedCaracteristica4" placeholder="Selecionar caracteristica" optionLabel="nombre" [showClear]="true" ></p-dropdown>
+        <p-dropdown  [style]="{'width':'50%'}" formControlName="caracteristica4" [options]="caracteristicas4" [(ngModel)]="selectedCaracteristica4" placeholder="Selecionar caracteristica" optionLabel="nombre" [showClear]="true" ></p-dropdown>
       </div>
     </div>
     <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>Caracteristica 5</label></div>
       <div class="ui-grid-col-8">
-        <p-dropdown  [style]="{'width':'50%'}" required="true" [options]="caracteristicas5" [(ngModel)]="selectedCaracteristica5" placeholder="Selecionar caracteristica" optionLabel="nombre" [showClear]="true" ></p-dropdown>
+        <p-dropdown  [style]="{'width':'50%'}" formControlName="caracteristica5" [options]="caracteristicas5" [(ngModel)]="selectedCaracteristica5" placeholder="Selecionar caracteristica" optionLabel="nombre" [showClear]="true" ></p-dropdown>
       </div>
     </div>
     <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>Caracteristica 6</label></div>
       <div class="ui-grid-col-8">
-        <p-dropdown  [style]="{'width':'50%'}" required="true" [options]="caracteristicas6" [(ngModel)]="selectedCaracteristica6" placeholder="Selecionar caracteristica" optionLabel="nombre" [showClear]="true" ></p-dropdown>
+        <p-dropdown  [style]="{'width':'50%'}" formControlName="caracteristica6" [options]="caracteristicas6" [(ngModel)]="selectedCaracteristica6" placeholder="Selecionar caracteristica" optionLabel="nombre" [showClear]="true" ></p-dropdown>
       </div>
     </div>
     <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>Caracteristica 7</label></div>
       <div class="ui-grid-col-8">
-        <p-dropdown  [style]="{'width':'50%'}" required="true" [options]="caracteristicas7" [(ngModel)]="selectedCaracteristica7" placeholder="Selecionar caracteristica" optionLabel="nombre" [showClear]="true" ></p-dropdown>
+        <p-dropdown  [style]="{'width':'50%'}" formControlName="caracteristica7" [options]="caracteristicas7" [(ngModel)]="selectedCaracteristica7" placeholder="Selecionar caracteristica" optionLabel="nombre" [showClear]="true" ></p-dropdown>
       </div>
     </div>
     <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>Caracteristica 8</label></div>
-      <div class="ui-grid-col-8"><input style="width: 50%;" pInputText [(ngModel)]="caracteristica8"/></div>
+      <div class="ui-grid-col-8"><input style="width: 50%;" formControlName="caracteristica8" pInputText [(ngModel)]="caracteristica8"/></div>
     </div>
     <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>Caracteristica 9</label></div>
-      <div class="ui-grid-col-8"><input style="width: 50%;" pInputText [(ngModel)]="caracteristica9"/></div>
+      <div class="ui-grid-col-8"><input style="width: 50%;" formControlName="caracteristica9" pInputText [(ngModel)]="caracteristica9"/></div>
     </div>
     <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>Caracteristica 10</label></div>
-      <div class="ui-grid-col-8"><input style="width: 50%;" pInputText [(ngModel)]="caracteristica10"/></div>
+      <div class="ui-grid-col-8"><input style="width: 50%;" formControlName="caracteristica10" pInputText [(ngModel)]="caracteristica10"/></div>
     </div>
     <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>Fecha registro</label></div>
       <div class="ui-grid-col-8">
-        <p-calendar [style]="{'width':'50%'}"   dateFormat="dd/mm/yy"  [(ngModel)]="fechaRegistro" [locale]="es" [showIcon]="true"></p-calendar>
+        <p-calendar [style]="{'width':'50%'}"  formControlName="fechaRegistro"  dateFormat="dd/mm/yy"  [(ngModel)]="fechaRegistro" [locale]="es" [showIcon]="true"></p-calendar>
+      </div>
+      <div class="ui-grid-col-2">
+        <p-message severity="error" text="Requerido" *ngIf="!nuevoMovimientoForm.controls['fechaRegistro'].valid&&nuevoMovimientoForm.controls['fechaRegistro'].dirty"></p-message>
       </div>
     </div>
   </div>
  <p-footer>
     <div class="ui-helper-clearfix">
       <button pButton type="button" icon="pi pi-check" label="Ingresar" (click)="showConfirmar()" class="ui-button-success" style="margin-right: .25em; float: right;"></button>
-      <button type="button" pButton label="Clear" (click)="clearFilter(dd)"></button>
     </div>
   </p-footer>
 </p-panel>

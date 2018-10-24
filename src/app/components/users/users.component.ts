@@ -56,6 +56,7 @@ export class UsersComponent implements OnInit {
       'nombreYApeUser': new FormControl('', Validators.required),
       'emailUser': new FormControl('', Validators.required),
       'nombreUser': new FormControl('', Validators.required),
+      'passUser': new FormControl('', Validators.required),
     });
 
     this.userFormUpdatePass = this.fb.group({
@@ -73,23 +74,24 @@ export class UsersComponent implements OnInit {
 
   save() {
     this.submitted = true;
-    if (!this.userForm.valid) {
-      if (!this.userForm.controls['nombreYApeUser'].valid) {
-        this.userForm.controls['nombreYApeUser'].markAsDirty();
-      }
-      if (!this.userForm.controls['emailUser'].valid) {
-        this.userForm.controls['emailUser'].markAsDirty();
-      }
-      if (!this.userForm.controls['nombreUser'].valid) {
-        this.userForm.controls['nombreUser'].markAsDirty();
-      }
-      if (!this.userForm.controls['passUser'].valid) {
-        this.userForm.controls['passUser'].markAsDirty();
-      }
-      return;
-    }
-
     if (this.newUser) {
+
+      if (!this.userForm.valid) {
+        if (!this.userForm.controls['nombreYApeUser'].valid) {
+          this.userForm.controls['nombreYApeUser'].markAsDirty();
+        }
+        if (!this.userForm.controls['emailUser'].valid) {
+          this.userForm.controls['emailUser'].markAsDirty();
+        }
+        if (!this.userForm.controls['nombreUser'].valid) {
+          this.userForm.controls['nombreUser'].markAsDirty();
+        }
+        if (!this.userForm.controls['passUser'].valid) {
+          this.userForm.controls['passUser'].markAsDirty();
+        }
+        return;
+      }
+
       this.authService.registerUser(this.user).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity:'success', summary:'Usuario', detail:'Registrado correctamente'});
@@ -101,7 +103,19 @@ export class UsersComponent implements OnInit {
       this.displayDialog = false;
       this.cargarTabla();
     } else {
-      this.authService.updateUser(this.user).subscribe(data => {
+        if (!this.userForm.controls['nombreYApeUser'].valid) {
+          this.userForm.controls['nombreYApeUser'].markAsDirty();
+          return;
+        }
+        if (!this.userForm.controls['emailUser'].valid) {
+          this.userForm.controls['emailUser'].markAsDirty();
+          return;
+        }
+        if (!this.userForm.controls['nombreUser'].valid) {
+          this.userForm.controls['nombreUser'].markAsDirty();
+          return;
+        }
+        this.authService.updateUser(this.user).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity:'success', summary:'Usuario', detail:'Actualizado correctamente'});
         } else {

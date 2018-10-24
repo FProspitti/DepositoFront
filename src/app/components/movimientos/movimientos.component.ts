@@ -68,7 +68,7 @@ export class MovimientosComponent implements OnInit {
   caracNombre8: String;
   caracNombre9: String;
   caracNombre10: String;
-  movimientoForm: FormGroup;
+  nuevoMovimientoForm: FormGroup;
 
   // d1: Dropdown;
 
@@ -112,17 +112,14 @@ export class MovimientosComponent implements OnInit {
         if (data.success) {
           this.messageService.add({severity: 'success', summary: 'Ingreso', detail: 'Creado correctamente'});
           this.movimiento = data.mov;
-          this.limpiarCampos();
+          this.limpiarCamposNuevo();
           this.displayDialog = true;
         } else {
           this.messageService.add({severity: 'error', summary: 'Ingreso', detail: 'Error al ingresar'});
         }
       });
     });
-
-
   }
-
   traerClientes() {
     this.authService.getClientes().subscribe(clientes => {
       this.clientes = clientes;
@@ -147,7 +144,6 @@ export class MovimientosComponent implements OnInit {
     this.selectedEstado = new Object;
     this.selectedEstadoActual = '';
     this.clienteNombre = '';
-    // this.d1.resetFilter();
     this.caracNombre1  = '';
     this.caracNombre2  = '';
     this.caracNombre3  = '';
@@ -158,8 +154,11 @@ export class MovimientosComponent implements OnInit {
     this.caracNombre8  = '';
     this.caracNombre9  = '';
     this.caracNombre10  = '';
-    this.movimiento = null;
-    this.movimientoForm.reset();
+}
+
+  limpiarCamposNuevo() {
+    this.nuevoMovimientoForm.reset();
+    this.fechaRegistro = new Date()
 
   }
 

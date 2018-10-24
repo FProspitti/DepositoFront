@@ -2,7 +2,7 @@
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
 <form [formGroup]="clienteForm">
 <p-table #dt [columns]="cols" [value]="clientes" selectionMode="single" [(selection)]="selectedCliente" contextMenuSelectionMode="joint"
-         dataKey="nombre" (onRowDblclick)="onRowSelect($event)"  [responsive]="true" [paginator]="true" [rows]="15" [contextMenu]="cm"
+         dataKey="nombre"  [responsive]="true" [paginator]="true" [rows]="15" [contextMenu]="cm"
          exportFilename="Clientes">
   <ng-template pTemplate="caption">
     <div>
@@ -41,7 +41,7 @@
   <div class="ui-grid ui-grid-responsive  ui-grid-pad  ui-fluid" *ngIf="cliente">
     <div class="ui-grid-row">
       <div class="ui-grid-col-4"><label>Nombre *</label></div>
-      <div class="ui-grid-col-8"><input formControlName="nombreValido" type="text"  [(ngModel)]="cliente.nombre"/></div>
+      <div class="ui-grid-col-6"><input formControlName="nombreValido" type="text"  [(ngModel)]="cliente.nombre"/></div>
       <div class="ui-grid-col-6">
         <p-message severity="error" text="Requerido" *ngIf="!clienteForm.controls['nombreValido'].valid&&clienteForm.controls['nombreValido'].dirty"></p-message>
       </div>

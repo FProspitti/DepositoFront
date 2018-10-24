@@ -19,7 +19,6 @@ export class ConsultaMovimientoComponent extends MovimientosComponent implements
   fechaHasta: Date;
 
   ngOnInit() {
-
     this.es = {
       firstDayOfWeek: 1,
       dayNames: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"],
@@ -42,6 +41,9 @@ export class ConsultaMovimientoComponent extends MovimientosComponent implements
 
     this.fechaDesde = new Date;
     this.fechaHasta = new Date;
+
+    this.traerClientes();
+    this.traerEstados();
 
   }
 

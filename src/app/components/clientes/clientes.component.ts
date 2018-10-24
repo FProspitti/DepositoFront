@@ -127,22 +127,6 @@ export class ClientesComponent implements OnInit {
     this.cargarTabla();
 
   }
-
-  onRowSelect(event) {
-    this.newCliente = false;
-    this.cliente = this.cloneCliente(event.data);
-    this.displayDialog = true;
-  }
-
-  cloneCliente(c: Object): Object {
-    let cliente = new Object();
-    for (let prop in c) {
-      cliente[prop] = c[prop];
-    }
-    return cliente;
-  }
-
-
   updateClienteContext(cliente: Cliente) {
     this.cliente = cliente;
     this.newCliente = false;

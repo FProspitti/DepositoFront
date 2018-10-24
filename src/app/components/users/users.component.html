@@ -53,7 +53,7 @@
     <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-4"><label for="email">Email</label></div>
-      <div class="ui-grid-col-8"><input type="email"  formControlName="emailUser" pKeyFilter="email" id="email" [(ngModel)]="user.email" /></div>
+      <div class="ui-grid-col-8"><input type="email"  formControlName="emailUser" pKeyFilter="email"  pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" id="email" [(ngModel)]="user.email" /></div>
       <div class="ui-grid-col-6">
         <p-message severity="error" text="Requerido" *ngIf="!userForm.controls['emailUser'].valid&&userForm.controls['emailUser'].dirty"></p-message>
       </div>
@@ -67,6 +67,13 @@
       </div>
     </div>
     <br/>
+    <div class="ui-grid-row" *ngIf="newUser">
+      <div class="ui-grid-col-4"><label for="passwordUpdate">Password</label></div>
+      <div class="ui-grid-col-8"><input pInputText formControlName="passUser" id="password" type="password" [(ngModel)]="user.password" /></div>
+      <div class="ui-grid-col-6">
+        <p-message severity="error" text="Requerido" *ngIf="!userForm.controls['passUser'].valid&&userForm.controls['passUser'].dirty"></p-message>
+      </div>
+    </div>
   </div>
   <p-footer>
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
