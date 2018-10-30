@@ -1,97 +1,126 @@
 
 <br/>
 <p-toast [style]="{marginTop: '80px'}"></p-toast>
+
+
+<p-toast position="center" key="baja" (onClose)="hideConfirmarBaja()" [modal]="true" [baseZIndex]="5000">
+  <ng-template let-message pTemplate="message">
+    <div style="text-align: center">
+      <i class="pi pi-exclamation-triangle" style="font-size: 3em"></i>
+      <h3>{{message.summary}}</h3>
+      <p>{{message.detail}}</p>
+    </div>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-6">
+        <button type="button" pButton (click)="borrar()" label="Si" class="ui-button-success"></button>
+      </div>
+      <div class="ui-g-6">
+        <button type="button" pButton (click)="hideConfirmarBaja()" label="No" class="ui-button-secondary"></button>
+      </div>
+    </div>
+  </ng-template>
+</p-toast>
+
+<form [formGroup]="entradaSalidaMovimientoForm">
 <p-panel>
   <p-header>
     <div class="ui-helper-clearfix">
       <span class="ui-panel-title" style="font-size:16px;display:inline-block;margin-top:2px">Entrada-Salida</span>
     </div>
   </p-header>
-
   <div class="ui-grid ui-grid-responsive ui-fluid">
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>ID</label></div>
-      <div class="ui-grid-col-8"><input style="width: 50%;" pInputText [(ngModel)]="id" pKeyFilter="int" (keyup)="buscarMovimiento()"/></div>
+      <div class="ui-grid-col-8"><input formControlName="codigoBarra"  style="width: 50%;" pInputText [(ngModel)]="id" pKeyFilter="int" (keyup)="buscarMovimiento()"/></div>
+      <div class="ui-grid-col-4">
+        <p-message severity="error" text="Requerido" *ngIf="!entradaSalidaMovimientoForm.controls['codigoBarra'].valid&&entradaSalidaMovimientoForm.controls['codigoBarra'].dirty"></p-message>
+      </div>
     </div>
     <br/>
-    <div class="ui-grid-row">
+    <div class="ui-grid-row" *ngIf="clienteNombre" >
       <div class="ui-grid-col-2"><label></label></div>
       <div class="ui-grid-col-8"><label>{{clienteNombre}}</label></div>
+      <br/>
     </div>
-    <br/>
-    <div class="ui-grid-row">
+    <div class="ui-grid-row" *ngIf="caracNombre1">
       <div class="ui-grid-col-2"><label>Caracteristica 1</label></div>
-      <div class="ui-grid-col-8"><input disabled style="width: 50%;" pInputText [(ngModel)]="caracNombre1"/></div>
+      <div class="ui-grid-col-8"><label>{{caracNombre1}}</label></div>
+      <br/>
     </div>
-    <br/>
-    <div class="ui-grid-row">
+    <div class="ui-grid-row" *ngIf="caracNombre2">
       <div class="ui-grid-col-2"><label>Caracteristica 2</label></div>
-      <div class="ui-grid-col-8"><input disabled style="width: 50%;" pInputText [(ngModel)]="caracNombre2"/></div>
+      <div class="ui-grid-col-8"><label>{{caracNombre2}}</label></div>
+      <br/>
     </div>
-    <br/>
-    <div class="ui-grid-row">
+    <div class="ui-grid-row" *ngIf="caracNombre3">
       <div class="ui-grid-col-2"><label>Caracteristica 3</label></div>
-      <div class="ui-grid-col-8"><input  disabled style="width: 50%;" pInputText [(ngModel)]="caracNombre3"/></div>
+      <div class="ui-grid-col-8"><label>{{caracNombre3}}</label></div>
+      <br/>
     </div>
-    <br/>
-    <div class="ui-grid-row">
+    <div class="ui-grid-row" *ngIf="caracNombre4">
       <div class="ui-grid-col-2"><label>Caracteristica 4</label></div>
-      <div class="ui-grid-col-8"><input disabled style="width: 50%;" pInputText [(ngModel)]="caracNombre4"/></div>
+      <div class="ui-grid-col-8"><label>{{caracNombre4}}</label></div>
+      <br/>
     </div>
-    <br/>
-    <div class="ui-grid-row">
+    <div class="ui-grid-row" *ngIf="caracNombre5">
       <div class="ui-grid-col-2"><label>Caracteristica 5</label></div>
-      <div class="ui-grid-col-8"><input disabled style="width: 50%;" pInputText [(ngModel)]="caracNombre5"/></div>
+      <div class="ui-grid-col-8"><label>{{caracNombre5}}</label></div>
+      <br/>
     </div>
-    <br/>
-    <div class="ui-grid-row">
+    <div class="ui-grid-row" *ngIf="caracNombre6">
       <div class="ui-grid-col-2"><label>Caracteristica 6</label></div>
-      <div class="ui-grid-col-8"><input disabled style="width: 50%;" pInputText [(ngModel)]="caracNombre6"/></div>
+      <div class="ui-grid-col-8"><label>{{caracNombre6}}</label></div>
+      <br/>
     </div>
-    <br/>
-    <div class="ui-grid-row">
+    <div class="ui-grid-row" *ngIf="caracNombre7">
       <div class="ui-grid-col-2"><label>Caracteristica 7</label></div>
-      <div class="ui-grid-col-8"><input disabled style="width: 50%;" pInputText [(ngModel)]="caracNombre7"/></div>
+      <div class="ui-grid-col-8"><label>{{caracNombre7}}</label></div>
+      <br/>
     </div>
-    <br/>
-    <div class="ui-grid-row">
+    <div class="ui-grid-row" *ngIf="caracNombre8">
       <div class="ui-grid-col-2"><label>Caracteristica 8</label></div>
-      <div class="ui-grid-col-8"><input disabled style="width: 50%;" pInputText [(ngModel)]="caracNombre8"/></div>
+      <div class="ui-grid-col-8"><label>{{caracNombre8}}</label></div>
+      <br/>
     </div>
-    <br/>
-    <div class="ui-grid-row">
+    <div class="ui-grid-row" *ngIf="caracNombre9">
       <div class="ui-grid-col-2"><label>Caracteristica 9</label></div>
-      <div class="ui-grid-col-8"><input disabled style="width: 50%;" pInputText [(ngModel)]="caracNombre9"/></div>
+      <div class="ui-grid-col-8"><label>{{caracNombre9}}</label></div>
+      <br/>
     </div>
-    <br/>
-    <div class="ui-grid-row">
+    <div class="ui-grid-row" *ngIf="caracNombre10">
       <div class="ui-grid-col-2"><label>Caracteristica 10</label></div>
-      <div class="ui-grid-col-8"><input disabled style="width: 50%;" pInputText [(ngModel)]="caracNombre10"/></div>
+      <div class="ui-grid-col-8"><label>{{caracNombre10}}</label></div>
+      <br/>
     </div>
-    <br/>
-    <div class="ui-grid-row">
+    <div class="ui-grid-row" *ngIf="selectedEstadoActual">
       <div class="ui-grid-col-2"><label>Estado Actual</label></div>
         <div class="ui-grid-col-8"><label [style.color]="getStyleBaja()">{{selectedEstadoActual}}</label></div>
+      <br/>
     </div>
-    <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>Nuevo Estado</label></div>
       <div class="ui-grid-col-8">
-        <p-dropdown   #de [options]="estados" [style]="{'width':'50%'}" [(ngModel)]="selectedEstado" placeholder="Selecionar estado" optionLabel="nombre" [showClear]="true"></p-dropdown>
+        <p-dropdown [options]="estados" formControlName="estado"  [style]="{'width':'50%'}" [(ngModel)]="selectedEstado" placeholder="Selecionar estado" optionLabel="nombre" [showClear]="true"></p-dropdown>
+      </div>
+      <div class="ui-grid-col-4">
+        <p-message severity="error" text="Requerido" *ngIf="!entradaSalidaMovimientoForm.controls['estado'].valid&&entradaSalidaMovimientoForm.controls['estado'].dirty"></p-message>
       </div>
     </div>
     <br/>
     <div class="ui-grid-row">
       <div class="ui-grid-col-2"><label>Fecha</label></div>
       <div class="ui-grid-col-8">
-        <p-calendar [style]="{'width':'50%'}"   dateFormat="dd/mm/yy"  [(ngModel)]="fecha" [locale]="es" [showIcon]="true"></p-calendar>
+        <p-calendar [style]="{'width':'50%'}" formControlName="fechaIngreso"    dateFormat="dd/mm/yy"  [(ngModel)]="fecha" [locale]="es" [showIcon]="true"></p-calendar>
+      </div>
+      <div class="ui-grid-col-4">
+        <p-message severity="error" text="Requerido" *ngIf="!entradaSalidaMovimientoForm.controls['fechaIngreso'].valid&&entradaSalidaMovimientoForm.controls['fechaIngreso'].dirty"></p-message>
       </div>
     </div>
   </div>
   <p-footer>
     <div class="ui-helper-clearfix">
       <button pButton type="button" icon="pi pi-check" label="Actualizar" (click)="save()" class="ui-button-success" style="margin-right: .25em; float: right;"></button>
-      <button pButton type="button" icon="fa  fa-close" label="Borrar" (click)="borrar()" class="ui-button-danger" style="margin-right: .25em; float: right;"></button>
+      <button pButton type="button" icon="fa  fa-close" label="Borrar" (click)="showConfirmarBaja()" class="ui-button-danger" style="margin-right: .25em; float: right;"></button>
       <button type="button" class="ui-button-success" pButton icon="fa fa-print" (click)="reimprirMovimiento()" label="Re-Imprimir Codigo"></button>
     </div>
   </p-footer>
@@ -128,3 +157,4 @@
     </div>
   </p-footer>
 </p-dialog>
+</form>

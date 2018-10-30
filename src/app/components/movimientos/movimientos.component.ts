@@ -38,7 +38,7 @@ export class MovimientosComponent implements OnInit {
   caracteristica8: string;
   caracteristica9: string;
   caracteristica10: string;
-  selectedEstadoActual: any;
+  selectedEstadoActual: String;
   clienteNombre: String;
   movimiento: Movimiento;
   newMovimiento: boolean;
@@ -69,6 +69,7 @@ export class MovimientosComponent implements OnInit {
   caracNombre9: String;
   caracNombre10: String;
   nuevoMovimientoForm: FormGroup;
+  entradaSalidaMovimientoForm: FormGroup;
 
   // d1: Dropdown;
 
@@ -141,7 +142,7 @@ export class MovimientosComponent implements OnInit {
 
   limpiarCampos() {
     this.fecha = new Date;
-    this.selectedEstado = new Object;
+    this.entradaSalidaMovimientoForm.controls['estado'].reset();
     this.selectedEstadoActual = '';
     this.clienteNombre = '';
     this.caracNombre1  = '';
@@ -158,8 +159,7 @@ export class MovimientosComponent implements OnInit {
 
   limpiarCamposNuevo() {
     this.nuevoMovimientoForm.reset();
-    this.fechaRegistro = new Date()
-
+    this.fechaRegistro = new Date();
   }
 
   cerrarDialogConfirmar() {
@@ -167,7 +167,7 @@ export class MovimientosComponent implements OnInit {
   }
 
   imprimir() {
-    const innerContents = document.getElementById("dialogBar").innerHTML;
+    const innerContents = document.getElementById('dialogBar').innerHTML;
     const popupWinindow = window.open('', '_blank', 'width=1000,height=1000,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
     popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</html>');
     popupWinindow.document.close();
@@ -201,12 +201,6 @@ export class MovimientosComponent implements OnInit {
     });
 
   };
-
-  clearFilter(dropdown: Dropdown) {
-
-    // dropdown.clear();
-  }
-
 }
 
 

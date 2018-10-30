@@ -68,5 +68,4 @@ export class NuevoMovimientoComponent extends MovimientosComponent implements On
     this.messageService.clear('c');
   }
 
-
 }

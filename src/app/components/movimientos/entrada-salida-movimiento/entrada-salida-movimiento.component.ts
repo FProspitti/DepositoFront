@@ -2,8 +2,9 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MovimientosComponent} from '../movimientos.component';
 import {MessageService} from 'primeng/api';
 import {Cliente} from '../../../shared/model/cliente';
+import {FormControl, Validators} from '@angular/forms';
 
-// import {Dropdown} from "primeng/components/dropdown/dropdown";
+
 
 @Component({
   selector: 'app-entrada-salida-movimiento',
@@ -31,11 +32,17 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
 
     this.traerEstados();
     this.fecha = new Date();
+
+    this.entradaSalidaMovimientoForm = this.fb.group({
+      'codigoBarra': new FormControl('', Validators.required),
+      'estado': new FormControl('', Validators.required),
+      'fechaIngreso': new FormControl('', Validators.required),
+    });
   }
 
   buscarMovimiento() {
     this.limpiarCampos();
-    this.selectedEstado = new Object;
+    this.movimiento = null;
     if (this.id) {
       this.authService.getMovimiento(this.id).subscribe(data => {
         if (data) {
@@ -50,16 +57,36 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
                 this.selectedEstadoActual = data.estado.nombre;
               }
           }
-          this.caracNombre1 = this.movimiento.caracteristicas1.nombre;
-          this.caracNombre2 = this.movimiento.caracteristicas2.nombre;
-          this.caracNombre3 = this.movimiento.caracteristicas3.nombre;
-          this.caracNombre4 = this.movimiento.caracteristicas4.nombre;
-          this.caracNombre5 = this.movimiento.caracteristicas5.nombre;
-          this.caracNombre6 = this.movimiento.caracteristicas6.nombre;
-          this.caracNombre7 = this.movimiento.caracteristicas7.nombre;
-          this.caracNombre8 = this.movimiento.caracteristicas8;
-          this.caracNombre9 = this.movimiento.caracteristicas9;
-          this.caracNombre10 = this.movimiento.caracteristicas10;
+          if (this.movimiento.caracteristicas1 != null) {
+            this.caracNombre1 = this.movimiento.caracteristicas1.nombre;
+          }
+          if (this.movimiento.caracteristicas2 != null) {
+            this.caracNombre2 = this.movimiento.caracteristicas2.nombre;
+          }
+          if (this.movimiento.caracteristicas3 != null) {
+            this.caracNombre3 = this.movimiento.caracteristicas3.nombre;
+          }
+          if (this.movimiento.caracteristicas4 != null) {
+            this.caracNombre4 = this.movimiento.caracteristicas4.nombre;
+          }
+          if (this.movimiento.caracteristicas5 != null) {
+            this.caracNombre5 = this.movimiento.caracteristicas5.nombre;
+          }
+          if (this.movimiento.caracteristicas6 != null) {
+            this.caracNombre6 = this.movimiento.caracteristicas6.nombre;
+          }
+          if (this.movimiento.caracteristicas7 != null) {
+            this.caracNombre7 = this.movimiento.caracteristicas7.nombre;
+          }
+          if (this.movimiento.caracteristicas8 != null) {
+            this.caracNombre8 = this.movimiento.caracteristicas8;
+          }
+          if (this.movimiento.caracteristicas9 != null) {
+            this.caracNombre9 = this.movimiento.caracteristicas9;
+          }
+          if (this.movimiento.caracteristicas10 != null) {
+            this.caracNombre10 = this.movimiento.caracteristicas10;
+          }
         } else {
           this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'No encontrado'});
         }
@@ -68,6 +95,18 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
   }
 
   save() {
+    if (!this.entradaSalidaMovimientoForm.valid) {
+      if (!this.entradaSalidaMovimientoForm.controls['codigoBarra'].valid) {
+        this.entradaSalidaMovimientoForm.controls['codigoBarra'].markAsDirty();
+      }
+      if (!this.entradaSalidaMovimientoForm.controls['estado'].valid) {
+        this.entradaSalidaMovimientoForm.controls['estado'].markAsDirty();
+      }
+      if (!this.entradaSalidaMovimientoForm.controls['fechaIngreso'].valid) {
+        this.entradaSalidaMovimientoForm.controls['fechaIngreso'].markAsDirty();
+      }
+      return;
+    }
     if (this.movimiento != null) {
       this.fecha.setHours(0, 0, 0, 0);
 
@@ -82,8 +121,10 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
       this.authService.updateMovimiento(movimient).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity: 'success', summary: 'Ingreso', detail: 'Creado correctamente'});
-          this.limpiarCampos();
           this.id = null;
+          this.entradaSalidaMovimientoForm.reset();
+          this.limpiarCampos();
+          this.movimiento = null;
         } else {
           this.messageService.add({severity: 'error', summary: 'Ingreso', detail: 'Error al ingresar'});
         }
@@ -94,12 +135,15 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
   }
 
   borrar() {
+    this.messageService.clear('baja');
     if (this.movimiento != null) {
       this.authService.deleteMovimiento(this.movimiento).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity: 'success', summary: 'Movimiento', detail: 'Borrado correctamente'});
-          this.limpiarCampos();
           this.id = null;
+          this.entradaSalidaMovimientoForm.reset();
+          this.limpiarCampos();
+          this.movimiento = null;
         } else {
           this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Error al borrar'});
         }
@@ -125,6 +169,26 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
         return 'blue';
       }
     }
+  }
+  showConfirmarBaja() {
+    if (this.movimiento != null) {
+      if (!this.entradaSalidaMovimientoForm.controls['codigoBarra'].valid) {
+        this.entradaSalidaMovimientoForm.controls['codigoBarra'].markAsDirty();
+      }
+      this.messageService.clear();
+      this.messageService.add({
+        key: 'baja',
+        sticky: true,
+        severity: 'warn',
+        summary: 'Desea dar de baja el movimiento?',
+        detail: 'Confirme para continuar'
+      });
+    }else {
+      this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Debe buscar un movimiento'});
+    }
+  }
+  hideConfirmarBaja() {
+    this.messageService.clear('baja');
   }
 }
 

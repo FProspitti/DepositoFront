@@ -94,9 +94,9 @@ export class UsersComponent implements OnInit {
 
       this.authService.registerUser(this.user).subscribe(data => {
         if (data.success) {
-          this.messageService.add({severity:'success', summary:'Usuario', detail:'Registrado correctamente'});
+          this.messageService.add({severity: 'success', summary: 'Usuario', detail: 'Registrado correctamente'});
         } else {
-          this.messageService.add({severity:'error', summary:'Usuario', detail:'Error al registrar'});
+          this.messageService.add({severity: 'error', summary: 'Usuario', detail: 'Error al registrar'});
         }
       });
       this.user = null;
@@ -117,9 +117,9 @@ export class UsersComponent implements OnInit {
         }
         this.authService.updateUser(this.user).subscribe(data => {
         if (data.success) {
-          this.messageService.add({severity:'success', summary:'Usuario', detail:'Actualizado correctamente'});
+          this.messageService.add({severity: 'success', summary: 'Usuario', detail: 'Actualizado correctamente'});
         } else {
-          this.messageService.add({severity:'error', summary:'Usuario', detail:'Error al actualizar'});
+          this.messageService.add({severity: 'error', summary: 'Usuario', detail: 'Error al actualizar'});
         }
       });
       this.user = null;
@@ -131,9 +131,9 @@ export class UsersComponent implements OnInit {
   delete() {
     this.authService.deleteUser(this.user).subscribe(data => {
       if (data.success) {
-        this.messageService.add({severity:'success', summary:'Usuario', detail:'Borrado correctamente'});
+        this.messageService.add({severity: 'success', summary: 'Usuario', detail: 'Borrado correctamente'});
       } else {
-        this.messageService.add({severity:'error', summary:'Usuario', detail:'Error al borrar'});
+        this.messageService.add({severity: 'error', summary: 'Usuario', detail: 'Error al borrar'});
       }
       this.user = null;
       this.displayDialog = false;
@@ -151,9 +151,9 @@ export class UsersComponent implements OnInit {
     }
     this.authService.updateUserPass(this.user).subscribe(data => {
       if (data.success) {
-        this.messageService.add({severity:'success', summary:'Pass', detail:'Actualizado correctamente'});
+        this.messageService.add({severity: 'success', summary: 'Pass', detail: 'Actualizado correctamente'});
       } else {
-        this.messageService.add({severity:'error', summary:'Pass', detail:'Error al actualizar'});
+        this.messageService.add({severity: 'error', summary: 'Pass', detail: 'Error al actualizar'});
       }
     });
     this.user = null;
