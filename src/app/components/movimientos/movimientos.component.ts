@@ -70,6 +70,7 @@ export class MovimientosComponent implements OnInit {
   caracNombre10: String;
   nuevoMovimientoForm: FormGroup;
   entradaSalidaMovimientoForm: FormGroup;
+  consultaMovimientoForm: FormGroup;
 
   // d1: Dropdown;
 

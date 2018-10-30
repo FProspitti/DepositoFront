@@ -3,6 +3,7 @@ import {MovimientosComponent} from '../movimientos.component';
 import {MessageService} from 'primeng/api';
 import {Cliente} from  '../../../shared/model/cliente';
 import {Estado} from  '../../../shared/model/estado';
+import {FormControl, Validators} from '@angular/forms';
 
 
 @Component({
@@ -45,10 +46,25 @@ export class ConsultaMovimientoComponent extends MovimientosComponent implements
     this.traerClientes();
     this.traerEstados();
 
+    this.consultaMovimientoForm = this.fb.group({
+      'clienteValido': new FormControl(''),
+      'estadoValido': new FormControl(''),
+      'fechaDesde': new FormControl('', Validators.required),
+      'fechaHasta': new FormControl('', Validators.required),
+    });
   }
 
   buscarMovimientos() {
-      this.cliente = this.selectedCliente;
+    if (!this.consultaMovimientoForm.valid) {
+      if (!this.consultaMovimientoForm.controls['fechaDesde'].valid) {
+        this.consultaMovimientoForm.controls['fechaDesde'].markAsDirty();
+      }
+      if (!this.consultaMovimientoForm.controls['fechaHasta'].valid) {
+        this.consultaMovimientoForm.controls['fechaHasta'].markAsDirty();
+      }
+      return;
+    }
+    this.cliente = this.selectedCliente;
 
       let idCliente;
      if (!this.cliente) {
