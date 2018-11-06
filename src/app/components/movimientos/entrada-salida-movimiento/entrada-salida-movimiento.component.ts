@@ -118,6 +118,32 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
         fecha: this.fecha
       };
 
+      debugger;
+
+      if (this.movimiento.baja) {
+        this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'El movimiento ya se encuentra dado de baja'});
+        return;
+      }
+
+      if (this.movimiento.estado.nombre === 'Registro') {
+          if (this.selectedEstado.nombre !== 'Ingreso') {
+            this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Debe ingresar primero el movimiento'});
+            return;
+          }
+      }
+
+      if (this.movimiento.estado.nombre === 'Ingreso') {
+        if (this.selectedEstado.nombre !== 'Salida') {
+          this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'El movimiento ya se encuentra ingresado'});
+          return;
+        }
+      }
+
+      if (this.movimiento.estado.nombre === 'Salida') {
+        this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'El movimiento ya se encuentra en estado de salida'});
+        return;
+      }
+
       this.authService.updateMovimiento(movimient).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity: 'success', summary: 'Ingreso', detail: 'Creado correctamente'});
