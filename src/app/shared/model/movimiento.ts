@@ -10,6 +10,7 @@ export class Movimiento {
   public estado: Estado;
   public fechaAlta: Date;
   public fechaIngreso: Date;
+  public fechaRegistro: Date;
   public fechaSalida: Date;
   public fecha: Date;
   public idMov: Number;

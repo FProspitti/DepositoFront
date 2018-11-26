@@ -109,7 +109,7 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
     }
     if (this.movimiento != null) {
       this.fecha.setHours(0, 0, 0, 0);
-
+      let fechaVali;
       var movimient = new Object();
       movimient = {
         _id: this.movimiento._id,
@@ -118,14 +118,17 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
         fecha: this.fecha
       };
 
-      debugger;
-
       if (this.movimiento.baja) {
         this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'El movimiento ya se encuentra dado de baja'});
         return;
       }
 
       if (this.movimiento.estado.nombre === 'Registro') {
+            fechaVali = new Date(this.movimiento.fechaRegistro);
+          if (fechaVali.getTime() > this.fecha.getTime()) {
+            this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'La fecha de ingreso debe ser mayor a la de registro'});
+            return;
+          }
           if (this.selectedEstado.nombre !== 'Ingreso') {
             this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Debe ingresar primero el movimiento'});
             return;
@@ -133,6 +136,11 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
       }
 
       if (this.movimiento.estado.nombre === 'Ingreso') {
+        fechaVali = new Date(this.movimiento.fechaIngreso);
+        if (fechaVali.getTime() > this.fecha.getTime()) {
+          this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'La fecha de salida debe ser mayor a la de ingreso'});
+          return;
+        }
         if (this.selectedEstado.nombre !== 'Salida') {
           this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'El movimiento ya se encuentra ingresado'});
           return;

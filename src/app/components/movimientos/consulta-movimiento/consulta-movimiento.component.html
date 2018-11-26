@@ -73,6 +73,9 @@
            <th>Cantidad dias</th>
          </tr>
        </ng-template>
+       <ng-template pTemplate="emptymessage">
+             Consulta vacia
+       </ng-template>
       <ng-template pTemplate="body" let-rowData let-movimiento>
          <tr [pSelectableRow]="rowData" [pContextMenuRow]="rowData">
            <td>{{movimiento.idMov}}</td>

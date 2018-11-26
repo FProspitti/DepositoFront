@@ -84,6 +84,11 @@ export class ConsultaMovimientoComponent extends MovimientosComponent implements
     this.fechaDesde.setHours(0,0,0,0);
     this.fechaHasta.setHours(0,0,0,0);
 
+    if (this.fechaDesde.getTime() > this.fechaHasta.getTime()) {
+      this.messageService.add({severity: 'error', summary: 'Buscar', detail: 'Filtros fechas incorrectos'});
+      return;
+    }
+
     const movimientoFiltro = new Object({
       clienteId : idCliente,
       estadoId : idEstado,
@@ -94,5 +99,6 @@ export class ConsultaMovimientoComponent extends MovimientosComponent implements
     this.authService.getMovimientos(movimientoFiltro).subscribe(data => {
       this.movimientos = data;
     });
+
   }
 }
