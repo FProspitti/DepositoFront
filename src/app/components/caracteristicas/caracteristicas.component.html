@@ -28,7 +28,7 @@
 </form>
  <form [formGroup]="caracteristicaForm">
   <div class="ui-grid-row">
-  <p-table #dt [columns]="cols" [value]="caracteristicas" selectionMode="single" [(selection)]="selectedCaracteristica" contextMenuSelectionMode="joint"
+  <p-table #dt [columns]="cols" [value]="caracteristicas" selectionMode="single" sortField="tipo"  [(selection)]="selectedCaracteristica" contextMenuSelectionMode="joint"
          dataKey="nombre"  [responsive]="true" [paginator]="true" [rows]="15" [contextMenu]="cm"
          exportFilename="Caracteristicas">
   <ng-template pTemplate="caption">
@@ -47,6 +47,9 @@
       <th>Fecha Alta</th>
     </tr>
   </ng-template>
+    <ng-template pTemplate="emptymessage">
+      Consulta vacia
+    </ng-template>
   <ng-template pTemplate="body"  let-rowData let-caracteristica>
     <tr [pSelectableRow]="rowData" [pContextMenuRow]="rowData">
       <td>{{caracteristica.nombre}}</td>

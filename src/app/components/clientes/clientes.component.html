@@ -22,6 +22,9 @@
       <th>Fecha Alta</th>
     </tr>
   </ng-template>
+  <ng-template pTemplate="emptymessage">
+    No hay Clientes
+  </ng-template>
   <ng-template pTemplate="body"  let-rowData let-cliente>
     <tr [pSelectableRow]="rowData" [pContextMenuRow]="rowData">
       <td>{{cliente.nombre}}</td>

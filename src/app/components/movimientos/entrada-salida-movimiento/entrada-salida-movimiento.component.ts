@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {MovimientosComponent} from '../movimientos.component';
 import {MessageService} from 'primeng/api';
 import {Cliente} from '../../../shared/model/cliente';
@@ -14,6 +14,8 @@ import {FormControl, Validators} from '@angular/forms';
 })
 
 export class EntradaSalidaMovimientoComponent extends MovimientosComponent implements OnInit {
+@ViewChild('codigoBarra') codigoBarraInput: ElementRef;
+
   id: Number;
   cliente: Object;
 
@@ -38,6 +40,8 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
       'estado': new FormControl('', Validators.required),
       'fechaIngreso': new FormControl('', Validators.required),
     });
+
+    this.codigoBarraInput.nativeElement.focus();
   }
 
   buscarMovimiento() {
@@ -171,6 +175,12 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
   borrar() {
     this.messageService.clear('baja');
     if (this.movimiento != null) {
+      debugger;
+      if (this.movimiento.estado.nombre !== 'Registro') {
+        this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'El movimiento solo se puede dar de baja en estado Registrado'});
+        return;
+      }
+
       this.authService.deleteMovimiento(this.movimiento).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity: 'success', summary: 'Movimiento', detail: 'Borrado correctamente'});

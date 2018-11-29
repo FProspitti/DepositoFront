@@ -65,7 +65,7 @@
        </ng-template>
        <ng-template pTemplate="header">
          <tr>
-           <th>Id</th>
+           <th>Codigo</th>
            <th>Cliente</th>
            <th>Estado</th>
            <th>Fecha Ingreso</th>
@@ -76,9 +76,9 @@
        <ng-template pTemplate="emptymessage">
              Consulta vacia
        </ng-template>
-      <ng-template pTemplate="body" let-rowData let-movimiento>
-         <tr [pSelectableRow]="rowData" [pContextMenuRow]="rowData">
-           <td>{{movimiento.idMov}}</td>
+      <ng-template pTemplate="body" let-movimiento>
+         <tr [pSelectableRow]="movimiento" [pContextMenuRow]="movimiento">
+           <td>{{movimiento.codigoBarras}}</td>
            <td>{{movimiento.cliente.nombre}}</td>
            <td>{{movimiento.estado.nombre}}</td>
            <td>{{movimiento.fechaIngreso | date:'dd/MM/yyyy'}}</td>
