@@ -96,7 +96,7 @@ export class ConsultaMovimientoComponent extends MovimientosComponent implements
       fechaHasta: this.fechaHasta
     });
 
-    this.authService.getMovimientos(movimientoFiltro).subscribe(data => {
+    this.movimientosService.getMovimientos(movimientoFiltro).subscribe(data => {
       this.movimientos = data;
     });
 

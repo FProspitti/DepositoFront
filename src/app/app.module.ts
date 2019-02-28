@@ -27,11 +27,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ButtonModule} from 'primeng/primeng';
 import {DropdownModule} from 'primeng/dropdown';
 import {ContextMenuModule} from "primeng/primeng";
-import { UnidadesComponent } from './components/unidades/unidades.component';
 import { ClientesComponent } from './components/clientes/clientes.component';
 import { EstadosComponent } from './components/estados/estados.component';
-import { ConsultasComponent } from './components/consultas/consultas.component';
-import { NuevoComponent } from './components/nuevo/nuevo.component';
 import {PanelModule} from 'primeng/panel';
 import { MovimientosComponent } from './components/movimientos/movimientos.component';
 import {CalendarModule} from 'primeng/calendar';
@@ -46,6 +43,10 @@ import { CaracteristicasComponent } from './components/caracteristicas/caracteri
 import {MessagesModule} from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
 import {KeyFilterModule} from 'primeng/keyfilter';
+import {ClientesService} from './services/clientes.service';
+import {EstadosService} from './services/estados.service';
+import {MovimientosService} from './services/movimientos.service';
+import {CaracteristicasService} from './services/caracteristicas.service';
 
 
 const  appRoutes: Routes = [
@@ -58,7 +59,6 @@ const  appRoutes: Routes = [
   {path: 'entradaSalida', component: EntradaSalidaMovimientoComponent, canActivate:[AuthGuard]},
   {path: 'clientes', component: ClientesComponent, canActivate:[AuthGuard]},
   {path: 'estados', component: EstadosComponent, canActivate:[AuthGuard]},
-  {path: 'consultas', component: ConsultasComponent, canActivate:[AuthGuard]},
   {path: 'consultaMovimiento', component: ConsultaMovimientoComponent, canActivate:[AuthGuard]},
   {path: 'nuevoMovimiento', component: NuevoMovimientoComponent, canActivate:[AuthGuard]},
   {path: 'caracteristicas', component: CaracteristicasComponent, canActivate:[AuthGuard]},
@@ -74,11 +74,8 @@ const  appRoutes: Routes = [
     DashboardComponent,
     ProfileComponent,
     UsersComponent,
-    UnidadesComponent,
     ClientesComponent,
     EstadosComponent,
-    ConsultasComponent,
-    NuevoComponent,
     MovimientosComponent,
     ConsultaMovimientoComponent,
     EntradaSalidaMovimientoComponent,
@@ -113,7 +110,7 @@ const  appRoutes: Routes = [
     KeyFilterModule
 
   ],
-  providers: [ValidateService,AuthService, AuthGuard],
+  providers: [ValidateService, AuthService, AuthGuard, ClientesService, EstadosService, MovimientosService, CaracteristicasService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

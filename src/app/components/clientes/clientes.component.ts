@@ -6,6 +6,7 @@ import {AuthService} from '../../services/auth.service';
 import {MenuItem} from 'primeng/primeng';
 import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
 import {Cliente} from '../../shared/model/cliente';
+import {ClientesService} from '../../services/clientes.service';
 
 
 
@@ -31,6 +32,7 @@ export class ClientesComponent implements OnInit {
   submitted = false;
 
   constructor(private authService: AuthService,
+  private clientesService: ClientesService,
   private router: Router,
   private flashMessages: FlashMessagesService,
   private messageService: MessageService,
@@ -74,7 +76,7 @@ export class ClientesComponent implements OnInit {
      return;
     }
      if (this.newCliente) {
-      this.authService.newCliente(this.cliente).subscribe(data => {
+      this.clientesService.newCliente(this.cliente).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity:'success', summary:'Cliente', detail:'Registrado correctamente'});
         } else {
@@ -85,7 +87,7 @@ export class ClientesComponent implements OnInit {
       this.displayDialog = false;
       this.cargarTabla();
     } else {
-      this.authService.updateCliente(this.cliente).subscribe(data => {
+      this.clientesService.updateCliente(this.cliente).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity:'success', summary:'Cliente', detail:'Actualizado correctamente'});
         } else {
@@ -99,7 +101,7 @@ export class ClientesComponent implements OnInit {
   }
 
   delete() {
-    this.authService.deleteCliente(this.cliente).subscribe(data => {
+    this.clientesService.deleteCliente(this.cliente).subscribe(data => {
       if (data.success) {
         this.messageService.add({severity:'success', summary:'Cliente', detail:'Eliminado correctamente'});
       } else {
@@ -145,7 +147,7 @@ export class ClientesComponent implements OnInit {
   }
 
   cargarTabla() {
-    this.authService.getClientes().subscribe(clientes => {
+    this.clientesService.getClientes().subscribe(clientes => {
       this.clientes = clientes;
 
     }, err => {

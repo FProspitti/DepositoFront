@@ -11,6 +11,10 @@ import {Estado} from  '../../shared/model/estado';
 import {Caracteristica} from '../../shared/model/caracteristica';
 import { Dropdown } from 'primeng/components/dropdown/dropdown';
 import {Cliente} from '../../shared/model/cliente';
+import {ClientesService} from '../../services/clientes.service';
+import {MovimientosService} from '../../services/movimientos.service';
+import {EstadosService} from '../../services/estados.service';
+import {CaracteristicasService} from '../../services/caracteristicas.service';
 
 
 
@@ -76,10 +80,14 @@ export class MovimientosComponent implements OnInit {
 
 
   constructor(public authService: AuthService,
+              public movimientosService: MovimientosService,
+              public estadosService: EstadosService,
+              public caracteristicasService: CaracteristicasService,
               public router: Router,
               public flashMessages: FlashMessagesService,
               public messageService: MessageService,
-              public fb: FormBuilder) {
+              public fb: FormBuilder,
+              public clientesService: ClientesService) {
   }
 
   ngOnInit() {
@@ -90,7 +98,7 @@ export class MovimientosComponent implements OnInit {
     this.messageService.clear('c');
     this.fechaRegistro.setHours(0, 0, 0, 0);
 
-    this.authService.getEstadoNombre('Registro').subscribe(estado => {
+    this.estadosService.getEstadoNombre('Registro').subscribe(estado => {
       this.estado = estado;
 
       var movimient = new Object();
@@ -110,7 +118,7 @@ export class MovimientosComponent implements OnInit {
         caracteristicas10: this.caracteristica10
       };
 
-      this.authService.newMovimiento(movimient).subscribe(data => {
+      this.movimientosService.newMovimiento(movimient).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity: 'success', summary: 'Ingreso', detail: 'Creado correctamente'});
           this.movimiento = data.mov;
@@ -123,7 +131,7 @@ export class MovimientosComponent implements OnInit {
     });
   }
   traerClientes() {
-    this.authService.getClientes().subscribe(clientes => {
+    this.clientesService.getClientes().subscribe(clientes => {
       this.clientes = clientes;
 
     }, err => {
@@ -133,7 +141,7 @@ export class MovimientosComponent implements OnInit {
   }
 
   traerEstados() {
-    this.authService.getEstados().subscribe(estados => {
+    this.estadosService.getEstados().subscribe(estados => {
       this.estados = estados;
     }, err => {
       console.log(err);
@@ -175,7 +183,7 @@ export class MovimientosComponent implements OnInit {
   }
 
    buscarCaracteristicasXtipos = function (tipo) {
-    this.authService.getCaracteristicasTipo(tipo).subscribe(data => {
+    this.caracteristicasService.getCaracteristicasTipo(tipo).subscribe(data => {
         switch (tipo) {
           case 1:
             this.caracteristicas1 = data;

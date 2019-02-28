@@ -48,7 +48,7 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
     this.limpiarCampos();
     this.movimiento = null;
     if (this.id) {
-      this.authService.getMovimiento(this.id).subscribe(data => {
+      this.movimientosService.getMovimiento(this.id).subscribe(data => {
         if (data) {
           this.movimiento = data;
           if (this.movimiento.cliente) {
@@ -156,7 +156,7 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
         return;
       }
 
-      this.authService.updateMovimiento(movimient).subscribe(data => {
+      this.movimientosService.updateMovimiento(movimient).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity: 'success', summary: 'Ingreso', detail: 'Creado correctamente'});
           this.id = null;
@@ -175,13 +175,12 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
   borrar() {
     this.messageService.clear('baja');
     if (this.movimiento != null) {
-      debugger;
       if (this.movimiento.estado.nombre !== 'Registro') {
         this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'El movimiento solo se puede dar de baja en estado Registrado'});
         return;
       }
 
-      this.authService.deleteMovimiento(this.movimiento).subscribe(data => {
+      this.movimientosService.deleteMovimiento(this.movimiento).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity: 'success', summary: 'Movimiento', detail: 'Borrado correctamente'});
           this.id = null;

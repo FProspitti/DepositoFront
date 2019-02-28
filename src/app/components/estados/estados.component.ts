@@ -6,6 +6,7 @@ import {AuthService} from '../../services/auth.service';
 import {MenuItem} from 'primeng/primeng';
 import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
 import {Estado} from '../../shared/model/estado';
+import {EstadosService} from '../../services/estados.service';
 
 @Component({
   selector: 'app-estados',
@@ -30,6 +31,7 @@ export class EstadosComponent implements OnInit{
 
 
   constructor(private authService: AuthService,
+              private estadosService: EstadosService,
               private router: Router,
               private flashMessages: FlashMessagesService,
               private messageService: MessageService,
@@ -75,7 +77,7 @@ export class EstadosComponent implements OnInit{
       return;
     }
     if (this.newEstado) {
-      this.authService.newEstado(this.estado).subscribe(data => {
+      this.estadosService.newEstado(this.estado).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity:'success', summary:'Estado', detail:'Registrado correctamente'});
         } else {
@@ -86,7 +88,7 @@ export class EstadosComponent implements OnInit{
       this.displayDialog = false;
       this.cargarTabla();
     } else {
-      this.authService.updateEstado(this.estado).subscribe(data => {
+      this.estadosService.updateEstado(this.estado).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity:'success', summary:'Estado', detail:'Actualizado correctamente'});
         } else {
@@ -100,7 +102,7 @@ export class EstadosComponent implements OnInit{
   }
 
   delete() {
-    this.authService.deleteEstado(this.estado).subscribe(data => {
+    this.estadosService.deleteEstado(this.estado).subscribe(data => {
       if (data.success) {
         this.messageService.add({severity:'success', summary:'Estado', detail:'Eliminado correctamente'});
       } else {
@@ -143,7 +145,7 @@ export class EstadosComponent implements OnInit{
   }
 
   cargarTabla() {
-    this.authService.getEstados().subscribe(estados => {
+    this.estadosService.getEstados().subscribe(estados => {
       this.estados = estados;
 
    }, err => {

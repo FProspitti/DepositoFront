@@ -7,6 +7,7 @@ import {MenuItem} from 'primeng/primeng';
 import {Caracteristica} from  '../../shared/model/caracteristica';
 import {CaracteristicaSelect} from  '../../shared/model/caracteristicaSelect';
 import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
+import {CaracteristicasService} from '../../services/caracteristicas.service';
 
 
 @Component({
@@ -38,6 +39,7 @@ export class CaracteristicasComponent implements OnInit {
 
 
   constructor(private authService: AuthService,
+              private caracteristicasService: CaracteristicasService,
               private router: Router,
               private flashMessages: FlashMessagesService,
               private messageService: MessageService,
@@ -113,7 +115,7 @@ export class CaracteristicasComponent implements OnInit {
 
       this.caracteristica.tipo = this.selectedCaracteristicaComboSave.tipo;
     if (this.newCaracteristica) {
-      this.authService.newCaracteristica(this.caracteristica).subscribe(data => {
+      this.caracteristicasService.newCaracteristica(this.caracteristica).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity:'success', summary:'Caracteristica', detail:'Registrada correctamente'});
         } else {
@@ -124,7 +126,7 @@ export class CaracteristicasComponent implements OnInit {
       this.displayDialog = false;
       this.buscarCaracteristicas();
     } else {
-      this.authService.updateCaracteristica(this.caracteristica).subscribe(data => {
+      this.caracteristicasService.updateCaracteristica(this.caracteristica).subscribe(data => {
         if (data.success) {
           this.messageService.add({severity:'success', summary:'Caracteristica', detail:'Actualizada correctamente'});
         } else {
@@ -138,7 +140,7 @@ export class CaracteristicasComponent implements OnInit {
   }
 
   delete() {
-    this.authService.deleteCaracteristica(this.caracteristica).subscribe(data => {
+    this.caracteristicasService.deleteCaracteristica(this.caracteristica).subscribe(data => {
       if (data.success) {
         this.messageService.add({severity:'success', summary:'Caracteristica', detail:'Eliminado correctamente'});
       } else {
@@ -195,7 +197,7 @@ export class CaracteristicasComponent implements OnInit {
       tipo : this.selectedCaracteristicaCombo.tipo
     });
 
-    this.authService.getCaracteristicasFiltro(caracteristicaFiltro).subscribe(data => {
+    this.caracteristicasService.getCaracteristicasFiltro(caracteristicaFiltro).subscribe(data => {
       this.caracteristicas = data;
     });
   }
