@@ -48,7 +48,7 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
     this.limpiarCampos();
     this.movimiento = null;
     if (this.id) {
-      this.movimientosService.getMovimiento(this.id).subscribe(data => {
+      this.movimientosService.getMovimiento(this.id).subscribe((data: any) => {
         if (data) {
           this.movimiento = data;
           if (this.movimiento.cliente) {
@@ -94,6 +94,8 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
         } else {
           this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'No encontrado'});
         }
+      }, error => {
+        this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Error'});
       });
     }
   }
@@ -114,7 +116,7 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
     if (this.movimiento != null) {
       this.fecha.setHours(0, 0, 0, 0);
       let fechaVali;
-      var movimient = new Object();
+      let movimient = new Object();
       movimient = {
         _id: this.movimiento._id,
         cliente: this.movimiento.cliente,
@@ -130,7 +132,8 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
       if (this.movimiento.estado.nombre === 'Registro') {
             fechaVali = new Date(this.movimiento.fechaRegistro);
           if (fechaVali.getTime() > this.fecha.getTime()) {
-            this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'La fecha de ingreso debe ser mayor a la de registro'});
+            this.messageService.add({severity: 'error', summary: 'Movimiento',
+              detail: 'La fecha de ingreso debe ser mayor a la de registro'});
             return;
           }
           if (this.selectedEstado.nombre !== 'Ingreso') {
@@ -157,15 +160,15 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
       }
 
       this.movimientosService.updateMovimiento(movimient).subscribe(data => {
-        if (data.success) {
+        if (data) {
           this.messageService.add({severity: 'success', summary: 'Ingreso', detail: 'Creado correctamente'});
           this.id = null;
           this.entradaSalidaMovimientoForm.reset();
           this.limpiarCampos();
           this.movimiento = null;
-        } else {
-          this.messageService.add({severity: 'error', summary: 'Ingreso', detail: 'Error al ingresar'});
         }
+      }, error => {
+        this.messageService.add({severity: 'error', summary: 'Ingreso', detail: 'Error al ingresar'});
       });
     } else {
       this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Debe buscar un movimiento'});
@@ -176,12 +179,13 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
     this.messageService.clear('baja');
     if (this.movimiento != null) {
       if (this.movimiento.estado.nombre !== 'Registro') {
-        this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'El movimiento solo se puede dar de baja en estado Registrado'});
+        this.messageService.add({severity: 'error', summary: 'Movimiento',
+          detail: 'El movimiento solo se puede dar de baja en estado Registrado'});
         return;
       }
 
       this.movimientosService.deleteMovimiento(this.movimiento).subscribe(data => {
-        if (data.success) {
+        if (data) {
           this.messageService.add({severity: 'success', summary: 'Movimiento', detail: 'Borrado correctamente'});
           this.id = null;
           this.entradaSalidaMovimientoForm.reset();
@@ -190,6 +194,8 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
         } else {
           this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Error al borrar'});
         }
+      }, error => {
+          this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Error al borrar'});
       });
     }  else {
           this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Debe buscar un movimiento'});
@@ -226,7 +232,7 @@ export class EntradaSalidaMovimientoComponent extends MovimientosComponent imple
         summary: 'Desea dar de baja el movimiento?',
         detail: 'Confirme para continuar'
       });
-    }else {
+    } else {
       this.messageService.add({severity: 'error', summary: 'Movimiento', detail: 'Debe buscar un movimiento'});
     }
   }

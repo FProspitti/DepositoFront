@@ -6,10 +6,8 @@ import {FlashMessagesService} from 'angular2-flash-messages';
 import {MenuItem} from '../../../../node_modules/primeng/primeng';
 import {SelectItem} from 'primeng/api';
 import {Validators, FormControl, FormGroup, FormBuilder} from '@angular/forms';
-import {Movimiento} from  '../../shared/model/movimiento';
-import {Estado} from  '../../shared/model/estado';
+import {Movimiento} from '../../shared/model/movimiento';
 import {Caracteristica} from '../../shared/model/caracteristica';
-import { Dropdown } from 'primeng/components/dropdown/dropdown';
 import {Cliente} from '../../shared/model/cliente';
 import {ClientesService} from '../../services/clientes.service';
 import {MovimientosService} from '../../services/movimientos.service';
@@ -76,9 +74,6 @@ export class MovimientosComponent implements OnInit {
   entradaSalidaMovimientoForm: FormGroup;
   consultaMovimientoForm: FormGroup;
 
-  // d1: Dropdown;
-
-
   constructor(public authService: AuthService,
               public movimientosService: MovimientosService,
               public estadosService: EstadosService,
@@ -101,7 +96,7 @@ export class MovimientosComponent implements OnInit {
     this.estadosService.getEstadoNombre('Registro').subscribe(estado => {
       this.estado = estado;
 
-      var movimient = new Object();
+      let movimient = new Object();
       movimient = {
         cliente: this.selectedCliente,
         estado: this.estado,
@@ -118,15 +113,15 @@ export class MovimientosComponent implements OnInit {
         caracteristicas10: this.caracteristica10
       };
 
-      this.movimientosService.newMovimiento(movimient).subscribe(data => {
-        if (data.success) {
+      this.movimientosService.newMovimiento(movimient).subscribe((data: any) => {
+        if (data) {
           this.messageService.add({severity: 'success', summary: 'Ingreso', detail: 'Creado correctamente'});
           this.movimiento = data.mov;
           this.limpiarCamposNuevo();
           this.displayDialog = true;
-        } else {
-          this.messageService.add({severity: 'error', summary: 'Ingreso', detail: 'Error al ingresar'});
         }
+      }, error => {
+        this.messageService.add({severity: 'error', summary: 'Ingreso', detail: 'Error al ingresar'});
       });
     });
   }
@@ -177,9 +172,11 @@ export class MovimientosComponent implements OnInit {
 
   imprimir() {
     const innerContents = document.getElementById('dialogBar').innerHTML;
-    const popupWinindow = window.open('', '_blank', 'width=1000,height=1000,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
-    popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /></head><body onload="window.print()">' + innerContents + '</html>');
-    popupWinindow.document.close();
+    const popupWinindow = window.open('', '_blank',
+      'width=1000,height=1000,scrollbars=no,menubar=no,toolbar=no,location=no,status=no,titlebar=no');
+          popupWinindow.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" />' +
+            '</head><body onload="window.print()">' + innerContents + '</html>');
+          popupWinindow.document.close();
   }
 
    buscarCaracteristicasXtipos = function (tipo) {

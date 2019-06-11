@@ -77,22 +77,22 @@ export class ClientesComponent implements OnInit {
     }
      if (this.newCliente) {
       this.clientesService.newCliente(this.cliente).subscribe(data => {
-        if (data.success) {
+        if (data) {
           this.messageService.add({severity:'success', summary:'Cliente', detail:'Registrado correctamente'});
-        } else {
-          this.messageService.add({severity:'error', summary:'Cliente', detail:'Error al registrar'});
         }
+      }, error => {
+        this.messageService.add({severity:'error', summary:'Cliente', detail:'Error al registrar'});
       });
       this.cliente = null;
       this.displayDialog = false;
       this.cargarTabla();
     } else {
       this.clientesService.updateCliente(this.cliente).subscribe(data => {
-        if (data.success) {
+        if (data) {
           this.messageService.add({severity:'success', summary:'Cliente', detail:'Actualizado correctamente'});
-        } else {
-          this.messageService.add({severity:'error', summary:'Cliente', detail:'Error al actualizar'});
-        }
+          }
+        }, error => {
+        this.messageService.add({severity:'error', summary:'Cliente', detail:'Error al actualizar'});
       });
       this.cliente = null;
       this.displayDialog = false;
@@ -102,16 +102,16 @@ export class ClientesComponent implements OnInit {
 
   delete() {
     this.clientesService.deleteCliente(this.cliente).subscribe(data => {
-      if (data.success) {
+      if (data) {
         this.messageService.add({severity:'success', summary:'Cliente', detail:'Eliminado correctamente'});
-      } else {
-        this.messageService.add({severity:'error', summary:'Cliente', detail:'Error al eliminar'});
       }
       this.cliente = null;
       this.displayDialogDelete = false;
       this.cargarTabla();
 
-    });
+    }, error => {
+      this.messageService.add({severity:'error', summary:'Cliente', detail:'Error al eliminar'});
+      });
   }
 
   cerrarDialog() {

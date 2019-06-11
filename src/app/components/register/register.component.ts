@@ -12,8 +12,8 @@ import {Router} from "@angular/router";
 export class RegisterComponent implements OnInit {
 name: String;
 username: String;
-email:String;
-password:String;
+email: String;
+password: String;
 
   constructor(private validateService: ValidateService,
               private flashMessages: FlashMessagesService,
@@ -23,33 +23,34 @@ password:String;
   ngOnInit() {
   }
 
-  onRegisterSubmit(){
-   const user ={
+  onRegisterSubmit() {
+   const user = {
      name: this.name,
      email: this.email,
      username: this.username,
      password: this.password,
    }
 
-   if(!this.validateService.validateRegister(user)){
-    this.flashMessages.show('Complete los campos',{cssClass: 'alert-danger', timeout:4000})
+   if(!this.validateService.validateRegister(user)) {
+    this.flashMessages.show('Complete los campos', {cssClass: 'alert-danger', timeout: 4000});
      return false;
    }
 
     if(!this.validateService.validateEmail(user.email)){
-      this.flashMessages.show('Validar email',{cssClass: 'alert-danger', timeout:4000})
+      this.flashMessages.show('Validar email', {cssClass: 'alert-danger', timeout: 4000});
      return false;
     }
-this.authService.registerUser(user).subscribe(data => {
-  if(data.success){
-    this.flashMessages.show('Se registro el usuario correctamente',{cssClass: 'alert-success', timeout:4000})
+this.authService.registerUser(user).subscribe((data: any) => {
+  if (data.success) {
+    this.flashMessages.show('Se registro el usuario correctamente', {cssClass: 'alert-success', timeout: 4000});
   this.router.navigate(['/login']);
-  }else{
-    this.flashMessages.show('No se pudo registrar el usuario',{cssClass: 'alert-danger', timeout:4000})
+  } else {
+    this.flashMessages.show('No se pudo registrar el usuario', {cssClass: 'alert-danger', timeout: 4000});
     this.router.navigate(['/register']);
   }
+}, error => {
+  this.flashMessages.show('No se pudo registrar el usuario', {cssClass: 'alert-danger', timeout: 4000});
 });
-
-  }
+}
 
 }

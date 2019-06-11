@@ -14,12 +14,11 @@ user: Object;
               private router: Router) { }
 
   ngOnInit() {
-    this.authService.getProfile().subscribe(profile => {
-      console.log("entra profile");
+    this.authService.getProfile().subscribe((profile: any) => {
       this.user = profile.user;
     }, err => {
-console.log(err);
-return false;
+      console.log(err);
+      return false;
     });
   }
 

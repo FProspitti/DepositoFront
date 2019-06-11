@@ -115,23 +115,23 @@ export class CaracteristicasComponent implements OnInit {
 
       this.caracteristica.tipo = this.selectedCaracteristicaComboSave.tipo;
     if (this.newCaracteristica) {
-      this.caracteristicasService.newCaracteristica(this.caracteristica).subscribe(data => {
-        if (data.success) {
+      this.caracteristicasService.newCaracteristica(this.caracteristica).subscribe((data) => {
+         if (data) {
           this.messageService.add({severity:'success', summary:'Caracteristica', detail:'Registrada correctamente'});
-        } else {
-          this.messageService.add({severity:'error', summary:'Caracteristica', detail:'Error al registrar'});
         }
+      }, error => {
+        this.messageService.add({severity:'error', summary:'Caracteristica', detail:'Error al registrar'});
       });
       this.caracteristica = null;
       this.displayDialog = false;
       this.buscarCaracteristicas();
     } else {
       this.caracteristicasService.updateCaracteristica(this.caracteristica).subscribe(data => {
-        if (data.success) {
+        if (data) {
           this.messageService.add({severity:'success', summary:'Caracteristica', detail:'Actualizada correctamente'});
-        } else {
-          this.messageService.add({severity:'error', summary:'Caracteristica', detail:'Error al actualizar'});
         }
+      }, error => {
+        this.messageService.add({severity:'error', summary:'Caracteristica', detail:'Error al actualizar'});
       });
       this.caracteristica = null;
       this.displayDialog = false;
@@ -141,15 +141,15 @@ export class CaracteristicasComponent implements OnInit {
 
   delete() {
     this.caracteristicasService.deleteCaracteristica(this.caracteristica).subscribe(data => {
-      if (data.success) {
+      if (data) {
         this.messageService.add({severity:'success', summary:'Caracteristica', detail:'Eliminado correctamente'});
-      } else {
-        this.messageService.add({severity:'error', summary:'Caracteristica', detail:'Error al eliminar'});
       }
       this.caracteristica = null;
       this.displayDialogDelete = false;
       this.buscarCaracteristicas();
 
+    }, error => {
+      this.messageService.add({severity:'error', summary:'Caracteristica', detail:'Error al eliminar'});
     });
   }
 
@@ -199,6 +199,8 @@ export class CaracteristicasComponent implements OnInit {
 
     this.caracteristicasService.getCaracteristicasFiltro(caracteristicaFiltro).subscribe(data => {
       this.caracteristicas = data;
+    }, error => {
+      this.messageService.add({severity:'error', summary:'Caracteristica', detail:'Error al buscar caracteristicas'});
     });
   }
 }

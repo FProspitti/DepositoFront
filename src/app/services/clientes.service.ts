@@ -7,48 +7,25 @@ import {AuthService} from './auth.service';
 export class ClientesService extends  AuthService {
 
   deleteCliente(cliente) {
-    const headers = new Headers();
-    this.loadToken();
-    headers.append('Authorization', this.authToken);
-    headers.append('content-type', 'application/json');
-    return this.http.put('http://localhost:3000/clientes/deleteCliente', cliente , {headers: headers})
-      .map(res => res.json());
+    return this.httpClient.put('http://localhost:3000/clientes/deleteCliente', cliente);
 
   }
 
   updateCliente(cliente) {
-    const headers = new Headers();
-    this.loadToken();
-    headers.append('Authorization', this.authToken);
-    headers.append('content-type', 'application/json');
-    return this.http.put('http://localhost:3000/clientes/updateCliente', cliente , {headers: headers})
-      .map(res => res.json());
+    return this.httpClient.put('http://localhost:3000/clientes/updateCliente', cliente);
 
   }
 
   newCliente(cliente) {
-    const headers = new Headers();
-    headers.append('content-type', 'application/json');
-    return this.http.post('http://localhost:3000/clientes/nuevoCliente', cliente, {headers: headers})
-      .map(res => res.json());
+    return this.httpClient.post('http://localhost:3000/clientes/nuevoCliente', cliente);
   }
 
   getClientes() {
-    const headers = new Headers();
-    this.loadToken();
-    headers.append('Authorization', this.authToken);
-    headers.append('content-type', 'application/json');
-    return this.http.get('http://localhost:3000/clientes/clientes', {headers: headers})
-      .map(res => res.json());
+    return this.httpClient.get<any>('http://localhost:3000/clientes/clientes');
   }
 
   getCliente(id) {
-    const headers = new Headers();
-    // this.loadToken();
-    // headers.append('Authorization', this.authToken);
-    headers.append('content-type', 'application/json');
-    return this.http.get('http://localhost:3000/clientes/getCliente/'+id , {headers: headers})
-      .map(res => res.json());
+    return this.httpClient.get('http://localhost:3000/clientes/getCliente/'+id);
 
   }
 

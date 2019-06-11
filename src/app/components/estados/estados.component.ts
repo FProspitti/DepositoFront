@@ -78,22 +78,22 @@ export class EstadosComponent implements OnInit{
     }
     if (this.newEstado) {
       this.estadosService.newEstado(this.estado).subscribe(data => {
-        if (data.success) {
+        if (data) {
           this.messageService.add({severity:'success', summary:'Estado', detail:'Registrado correctamente'});
-        } else {
-          this.messageService.add({severity:'error', summary:'Estado', detail:'Error al registrar'});
         }
+      }, error => {
+        this.messageService.add({severity:'error', summary:'Estado', detail:'Error al registrar'});
       });
       this.estado = null;
       this.displayDialog = false;
       this.cargarTabla();
     } else {
       this.estadosService.updateEstado(this.estado).subscribe(data => {
-        if (data.success) {
+        if (data) {
           this.messageService.add({severity:'success', summary:'Estado', detail:'Actualizado correctamente'});
-        } else {
-          this.messageService.add({severity:'error', summary:'Estado', detail:'Error al actualizar'});
         }
+      }, error => {
+        this.messageService.add({severity:'error', summary:'Estado', detail:'Error al actualizar'});
       });
       this.estado = null;
       this.displayDialog = false;
@@ -103,15 +103,14 @@ export class EstadosComponent implements OnInit{
 
   delete() {
     this.estadosService.deleteEstado(this.estado).subscribe(data => {
-      if (data.success) {
+      if (data) {
         this.messageService.add({severity:'success', summary:'Estado', detail:'Eliminado correctamente'});
-      } else {
-        this.messageService.add({severity:'error', summary:'Estado', detail:'Error al eliminar'});
       }
       this.estado = null;
       this.displayDialogDelete = false;
       this.cargarTabla();
-
+    }, error => {
+      this.messageService.add({severity:'error', summary:'Estado', detail:'Error al eliminar'});
     });
   }
 

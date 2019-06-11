@@ -93,11 +93,13 @@ export class UsersComponent implements OnInit {
       }
 
       this.authService.registerUser(this.user).subscribe(data => {
-        if (data.success) {
+        if (data) {
           this.messageService.add({severity: 'success', summary: 'Usuario', detail: 'Registrado correctamente'});
         } else {
           this.messageService.add({severity: 'error', summary: 'Usuario', detail: 'Error al registrar'});
         }
+      }, error => {
+        this.messageService.add({severity: 'error', summary: 'Usuario', detail: 'Error al registrar'});
       });
       this.user = null;
       this.displayDialog = false;
@@ -116,12 +118,14 @@ export class UsersComponent implements OnInit {
           return;
         }
         this.authService.updateUser(this.user).subscribe(data => {
-        if (data.success) {
+        if (data) {
           this.messageService.add({severity: 'success', summary: 'Usuario', detail: 'Actualizado correctamente'});
         } else {
           this.messageService.add({severity: 'error', summary: 'Usuario', detail: 'Error al actualizar'});
         }
-      });
+        }, error => {
+          this.messageService.add({severity: 'error', summary: 'Usuario', detail: 'Error al actualizar'});
+        });
       this.user = null;
       this.displayDialog = false;
       this.cargarTabla();
@@ -130,7 +134,7 @@ export class UsersComponent implements OnInit {
 
   delete() {
     this.authService.deleteUser(this.user).subscribe(data => {
-      if (data.success) {
+      if (data) {
         this.messageService.add({severity: 'success', summary: 'Usuario', detail: 'Borrado correctamente'});
       } else {
         this.messageService.add({severity: 'error', summary: 'Usuario', detail: 'Error al borrar'});
@@ -139,6 +143,8 @@ export class UsersComponent implements OnInit {
       this.displayDialog = false;
       this.displayDialogDelete = false;
       this.cargarTabla();
+    }, error => {
+      this.messageService.add({severity: 'error', summary: 'Usuario', detail: 'Error al borrar'});
     });
   }
 
@@ -150,11 +156,13 @@ export class UsersComponent implements OnInit {
       return;
     }
     this.authService.updateUserPass(this.user).subscribe(data => {
-      if (data.success) {
+      if (data) {
         this.messageService.add({severity: 'success', summary: 'Pass', detail: 'Actualizado correctamente'});
       } else {
         this.messageService.add({severity: 'error', summary: 'Pass', detail: 'Error al actualizar'});
       }
+    }, error => {
+        this.messageService.add({severity: 'error', summary: 'Pass', detail: 'Error al actualizar'});
     });
     this.user = null;
     this.displayDialogPass = false;
@@ -184,7 +192,7 @@ export class UsersComponent implements OnInit {
 
 
   cargarTabla() {
-    this.authService.getUsers().subscribe(usuarios => {
+    this.authService.getUsers().subscribe((usuarios: any) => {
       this.usuarios = usuarios;
 
     }, err => {

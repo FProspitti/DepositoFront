@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
@@ -47,6 +47,7 @@ import {ClientesService} from './services/clientes.service';
 import {EstadosService} from './services/estados.service';
 import {MovimientosService} from './services/movimientos.service';
 import {CaracteristicasService} from './services/caracteristicas.service';
+import {SecurityInterceptor} from './interceptors/security.interceptor';
 
 
 const  appRoutes: Routes = [
@@ -110,7 +111,19 @@ const  appRoutes: Routes = [
     KeyFilterModule
 
   ],
-  providers: [ValidateService, AuthService, AuthGuard, ClientesService, EstadosService, MovimientosService, CaracteristicasService],
+  providers: [
+    ValidateService,
+    AuthService,
+    AuthGuard,
+    ClientesService,
+    EstadosService,
+    MovimientosService,
+    CaracteristicasService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass:  SecurityInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
